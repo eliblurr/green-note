@@ -1,6 +1,6 @@
 rootProject.name = 'green-note'
 
-include 'services:client-service'
+include 'services:user-service'
 include 'services:order-service'
 include 'services:reporting-service'
 include 'services:logging-service'
