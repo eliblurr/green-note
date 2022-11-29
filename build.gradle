@@ -19,6 +19,7 @@ ext {
 }
 
 subprojects {
+
 	repositories {
 		mavenCentral()
 	}
