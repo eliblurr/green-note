@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
+import org.tlc.microservices.userservice.dto.admin.EmailDTO;
 import org.tlc.microservices.userservice.model.Admin;
 import org.tlc.microservices.userservice.service.AdminService;
 
@@ -25,6 +26,12 @@ public class AdminController {
         return adminService.create(payload);
     }
 
+    @PostMapping("/verify-email")
+    @ResponseStatus(HttpStatus.OK)
+    Boolean adminExists(@RequestBody EmailDTO payload){
+        return adminService.adminExists(payload.getEmail());
+    }
+
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     List<AdminDTO> read(){
@@ -37,11 +44,11 @@ public class AdminController {
         return adminService.readById(id);
     }
 
-//    @PatchMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    AdminDTO updateById(@PathVariable("id") UUID id){
-//        return adminService.updateById(id);
-//    }
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    AdminDTO updateById(@PathVariable("id") UUID id){
+        return adminService.updateById(id);
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

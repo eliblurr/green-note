@@ -41,14 +41,19 @@ public class AdminService {
         adminRepository.deleteById(id);
     }
 
-//    public void updateById(UUID id){
-//        return AdminDTO.convertToDTO(
-//                adminRepository.getReferenceById(id)
-//        );
-//    }
+    public AdminDTO updateById(UUID id){
+//        wirte update method here
+        return AdminDTO.convertToDTO(
+                adminRepository.getReferenceById(id)
+        );
+    }
 
     public AdminDTO create(CreateAdminDTO payload) {
         return AdminDTO.convertToDTO( adminRepository.save(payload.convertToEntity()) );
+    }
+
+    public Boolean adminExists(String email){
+        return adminRepository.adminExists(email);
     }
 
 }

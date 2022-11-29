@@ -2,9 +2,7 @@ package org.tlc.microservices.userservice.dto.admin;
 
 import lombok.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.userservice.dto.interfaces.ModelToDTO;
 import org.tlc.microservices.userservice.model.Admin;
 
 import java.sql.Timestamp;

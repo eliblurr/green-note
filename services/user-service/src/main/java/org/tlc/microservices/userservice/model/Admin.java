@@ -25,6 +25,7 @@ public class Admin {
     private String email;
 
     @Column(name = "password", nullable = false, length = 15)
+//    hash password before save .i.e. override setter .. implement encryption with springboot Security
     @NonNull
     private String password;
 
@@ -38,4 +39,8 @@ public class Admin {
 
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean is_active = true;
+
+    public void setPassword(String password) {
+        this.password = password+"some hash string";
+    }
 }
