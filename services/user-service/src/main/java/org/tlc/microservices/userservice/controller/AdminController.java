@@ -8,9 +8,7 @@ import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
 import org.tlc.microservices.userservice.dto.admin.EmailDTO;
 import org.tlc.microservices.userservice.model.Admin;
 import org.tlc.microservices.userservice.service.AdminService;
-
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -34,8 +32,12 @@ public class AdminController {
 
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    List<AdminDTO> read(){
-        return adminService.read();
+    List<AdminDTO> read(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "created, asc") String[] sort // defaultValue = new ArrayList<String>("created,asc")
+    ){
+        return adminService.read(page, size, sort);
     }
 
     @GetMapping("/{id}")
