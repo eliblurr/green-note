@@ -1,4 +1,4 @@
-package org.tlc.microservices.userservice.dto.admin;
+package org.tlc.microservices.userservice.dto;
 
 import lombok.Getter;
 import lombok.Setter;

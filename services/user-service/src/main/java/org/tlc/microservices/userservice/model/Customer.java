@@ -46,8 +46,8 @@ public class Customer {
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean is_active = true;
 
-    @Column(name = "allow_short", columnDefinition = "boolean default true")
-    private Boolean allow_short = true;
+    @Column(name = "can_short", columnDefinition = "boolean default true")
+    private Boolean can_short = true;
 
     @OneToMany(mappedBy = "customer")
     private List<Portfolio> portfolios;
