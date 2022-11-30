@@ -26,14 +26,9 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     public List<AdminDTO> read(Integer page, Integer size, String[] sort){
-
         return adminRepository.findAll(
                 PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))
         ).stream().map(AdminDTO::convertToDTO).toList();
-
-//        return adminRepository.test(
-//                PageRequest.of(page,size), Sort.by(Utils.generateSortOrders(sort))
-//        ).stream().map(AdminDTO::convertToDTO).toList();
     }
 
     public AdminDTO readById(UUID id){
