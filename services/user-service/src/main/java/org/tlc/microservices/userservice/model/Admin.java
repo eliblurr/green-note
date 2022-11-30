@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "admin")
 @RequiredArgsConstructor
 public class Admin {
 
