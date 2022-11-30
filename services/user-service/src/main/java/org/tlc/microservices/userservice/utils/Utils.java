@@ -1,11 +1,16 @@
 package org.tlc.microservices.userservice.utils;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+@Component
 final public class Utils {
+
+    private Utils(){};
 
     public static List<Sort.Order> generateSortOrders(String[] orders){
         // convert to streams

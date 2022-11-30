@@ -28,7 +28,7 @@ public class CustomerController {
         return customerService.create(payload);
     }
 
-    @PostMapping("/verify-email")
+    @PostMapping(value = {"/verify-email", "/verify-email/"})
     @ResponseStatus(HttpStatus.OK)
     Boolean customerExists(@RequestBody EmailDTO payload){
         return customerService.customerExists(payload.getEmail());
@@ -42,17 +42,17 @@ public class CustomerController {
             @RequestParam(defaultValue = "created, asc") String[] sort
     ){ return customerService.read(page, size, sort);}
 
-    @GetMapping("/{id}")
+    @GetMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.OK)
     CustomerDTO readById(@PathVariable("id") UUID id){
         return customerService.readById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void removeById(@PathVariable("id") UUID id){ customerService.removeById(id); }
 
-    @PatchMapping("/{id}")
+    @PatchMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     CustomerDTO updateById(@PathVariable("id") UUID id){
         return customerService.updateById(id);

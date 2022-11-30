@@ -28,7 +28,7 @@ public class Customer {
     @NonNull
     private String email;
 
-    @Column(name = "password", nullable = false, length = 15)
+    @Column(name = "password", nullable = false, length = 255)
     @NonNull
     private String password; //hash password before save .i.e. override setter .. implement encryption with springboot Security
 
@@ -53,7 +53,7 @@ public class Customer {
     private List<Portfolio> portfolios;
 
     public void setPassword(String password) {
-        this.password = password+"some hash string";
+        this.password = password; // hash password here
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
 import org.tlc.microservices.userservice.dto.EmailDTO;
+import org.tlc.microservices.userservice.dto.admin.UpdateAdminDTO;
 import org.tlc.microservices.userservice.service.AdminService;
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class AdminController {
         return adminService.create(payload);
     }
 
-    @PostMapping("/verify-email")
+    @PostMapping(value = {"/verify-email", "/verify-email/"})
     @ResponseStatus(HttpStatus.OK)
     Boolean adminExists(@RequestBody EmailDTO payload){
         return adminService.adminExists(payload.getEmail());
@@ -39,19 +40,19 @@ public class AdminController {
         return adminService.read(page, size, sort);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.OK)
     AdminDTO readById(@PathVariable("id") UUID id){
         return adminService.readById(id);
     }
 
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    AdminDTO updateById(@PathVariable("id") UUID id){
-        return adminService.updateById(id);
+    @PutMapping(value = {"/{id}", "/{id}/"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    AdminDTO updateById(@PathVariable("id") UUID id, @RequestBody UpdateAdminDTO payload){
+        return adminService.updateById(id, payload);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void removeById(@PathVariable("id") UUID id){
         adminService.removeById(id);
