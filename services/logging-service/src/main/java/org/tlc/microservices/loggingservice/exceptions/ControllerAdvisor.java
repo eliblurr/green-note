@@ -19,8 +19,6 @@ public class ControllerAdvisor {
         return new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage());
     }
 
-//    MissingServletRequestParameterException
-
     @ExceptionHandler(value = {MissingServletRequestParameterException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage missingParamHandler(Exception e, WebRequest wr){
