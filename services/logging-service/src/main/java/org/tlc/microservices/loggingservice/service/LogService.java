@@ -27,14 +27,19 @@ public class LogService {
         return logRepository.findByUser(user, PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))).stream().map(LogDTO::convertToDTO).toList();
     }
 
-    public void create(Ops op, Timestamp occurrence, UUID user, @Autowired CreateLogDTO createLogDTO){
-        try{
-            createLogDTO.setUser(user);
-            createLogDTO.setMessage(op, occurrence);
-            logRepository.save(createLogDTO.convertToEntity());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    @Autowired CreateLogDTO createLogDTO;
+    public void create(Ops op, Timestamp occurrence, UUID user){
+        createLogDTO.setUser(user);
+        createLogDTO.setMessage(op, occurrence);
+        logRepository.save(createLogDTO.convertToEntity());
+//        try{
+//            createLogDTO.setUser(user);
+//            createLogDTO.setMessage(op, occurrence);
+//            System.out.println(createLogDTO.convertToEntity());
+//            logRepository.save(createLogDTO.convertToEntity());
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
 }
