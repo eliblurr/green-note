@@ -14,7 +14,7 @@ public interface PortfolioProductRepository  extends JpaRepository<PortfolioProd
 
     Page<PortfolioProduct> findAll(Pageable pageable);
 
-    @Query(value = "select * from portfolio_product where portfolio_id=:portfolio", nativeQuery = true)
-    Page<PortfolioProduct> findAllByPortfolioId(Pageable pageable, @Param("portfolio") UUID portfolio);
+//    @Query(value = "select * from portfolio_product where portfolio_id=:portfolio", nativeQuery = true)
+    Page<PortfolioProduct> findAllByPortfolioId(UUID portfolio, Pageable pageable);
 
 }

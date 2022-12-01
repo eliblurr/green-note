@@ -32,7 +32,7 @@ public class PortfolioService {
         Page<Portfolio> rs = customer == null ? portfolioRepository.findAll(
                 PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))
         ) : portfolioRepository.findAllByCustomerId(
-                PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort))), customer
+                customer, PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))
         );
         return rs.stream().map(PortfolioDTO::convertToDTO).toList();
     }
