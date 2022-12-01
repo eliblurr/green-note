@@ -28,4 +28,8 @@ public class Log {
     @CreationTimestamp
     private Timestamp created;
 
+    @Column(name = "user_id", updatable = false)
+    @NonNull
+    private UUID user;
+
 }
