@@ -17,19 +17,16 @@ public class LogController {
 
     private final LogService logService;
 
+//    &user=af440a2f-91c9-4aad-aa50-a3bb647be191
+
     @GetMapping(value = {"/"})
     @ResponseStatus(HttpStatus.OK)
     List<LogDTO> read(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "created, asc") String[] sort,
-            @RequestParam(required = true) UUID user
-//            add dateRangeFilter
+            @RequestParam(required = true) UUID user // add dateRangeFilter
     ){
         return logService.read(page, size, sort, user);
     }
-
-//    read -> sortByDate
-//    readForUser -> sortByDate
-
 }

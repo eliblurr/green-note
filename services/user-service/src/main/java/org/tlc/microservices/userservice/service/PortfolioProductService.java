@@ -42,7 +42,7 @@ public class PortfolioProductService {
         Page<PortfolioProduct> rs = portfolio == null ? portfolioProductRepository.findAll(
                 PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))
         ) : portfolioProductRepository.findAllByPortfolioId(
-                PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort))), portfolio
+                portfolio, PageRequest.of(page,size, Sort.by(Utils.generateSortOrders(sort)))
         );
         return rs.stream().map(PortfolioProductDTO::convertToDTO).toList();
     }
