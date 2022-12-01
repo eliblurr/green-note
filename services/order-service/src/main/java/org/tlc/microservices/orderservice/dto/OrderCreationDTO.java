@@ -4,26 +4,42 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.tlc.microservices.orderservice.dto.enums.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
+import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
+import org.tlc.microservices.orderservice.dto.enums.Side;
 
-import java.sql.Timestamp;
-
+@Component
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 public class OrderCreationDTO {
-    private int orderID;
-    private int clientID;
-    private double price;
-    private String ticker;
-    private Timestamp created;
-    private Timestamp updated;
-    private OrderStatus status;
-    private int quantity;
-    private Side side;
-    private OrderType type;
-    private int portfolioID; //dependency
-    private OrderPosition position;
+   // @Autowired
+    private static final ModelMapper modelMapper = new ModelMapper();
 
+    private int clientID;
+    private String product;
+    private double price;
+    private int quantity;
+    private int portfolioID;
+    private Side side;
+    private OrderPosition position;
+    private OrderStatus status;
+
+
+
+ @Override
+ public String toString() {
+  return "OrderRequestDTO{" +
+          "clientID=" + clientID +
+          ", product='" + product + '\'' +
+          ", price=" + price +
+          ", quantity=" + quantity +
+          ", side=" + side +
+          ", portfolioID=" + portfolioID +
+          ", position=" + position +
+          '}';
+ }
 }
