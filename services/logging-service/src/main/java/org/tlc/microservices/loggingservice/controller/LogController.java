@@ -17,6 +17,8 @@ public class LogController {
 
     private final LogService logService;
 
+//    &user=af440a2f-91c9-4aad-aa50-a3bb647be191
+
     @GetMapping(value = {"/"})
     @ResponseStatus(HttpStatus.OK)
     List<LogDTO> read(
