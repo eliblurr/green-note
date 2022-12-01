@@ -34,6 +34,14 @@ public class CustomerController {
         return customerService.customerExists(payload.getEmail());
     }
 
+    @GetMapping(value = {"/user-exists", "/user-exists/"})
+    @ResponseStatus(HttpStatus.OK)
+    Boolean customerExists(
+            @RequestParam(required = true) UUID user
+    ){
+        return customerService.customerExistsById(user);
+    }
+
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     List<CustomerDTO> read(
