@@ -23,6 +23,10 @@ public class OrderService {
                 .toList();
     }
 
+    public void saveOrder(OrderCreationDTO orderCreationDTO) {
+
+        orderRepository.save(orderCreationDTO.convertToEntity());
+    }
 
 
 //    public void insertNewOrder(Order order){

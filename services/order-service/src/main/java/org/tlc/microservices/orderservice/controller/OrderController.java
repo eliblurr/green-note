@@ -27,6 +27,7 @@ public class OrderController {
         if (!resp.isSuccess()) {
             throw new RuntimeException(resp.getMessage());
         }
+        System.out.println(orderRequestDTO);
         orderService.placeOrder(orderRequestDTO);
         orderService.saveOrder(orderRequestDTO);
     }

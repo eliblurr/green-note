@@ -1,9 +1,8 @@
 package org.tlc.microservices.reportingservice.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
 import org.tlc.microservices.reportingservice.dto.ReadOrderDTO;
 import org.tlc.microservices.reportingservice.services.OrderService;
 
@@ -22,8 +21,14 @@ public class OrderController {
 
     @GetMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
-    List<ReadOrderDTO> all() {
+    public List<ReadOrderDTO> all() {
         return orderService.getAllOrders();
+    }
+
+    @PostMapping("/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public  void createOrder(@RequestBody OrderCreationDTO orderCreationDTO){
+    orderService.saveOrder(orderCreationDTO);
     }
 
 

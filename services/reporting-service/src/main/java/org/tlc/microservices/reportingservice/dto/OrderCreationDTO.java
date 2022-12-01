@@ -28,7 +28,7 @@ public class OrderCreationDTO implements DTOToModel<OrderTrade> {
     private int quantity;
     private Side side;
     private OrderType type;
-    private String portfolioName; //dependency should be id
+    private int portfolioID; //dependency should be id
     private OrderPosition position;
 
     public OrderTrade convertToEntity() throws RuntimeException{
