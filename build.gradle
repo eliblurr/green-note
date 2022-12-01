@@ -27,8 +27,8 @@ subprojects {
 	version = '0.0.1-SNAPSHOT'
 
 	apply plugin: 'java'
-	sourceCompatibility = '19' // sourceCompatibility should be applied after java plugin
-	targetCompatibility = '19'
+	sourceCompatibility = '18' // sourceCompatibility should be applied after java plugin
+	targetCompatibility = '18'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 
