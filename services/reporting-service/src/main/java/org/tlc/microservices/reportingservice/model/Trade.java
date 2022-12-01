@@ -1,6 +1,8 @@
 package org.tlc.microservices.reportingservice.model;
 
 import jakarta.persistence.*;
+import org.tlc.microservices.reportingservice.model.enums.Side;
+import org.tlc.microservices.reportingservice.model.enums.TradeStatus;
 
 
 import java.sql.Timestamp;

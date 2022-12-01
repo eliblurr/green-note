@@ -1,13 +1,13 @@
 package org.tlc.microservices.reportingservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
 import org.tlc.microservices.reportingservice.model.*;
+import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
+import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
+import org.tlc.microservices.reportingservice.model.enums.OrderType;
+import org.tlc.microservices.reportingservice.model.enums.Side;
 
 import java.sql.Timestamp;
 
@@ -22,13 +22,13 @@ public class OrderCreationDTO implements DTOToModel<OrderTrade> {
     private int clientID;//client name?
     private double price;
     private String ticker;
-    private Timestamp created;
-    private Timestamp updated;
-    private OrderStatus status;
+    private Timestamp created;//necessary?
+    private Timestamp updated;//necessary?
+    private OrderStatus status;//necessary?
     private int quantity;
     private Side side;
     private OrderType type;
-    private String portfolioName; //dependency
+    private String portfolioName; //dependency should be id
     private OrderPosition position;
 
     public OrderTrade convertToEntity() throws RuntimeException{

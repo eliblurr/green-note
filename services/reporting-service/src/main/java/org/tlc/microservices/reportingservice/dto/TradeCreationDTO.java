@@ -1,14 +1,11 @@
 package org.tlc.microservices.reportingservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
-import org.tlc.microservices.reportingservice.model.Side;
+import org.tlc.microservices.reportingservice.model.enums.Side;
 import org.tlc.microservices.reportingservice.model.Trade;
-import org.tlc.microservices.reportingservice.model.TradeStatus;
+import org.tlc.microservices.reportingservice.model.enums.TradeStatus;
 
 import java.sql.Timestamp;
 

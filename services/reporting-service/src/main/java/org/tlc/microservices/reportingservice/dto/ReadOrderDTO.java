@@ -4,6 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
 import org.tlc.microservices.reportingservice.model.*;
+import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
+import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
+import org.tlc.microservices.reportingservice.model.enums.OrderType;
+import org.tlc.microservices.reportingservice.model.enums.Side;
 
 import java.sql.Timestamp;
 

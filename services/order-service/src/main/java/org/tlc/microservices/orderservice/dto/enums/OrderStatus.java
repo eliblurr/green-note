@@ -1,4 +1,4 @@
-package org.tlc.microservices.reportingservice.model;
+package org.tlc.microservices.orderservice.dto.enums;
 
 public enum OrderStatus {
     ACCEPTED,

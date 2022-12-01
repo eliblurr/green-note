@@ -5,6 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.modelmapper.ModelMapper;
+import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
+import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
+import org.tlc.microservices.reportingservice.model.enums.OrderType;
+import org.tlc.microservices.reportingservice.model.enums.Side;
 
 import java.sql.Timestamp;
 
@@ -12,7 +16,7 @@ import java.sql.Timestamp;
 @Entity
 
 public class OrderTrade {
-    private static final ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper = new ModelMapper();//unneccessary?
 
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) int orderID;
     private int clientID;
