@@ -25,6 +25,8 @@ public class OrderRequestDTO {
     private Side side;
     private OrderPosition position;
 
+    private OrderStatus status;
+
 
  @Override
  public String toString() {
