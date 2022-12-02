@@ -22,7 +22,14 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+		maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+		maven { url 'https://repo.spring.io/milestone' }
 	}
+
+	ext {
+		set('springCloudVersion', "2022.0.0-RC2")
+	}
+
 	group = 'org.tlc.microservices'
 	version = '0.0.1-SNAPSHOT'
 
