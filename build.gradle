@@ -14,10 +14,6 @@ buildscript {
 	}
 }
 
-ext {
-	set('springBootVersion', "3.0.0")
-}
-
 subprojects {
 
 	repositories {
@@ -27,6 +23,7 @@ subprojects {
 	}
 
 	ext {
+		set('springBootVersion', "3.0.0")
 		set('springCloudVersion', "2022.0.0-RC2")
 	}
 
