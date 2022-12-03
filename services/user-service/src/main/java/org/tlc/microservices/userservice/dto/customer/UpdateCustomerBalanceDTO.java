@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UpdateCustomerBalanceDTO {
-    @NonNull private Double balance;
+    @NonNull private Double balance = 0.0;
 }
