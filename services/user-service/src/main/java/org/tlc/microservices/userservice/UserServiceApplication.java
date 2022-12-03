@@ -10,11 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "org.tlc.*")
 public class UserServiceApplication {
 
-	@Bean
-	public ModelMapper modelMapper(){
-		return new ModelMapper();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}

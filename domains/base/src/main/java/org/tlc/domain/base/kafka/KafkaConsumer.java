@@ -1,4 +1,7 @@
 package org.tlc.domain.base.kafka;
 
-public class KafkaConsumer {
+public interface KafkaConsumer<E> {
+
+    public void consume (E obj);
+
 }
