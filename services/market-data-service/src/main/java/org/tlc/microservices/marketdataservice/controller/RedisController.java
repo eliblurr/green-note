@@ -15,19 +15,18 @@ import org.tlc.microservices.marketdataservice.service.RedisMessagePublish;
 @RequestMapping("/api/redis")
 @EnableCaching
 public class RedisController {
-
     private static Logger logger = LoggerFactory.getLogger(RedisController.class);
-
     @Autowired
     private RedisMessagePublish messagePublish;
     @Autowired
     private WebHookController webHookController;
 
     @PostMapping("/publish")
-    public void publish(@RequestBody RedisMessage message) {
-        logger.info(">> publishing : {}", message);
-        messagePublish.publish(message.toString());
-//        System.out.println("webhookData:" + webHookController.getNewObject());
+    public void publish(@RequestBody RedisMessage redisMessage) {
+        logger.info(">> publishing : {}", webHookController.getMarketData());
+        messagePublish.publish(webHookController.getMarketData().toString());
+        System.out.println(redisMessage);
+        System.out.println("Message:" + webHookController.getMarketData());
     }
 }
 
