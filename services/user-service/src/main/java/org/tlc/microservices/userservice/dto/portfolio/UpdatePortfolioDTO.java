@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class UpdatePortfolioDTO {
 
     @Nullable private String name;
-    @Nullable private Boolean is_default;
     @Nullable private Boolean is_active;
 
 }

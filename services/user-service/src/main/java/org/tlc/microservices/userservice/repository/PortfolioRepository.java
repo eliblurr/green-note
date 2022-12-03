@@ -19,4 +19,7 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, UUID> {
 //    @Query(value = "select * from portfolio where customer_id=:customer", nativeQuery = true)
     Page<Portfolio> findAllByCustomerId(UUID customer, Pageable pageable);
 
+    @Query(value = "select * from portfolio where customer_id=:customer and is_default=true", nativeQuery = true)
+    Portfolio findOneByIsDefault(UUID customer);
+
 }
