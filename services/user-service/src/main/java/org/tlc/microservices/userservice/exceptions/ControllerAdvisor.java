@@ -37,8 +37,14 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(value = {InternalServerErrorException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage jsonProcessing(RuntimeException e, WebRequest wr){
+    public ErrorMessage jsonProcessingHandler(RuntimeException e, WebRequest wr){
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = {BadOperationException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage badOperationHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
 }
