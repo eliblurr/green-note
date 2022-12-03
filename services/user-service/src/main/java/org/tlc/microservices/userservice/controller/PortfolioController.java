@@ -49,7 +49,7 @@ public class PortfolioController {
             @PathVariable("id") UUID id
     ){ return portfolioService.create(id, payload);}
 
-    @PutMapping(value = {"/portfolios/{id}", "/portfolios/{id}/"})
+    @PatchMapping(value = {"/portfolios/{id}", "/portfolios/{id}/"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     PortfolioDTO update(@PathVariable("id") UUID id, @RequestBody UpdatePortfolioDTO payload){
         return portfolioService.updateById(id, payload);
