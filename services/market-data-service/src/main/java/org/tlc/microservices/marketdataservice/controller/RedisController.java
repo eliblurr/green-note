@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import org.tlc.microservices.marketdataservice.model.RedisMessage;
 import org.tlc.microservices.marketdataservice.service.RedisMessagePublish;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/redis")
@@ -18,15 +23,15 @@ public class RedisController {
     private static Logger logger = LoggerFactory.getLogger(RedisController.class);
     @Autowired
     private RedisMessagePublish messagePublish;
-    @Autowired
-    private WebHookController webHookController;
+
+    private List<RedisMessage> repository = new ArrayList<>();
 
     @PostMapping("/publish")
     public void publish(@RequestBody RedisMessage redisMessage) {
-        logger.info(">> publishing : {}", webHookController.getMarketData());
-        messagePublish.publish(webHookController.getMarketData().toString());
-        System.out.println(redisMessage);
-        System.out.println("Message:" + webHookController.getMarketData());
+        messagePublish.publish(redisMessage.toString());
+        this.repository.add(redisMessage);
+
+        logger.info(">> publishing : {}", redisMessage);
     }
 }
 

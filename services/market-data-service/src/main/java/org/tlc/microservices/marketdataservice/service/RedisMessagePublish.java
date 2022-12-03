@@ -20,7 +20,7 @@ public class RedisMessagePublish {
     }
 
     public void publish(String message) {
-        redisTemplate.convertAndSend(topic.getTopic(),message);
         System.out.println("message sent:"+ message);
+        redisTemplate.convertAndSend(topic.getTopic(),message);
     }
 }
