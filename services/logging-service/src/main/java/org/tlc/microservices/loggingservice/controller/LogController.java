@@ -1,5 +1,6 @@
 package org.tlc.microservices.loggingservice.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +12,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/logs")
-//@CrossOrigin(origins = "http://127.0.0.1:8080")
-@RequiredArgsConstructor // create constructor with required arguments we need at compile time
+@CrossOrigin(origins = {"http://127.0.0.1:*", "http://localhost:*"})
+@RequiredArgsConstructor
 public class LogController {
 
     private final LogService logService;
-
-//    &user=af440a2f-91c9-4aad-aa50-a3bb647be191
 
     @GetMapping(value = {"/"})
     @ResponseStatus(HttpStatus.OK)

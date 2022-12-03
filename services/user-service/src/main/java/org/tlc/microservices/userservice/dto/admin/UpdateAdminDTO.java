@@ -1,5 +1,7 @@
 package org.tlc.microservices.userservice.dto.admin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +15,10 @@ import java.util.UUID;
 @Setter
 @Getter
 @Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateAdminDTO {
 
-    private static final ModelMapper modelMapper = new ModelMapper();
-
-    @Nullable
-    private Boolean is_active;
-    @Nullable
-    private String password;
-
-    public Admin convertToEntity() throws RuntimeException {
-        return modelMapper.map(this, Admin.class);
-    }
+    @Nullable private Boolean is_active;
+    @Nullable private String password;
 
 }

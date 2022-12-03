@@ -1,12 +1,12 @@
 package org.tlc.microservices.userservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.tlc.microservices.userservice.listeners.PortfolioListener;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,7 +17,9 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "portfolio")
+@EntityListeners(PortfolioListener.class)
 public class Portfolio {
 
     @Id
@@ -29,7 +31,8 @@ public class Portfolio {
     private String name;
 
     @Column(name = "is_default", columnDefinition = "boolean default true")
-    private Boolean is_default = true;
+    @NonNull
+    private Boolean is_default;
 
     @Column(name = "updated")
     @UpdateTimestamp

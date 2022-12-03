@@ -8,6 +8,8 @@ import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
 import org.tlc.microservices.userservice.dto.customer.CreateCustomerDTO;
 import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
+import org.tlc.microservices.userservice.dto.customer.UpdateCustomerBalanceDTO;
+import org.tlc.microservices.userservice.dto.customer.UpdateCustomerDTO;
 import org.tlc.microservices.userservice.service.AdminService;
 import org.tlc.microservices.userservice.service.CustomerService;
 
@@ -34,6 +36,14 @@ public class CustomerController {
         return customerService.customerExists(payload.getEmail());
     }
 
+    @GetMapping(value = {"/user-exists", "/user-exists/"})
+    @ResponseStatus(HttpStatus.OK)
+    Boolean customerExists(
+            @RequestParam(required = true) UUID user
+    ){
+        return customerService.customerExistsById(user);
+    }
+
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     List<CustomerDTO> read(
@@ -53,9 +63,15 @@ public class CustomerController {
     void removeById(@PathVariable("id") UUID id){ customerService.removeById(id); }
 
     @PatchMapping(value = {"/{id}", "/{id}/"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    CustomerDTO updateById(@PathVariable("id") UUID id){
-        return customerService.updateById(id);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    CustomerDTO updateById(@PathVariable("id") UUID id, UpdateCustomerDTO payload){
+        return customerService.updateById(id, payload);
+    }
+
+    @PatchMapping(value = {"/{id}/balance", "/{id}/balance/"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    CustomerDTO updateBalanceById(@PathVariable("id") UUID id, UpdateCustomerBalanceDTO payload){
+        return customerService.updateBalanceById(id, payload);
     }
 
 }
