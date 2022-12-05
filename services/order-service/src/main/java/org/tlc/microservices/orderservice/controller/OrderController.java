@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.tlc.microservices.orderservice.Response;
-import org.tlc.microservices.orderservice.dto.OrderCreationDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
 import org.tlc.microservices.orderservice.services.OrderService;
 import org.tlc.microservices.orderservice.services.OrderValidator;
+import org.tlc.microservices.orderservice.strategy.DefaultOrderProcessor;
 
 @RestController
 public class OrderController {
@@ -20,24 +19,28 @@ public class OrderController {
 
     @Autowired
     OrderValidator validator;
+
+    @Autowired
+    private DefaultOrderProcessor orderProcessor;
     @PostMapping("/orders")
-    @ResponseStatus(HttpStatus.OK)
-    public void makeOrder(@RequestBody OrderRequestDTO orderRequestDTO){
+//    @ResponseStatus(HttpStatus.OK)
+    public HttpStatus makeOrder(@RequestBody OrderRequestDTO orderRequestDTO){
 
         // validate order
         Response resp = validator.validate(orderRequestDTO);
         if (!resp.isSuccess()) {
             orderRequestDTO.setStatus(OrderStatus.REJECTED);
             orderService.saveOrder(orderRequestDTO);
-            //should we be throwing an exception?
-            //return bad request error message to caller
-            throw new RuntimeException(resp.getMessage());
+            return HttpStatus.UNPROCESSABLE_ENTITY;
         }
-//        System.out.println(orderRequestDTO);
+
+        //for valid order choose strategy
+        //use strategy to process order
+        orderProcessor.processOrder(orderRequestDTO);
 
         orderRequestDTO.setStatus(OrderStatus.ACCEPTED);
-        orderService.placeOrder(orderRequestDTO);
         orderService.saveOrder(orderRequestDTO);
+        return HttpStatus.CREATED;
     }
 
 

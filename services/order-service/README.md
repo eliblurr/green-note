@@ -20,10 +20,13 @@ Accept: application/json
 Authorization: <whatever_authorization_mechanism>
 ...
 {
-    "client_id": 3,
-    "product_id": 1,
-    "price": 1.67,
-    "quantity": 80
+   "clientID":"1",
+   "product":"APPL",
+   "price":"2.5",
+   "quantity":"25",
+   "portfolioID": "1",
+   "side":"0",
+   "position":"1"
 }
 ```
 

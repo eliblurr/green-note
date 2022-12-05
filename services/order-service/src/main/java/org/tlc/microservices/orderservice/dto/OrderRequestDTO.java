@@ -1,9 +1,6 @@
 package org.tlc.microservices.orderservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.orderservice.dto.enums.*;
@@ -13,6 +10,7 @@ import org.tlc.microservices.orderservice.dto.enums.*;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 public class OrderRequestDTO {
    // @Autowired
     private static final ModelMapper modelMapper = new ModelMapper();
@@ -22,22 +20,11 @@ public class OrderRequestDTO {
     private double price;
     private int quantity;
     private int portfolioID;
-    private Side side;
+    private String side;
     private OrderPosition position;
 
     private OrderStatus status;
+    private String type;
 
 
- @Override
- public String toString() {
-  return "OrderRequestDTO{" +
-          "clientID=" + clientID +
-          ", product='" + product + '\'' +
-          ", price=" + price +
-          ", quantity=" + quantity +
-          ", side=" + side +
-          ", portfolioID=" + portfolioID +
-          ", position=" + position +
-          '}';
- }
 }

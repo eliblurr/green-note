@@ -9,6 +9,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class Config {
+
+    @Bean
+    public WebClient webClientBean() {
+        return WebClient.create();
+    }
+
+
+/*    @Bean
+    public WebClient getWebClientToExchange()
+    {
+        //build webclient to connect to exchange
+        return WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
     @Bean
     @Primary
     public WebClient getWebClientToReportingService()
@@ -20,14 +35,5 @@ public class Config {
                 .baseUrl("http://localhost:8080")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
-    }
-
-    @Bean
-    public WebClient getWebClientToExchange()
-    {
-        //build webclient to connect to exchange
-        return WebClient.builder()
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-    }
+    }*/
 }

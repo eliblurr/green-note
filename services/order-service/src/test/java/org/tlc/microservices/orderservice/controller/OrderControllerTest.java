@@ -36,7 +36,7 @@ class OrderControllerTest {
     @Test
     public void makeOrderWithValidRequestTest(){
         //g
-        OrderRequestDTO orderRequest = new OrderRequestDTO(2,"APPL",1.5,100,1, Side.BUY, OrderPosition.NORMAL);
+//        OrderRequestDTO orderRequest = new OrderRequestDTO(2,"APPL",1.5,100,1, Side.BUY, OrderPosition.NORMAL,OrderStatus.ACCEPTED);
 
 //        doReturn(HttpStatus.OK).when(orderService).saveOrder(any());
         //w
