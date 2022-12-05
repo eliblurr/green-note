@@ -3,6 +3,7 @@ package org.tlc.microservices.marketdataservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
 import org.tlc.microservices.marketdataservice.model.RedisMessage;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +19,17 @@ import java.util.stream.Stream;
 public class WebHookController {
     @Autowired
     WebClient.Builder webClientBuilder;
+
+    @GetMapping("/GetExchangeProduct")
+    public ExchangeProducts[] getExchangeProduct(){
+        return webClientBuilder.build()
+                .get()
+                .uri("https://exchange.matraining.com/pd")
+                .retrieve()
+                .bodyToMono(ExchangeProducts[].class)
+                .block();
+    }
+
     @PostMapping
     public void marketData(@RequestBody Object newData){
 
