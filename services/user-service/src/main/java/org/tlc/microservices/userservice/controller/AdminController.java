@@ -46,7 +46,7 @@ public class AdminController {
         return adminService.readById(id);
     }
 
-    @PutMapping(value = {"/{id}", "/{id}/"})
+    @PatchMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     AdminDTO updateById(@PathVariable("id") UUID id, @RequestBody UpdateAdminDTO payload){
         return adminService.updateById(id, payload);

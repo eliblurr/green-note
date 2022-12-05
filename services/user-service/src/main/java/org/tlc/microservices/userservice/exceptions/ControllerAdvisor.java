@@ -1,5 +1,6 @@
 package org.tlc.microservices.userservice.exceptions;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.modelmapper.MappingException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -31,6 +32,18 @@ public class ControllerAdvisor {
     @ExceptionHandler(value = {PropertyReferenceException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage propertyReferenceHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = {InternalServerErrorException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage jsonProcessingHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = {BadOperationException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage badOperationHandler(RuntimeException e, WebRequest wr){
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 

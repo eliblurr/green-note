@@ -1,4 +1,4 @@
-package org.tlc.microservices.reportingservice.service;
+package org.tlc.microservices.reportingservice.services;
 
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
