@@ -11,12 +11,11 @@ public class RedisMessagePublish {
     @Autowired
     private ChannelTopic topic;
 
+    public RedisMessagePublish() {
+    }
     public RedisMessagePublish(RedisTemplate<String, Object> redisTemplate, ChannelTopic topic) {
         this.redisTemplate = redisTemplate;
         this.topic = topic;
-    }
-
-    public RedisMessagePublish() {
     }
 
     public void publish(String message) {

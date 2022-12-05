@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.tlc.microservices.marketdataservice.model.RedisMessage;
+import org.tlc.microservices.marketdataservice.dto.ReportingServiceDto;
 import org.tlc.microservices.marketdataservice.service.RedisMessagePublish;
 
 
@@ -24,10 +24,10 @@ public class RedisController {
     @Autowired
     private RedisMessagePublish messagePublish;
 
-    private List<RedisMessage> repository = new ArrayList<>();
+    private List<ReportingServiceDto> repository = new ArrayList<>();
 
     @PostMapping("/publish")
-    public void publish(@RequestBody RedisMessage redisMessage) {
+    public void publish(@RequestBody ReportingServiceDto redisMessage) {
         messagePublish.publish(redisMessage.toString());
         this.repository.add(redisMessage);
 
