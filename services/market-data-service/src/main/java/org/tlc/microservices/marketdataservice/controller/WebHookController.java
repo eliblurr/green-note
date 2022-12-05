@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
 import org.tlc.microservices.marketdataservice.dto.ReportingServiceDto;
+import org.tlc.microservices.marketdataservice.dto.TickerDto;
+import org.tlc.microservices.marketdataservice.model.Ticker;
+import org.tlc.microservices.marketdataservice.service.TickerService;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -12,6 +15,9 @@ import reactor.core.publisher.Mono;
 public class WebHookController {
     @Autowired
     WebClient.Builder webClientBuilder;
+
+    @Autowired
+    TickerService tickerService;
 
     @GetMapping("/GetExchangeProduct")
     public ExchangeProducts[] getExchangeProduct(){
@@ -34,6 +40,11 @@ public class WebHookController {
                 error->System.out.println(error)
         );
 
-    }
+        //save data to mongo Db
+        TickerDto tickerDto = new TickerDto(newData);
+        Ticker ticker = tickerDto.convertToEntity();
+        tickerService.AddTicker(ticker);
+        System.out.println("saved ticker: "+ ticker );
 
+    }
 }
