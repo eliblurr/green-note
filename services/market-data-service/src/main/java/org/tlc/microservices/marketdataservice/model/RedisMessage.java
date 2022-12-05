@@ -1,5 +1,8 @@
 package org.tlc.microservices.marketdataservice.model;
 
+import lombok.Data;
+
+@Data
 public class RedisMessage {
     private String product;
     private Double price;

@@ -2,6 +2,7 @@ package org.tlc.microservices.marketdataservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.tlc.microservices.marketdataservice.model.RedisMessage;
 
 
 @SpringBootApplication
