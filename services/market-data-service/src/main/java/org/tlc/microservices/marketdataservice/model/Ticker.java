@@ -6,11 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Ticker")
+
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ticker {
@@ -19,4 +17,12 @@ public class Ticker {
     private Double price;
     private String side;
 
+    @Override
+    public String toString() {
+        return "Ticker{" +
+                "product='" + product + '\'' +
+                ", price=" + price +
+                ", side='" + side + '\'' +
+                '}';
+    }
 }
