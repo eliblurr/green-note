@@ -27,4 +27,9 @@ public class CreateLogDTO {
     public void setMessage(Ops op, Timestamp time) {
         this.message = String.format(op.getMessage(), time.toString());
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }

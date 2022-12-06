@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.tlc.microservices.userservice.dto.portfolio.CreatePortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.UpdatePortfolioDTO;
+import org.tlc.microservices.userservice.exceptions.BadOperationException;
 import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
 import org.tlc.microservices.userservice.exceptions.NotFoundException;
 import org.tlc.microservices.userservice.model.Portfolio;
@@ -49,6 +50,9 @@ public class PortfolioService {
     }
 
     public void removeById(UUID id){
+        if (portfolioRepository.portfolioIsDefault(id)){
+            throw new BadOperationException("you cannot delete default portfolio");
+        }
         portfolioRepository.deleteById(id);
     }
 
@@ -62,7 +66,12 @@ public class PortfolioService {
     }
 
     public PortfolioDTO updateById(UUID id, UpdatePortfolioDTO payload){
+        // make sure if is_active=false in payload and portfolio is_default throw bad operation
         Portfolio portfolio = portfolioRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+
+        if (portfolio.getIs_default() && !payload.getIs_active()){
+            throw new BadOperationException("you cannot set default portfolio is_active to false");
+        }
 
         try{ objectMapper.readerForUpdating(portfolio).readValue(objectMapper.writeValueAsString(payload));}
         catch (JsonProcessingException e){ throw new InternalServerErrorException(e.getMessage());}

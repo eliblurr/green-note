@@ -11,7 +11,7 @@ import org.tlc.microservices.userservice.service.AdminService;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping("/api/users/admins")
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class AdminController {

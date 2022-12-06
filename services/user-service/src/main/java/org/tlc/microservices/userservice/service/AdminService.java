@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AdminService {
 
-    @Autowired
-    private AdminRepository adminRepository;
-
+    @Autowired private AdminRepository adminRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private ObjectMapper objectMapper;
 
     public List<AdminDTO> read(Integer page, Integer size, String[] sort){
@@ -56,6 +56,7 @@ public class AdminService {
     }
 
     public AdminDTO create(CreateAdminDTO payload) {
+        payload.setPassword(passwordEncoder.encode(payload.getPassword()));
         return AdminDTO.convertToDTO( adminRepository.save(payload.convertToEntity()) );
     }
 

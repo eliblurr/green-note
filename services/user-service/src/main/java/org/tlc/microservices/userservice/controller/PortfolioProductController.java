@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/users/")
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class PortfolioProductController {

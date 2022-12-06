@@ -22,4 +22,7 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, UUID> {
     @Query(value = "select * from portfolio where customer_id=:customer and is_default=true", nativeQuery = true)
     Portfolio findOneByIsDefault(UUID customer);
 
+    @Query(value = "select * from portfolio where is_default=true", nativeQuery = true)
+    Boolean portfolioIsDefault(UUID portfolio);
+
 }

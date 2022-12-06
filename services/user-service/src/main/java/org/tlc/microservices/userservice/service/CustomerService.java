@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
@@ -20,6 +21,7 @@ import org.tlc.microservices.userservice.model.Admin;
 import org.tlc.microservices.userservice.model.Customer;
 import org.tlc.microservices.userservice.model.Portfolio;
 import org.tlc.microservices.userservice.repository.CustomerRepository;
+import org.tlc.microservices.userservice.repository.PortfolioRepository;
 import org.tlc.microservices.userservice.utils.Utils;
 
 import java.util.List;
@@ -29,9 +31,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
+    @Autowired private CustomerRepository customerRepository;
+    @Autowired private PortfolioRepository portfolioRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private ObjectMapper objectMapper;
 
     public List<CustomerDTO> read(Integer page, Integer size, String[] sort){
@@ -52,7 +54,16 @@ public class CustomerService {
 
 
     public CustomerDTO create(CreateCustomerDTO payload) {
-        payload.getPortfolios().add(new Portfolio("default portfolio", true));
+        payload.setPassword(passwordEncoder.encode(payload.getPassword()));
+
+//        adminRepository.save(payload.convertToEntity())
+
+        Portfolio portfolio = portfolioRepository.save(new Portfolio("default portfolio", true));
+
+
+        payload.getPortfolios().add(portfolio);
+
+
         return CustomerDTO.convertToDTO( customerRepository.save(payload.convertToEntity()) );
     }
 
