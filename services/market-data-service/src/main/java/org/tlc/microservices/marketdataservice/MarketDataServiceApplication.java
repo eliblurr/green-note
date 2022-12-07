@@ -5,13 +5,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "org.tlc.*")
 public class MarketDataServiceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MarketDataServiceApplication.class, args);
 	}
-
 }
