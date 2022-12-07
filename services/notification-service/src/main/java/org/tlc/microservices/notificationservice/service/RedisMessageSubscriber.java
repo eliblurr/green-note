@@ -21,16 +21,18 @@ public class RedisMessageSubscriber implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] bytes) {
         this.newMessage = message.toString();
-         messageList.add(message.toString());
+        messageList.add(message.toString());
         System.out.println("Message received : "+message);
 
-        webClientBuilder.baseUrl("http://localhost:8081/app/tickers")
+//        send the message to the subsc
+
+        /*webClientBuilder.baseUrl("http://localhost:8081/app/tickers")
                 .defaultHeader("Content-Type", "application/json").build()
                 .post().body(Mono.just(message), Message.class)
                 .retrieve().bodyToFlux(Message.class).subscribe(
                         confirmation-> {System.out.println("Message Stored!");},
                         error->System.out.println(error)
-                );
+                );*/
     }
 
     public String getNewData(){

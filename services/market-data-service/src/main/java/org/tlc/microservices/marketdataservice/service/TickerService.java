@@ -31,7 +31,7 @@ public class TickerService {
 
         else{
             tickers.get(ticker).remove();
-            tickers.get(ticker).add(price);
+//            tickers.get(ticker).add(price);
         }
 
     }

@@ -5,24 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
-import org.tlc.microservices.marketdataservice.service.RedisMessagePublish;
+
 
 @Configuration
 public class RedisConfiguration {
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
-
-    @Bean
-    public ChannelTopic topic() {
-        return new ChannelTopic("GreenNote");
-    }
-
-//    @Bean
-//    public ChannelTopic PricesTopic(){
-//        return new ChannelTopic("NotificationTopic");
-//    }
 
     @Bean
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
@@ -33,14 +22,4 @@ public class RedisConfiguration {
         return redisTemplate;
     }
 
-    @Bean
-    public RedisMessagePublish messagePublish()
-    {
-        return new RedisMessagePublish(redisTemplate(redisConnectionFactory),topic());
-    }
-
-//    @Bean
-//    public RedisMessagePublish PricesPublish(){
-//        return new RedisMessagePublish(redisTemplate(redisConnectionFactory),notificationTopic());
-//    }
 }

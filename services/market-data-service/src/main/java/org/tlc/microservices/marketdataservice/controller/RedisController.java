@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.listener.ChannelTopic;
 
 import org.tlc.microservices.marketdataservice.dto.ReportingServiceDto;
 import org.tlc.microservices.marketdataservice.service.RedisMessagePublish;
+import org.tlc.microservices.marketdataservice.service.TickerService;
 
 
 import java.util.ArrayList;
@@ -28,19 +30,18 @@ public class RedisController {
 
     @PostMapping("/publish")
     public void publish(@RequestBody ReportingServiceDto redisMessage) {
-        messagePublish.publish(redisMessage.toString());
+        messagePublish.publish(redisMessage.toString(), new ChannelTopic("GreenNote"));
         this.repository.add(redisMessage);
 
         logger.info(">> publishing : {}", redisMessage);
     }
 
-//    @PostMapping("/PricesPublish")
-//    public void notificationPublish(@RequestBody ReportingServiceDto redisMessage) {
-//        messagePublish.publish(redisMessage.toString());
-//        this.repository.add(redisMessage);
-//
-//        logger.info(">> publishing : {}", redisMessage);
-//    }
+    @PostMapping("/OrderingPublish")
+    public void notificationPublish(@RequestBody TickerService tickerMessage) {
+        messagePublish.publish(tickerMessage.toString(),new ChannelTopic("NotificationTopic"));
+
+        logger.info(">> publishing ticker : {}", tickerMessage);
+    }
 }
 
 

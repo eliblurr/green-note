@@ -11,9 +11,6 @@ import org.tlc.microservices.marketdataservice.model.WebHookData;
 import java.sql.Timestamp;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-
 public class ReportingServiceDto implements ReportingServiceMapper {
     @JsonProperty
     private String orderType;
