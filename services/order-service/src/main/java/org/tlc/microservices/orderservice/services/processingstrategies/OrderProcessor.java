@@ -4,14 +4,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.tlc.microservices.orderservice.Config;
+import org.tlc.microservices.orderservice.configuration.WebClientConfiguration;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import reactor.core.publisher.Mono;
 
 public abstract class OrderProcessor {
     public void placeOrder(OrderRequestDTO newOrder, String exchange) {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(WebClientConfiguration.class);
         WebClient client = (WebClient) ctx.getBean("webClientBean");
         //refactor and stop creating a new application context with each call
 

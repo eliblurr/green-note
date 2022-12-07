@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
+import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import org.tlc.microservices.orderservice.services.processingstrategies.MasterOrderProcessor;
 
 @Service
@@ -15,7 +16,7 @@ public class OrderService {
 //    private WebClient webClient;
 
     @Autowired
-    private MasterOrderProcessor masterOrderProcessor;
+    private DefaultOrderProcessor orderProcessor;
 
     @Autowired
     private OrderValidator validator;
@@ -43,7 +44,7 @@ public class OrderService {
 
         //use strategy to process order
 
-        masterOrderProcessor.processOrder(order);
+        orderProcessor.processOrder(order);
 
         order.setStatus(OrderStatus.ACCEPTED);
         saveOrder(order);
