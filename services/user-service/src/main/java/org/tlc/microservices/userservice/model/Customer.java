@@ -28,7 +28,6 @@ public class Customer {
     @Column(name = "email", nullable = false, length = 255, unique = true)
     @NonNull
     private String email;
-
     @Column(name = "password", nullable = false, length = 255)
     @NonNull
     private String password; //hash password before save .i.e. override setter .. implement encryption with springboot Security

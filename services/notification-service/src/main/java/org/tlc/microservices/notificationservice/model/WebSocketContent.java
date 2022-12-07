@@ -4,6 +4,9 @@ public class WebSocketContent {
 
     private String content;
 
+    public WebSocketContent() {
+    }
+
     public WebSocketContent(String content) {
         this.content = content;
     }
