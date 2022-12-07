@@ -1,6 +1,5 @@
 package org.tlc.microservices.userservice.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,23 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
-import org.tlc.microservices.userservice.dto.portfolio.CreatePortfolioDTO;
-import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
-import org.tlc.microservices.userservice.dto.portfolio.UpdatePortfolioDTO;
 import org.tlc.microservices.userservice.dto.product.CreatePortfolioProductDTO;
 import org.tlc.microservices.userservice.dto.product.PortfolioProductDTO;
 import org.tlc.microservices.userservice.dto.product.UpdatePortfolioProductDTO;
-import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
+import org.tlc.microservices.userservice.exceptions.BadOperationException;
 import org.tlc.microservices.userservice.exceptions.NotFoundException;
-import org.tlc.microservices.userservice.model.Customer;
-import org.tlc.microservices.userservice.model.Portfolio;
 import org.tlc.microservices.userservice.model.PortfolioProduct;
 import org.tlc.microservices.userservice.repository.PortfolioProductRepository;
 import org.tlc.microservices.userservice.repository.PortfolioRepository;
 import org.tlc.microservices.userservice.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -64,16 +58,24 @@ public class PortfolioProductService {
                     payload.setPortfolio(portfolio);
                     return portfolioProductRepository.save(payload.convertToEntity());
                 }
-        ).orElseThrow(() -> new NotFoundException(id)) );
+        ).orElseThrow(() -> new NotFoundException("portfolio with id: "+id+" not found")) );
     }
 
     public PortfolioProductDTO updateById(UUID id, UpdatePortfolioProductDTO payload){
-        PortfolioProduct portfolioProduct = portfolioProductRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        PortfolioProduct oldPortfolioProduct = portfolioProductRepository.findById(id).orElseThrow(() -> new NotFoundException("source portfolio does not exist"));
 
-        try{ objectMapper.readerForUpdating(portfolioProduct).readValue(objectMapper.writeValueAsString(payload));}
-        catch (JsonProcessingException e){ throw new InternalServerErrorException(e.getMessage());}
+        if (payload.getQuantity() > oldPortfolioProduct.getQuantity() ){ throw new BadOperationException("attempted to move quantity you don't have");}
+//        if (id.equals(payload.getTargetPortfolio())){ throw new BadOperationException("attempted to self update");}
 
-        return PortfolioProductDTO.convertToDTO(portfolioProductRepository.save(portfolioProduct));
+        PortfolioProduct newPortfolioProduct = portfolioProductRepository.findById(payload.getTargetPortfolio()).orElseThrow(() -> new NotFoundException("source portfolio does not exist"));
+
+        newPortfolioProduct.setQuantity(newPortfolioProduct.getQuantity()+ payload.getQuantity());
+        oldPortfolioProduct.setQuantity(oldPortfolioProduct.getQuantity() - payload.getQuantity());
+
+        if (oldPortfolioProduct.getQuantity() == 0){this.removeById(oldPortfolioProduct.getId()); return null;}
+
+        portfolioProductRepository.save(newPortfolioProduct);
+        return PortfolioProductDTO.convertToDTO(portfolioProductRepository.save(oldPortfolioProduct));
     }
 
 }

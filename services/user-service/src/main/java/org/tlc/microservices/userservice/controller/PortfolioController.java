@@ -3,6 +3,7 @@ package org.tlc.microservices.userservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
 import org.tlc.microservices.userservice.dto.portfolio.CreatePortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.UpdatePortfolioDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/users/")
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class PortfolioController {
@@ -54,4 +55,5 @@ public class PortfolioController {
     PortfolioDTO update(@PathVariable("id") UUID id, @RequestBody UpdatePortfolioDTO payload){
         return portfolioService.updateById(id, payload);
     }
+
 }

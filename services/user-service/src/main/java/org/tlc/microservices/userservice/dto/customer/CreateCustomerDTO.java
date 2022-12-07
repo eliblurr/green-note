@@ -10,6 +10,7 @@ import org.tlc.microservices.userservice.dto.interfaces.DTOToModel;
 import org.tlc.microservices.userservice.model.Customer;
 import org.tlc.microservices.userservice.model.Portfolio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -24,7 +25,7 @@ public class CreateCustomerDTO  implements DTOToModel<Customer> {
     private String password;
     private String username;
     @Nullable private Boolean can_short;
-    @Nullable private List<Portfolio> portfolios;
+    @Nullable private List<Portfolio> portfolios = new ArrayList<>();
 
     public Customer convertToEntity() throws RuntimeException {
         return modelMapper.map(this, Customer.class);

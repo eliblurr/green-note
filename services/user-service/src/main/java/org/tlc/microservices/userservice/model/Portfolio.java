@@ -18,7 +18,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "portfolio")
+@Table(name = "portfolio", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "customer_id"})
+})
 @EntityListeners(PortfolioListener.class)
 public class Portfolio {
 
@@ -26,13 +28,13 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "name", nullable = false, length = 255, unique = true)
+    @Column(name = "name", nullable = false, length = 255)
     @NonNull
     private String name;
 
-    @Column(name = "is_default", columnDefinition = "boolean default true")
+    @Column(name = "is_default", columnDefinition = "boolean default false")
     @NonNull
-    private Boolean is_default;
+    private Boolean is_default = false;
 
     @Column(name = "updated")
     @UpdateTimestamp
@@ -53,4 +55,9 @@ public class Portfolio {
     @OneToMany(mappedBy = "portfolio")
     private List<PortfolioProduct> products;
 
+    public Portfolio(String default_portfolio, boolean b, Customer customer) {
+        this.name = default_portfolio;
+        this.is_default = true;
+        this.customer = customer;
+    }
 }

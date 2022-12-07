@@ -1,5 +1,6 @@
 package org.tlc.microservices.userservice.dto.portfolio;
 
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -18,12 +19,8 @@ public class CreatePortfolioDTO {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    private UUID id;
     private String name;
-    private Boolean is_default;
-    private Timestamp updated;
-    private Timestamp created;
-    private Customer customer;
+    @Nullable private Customer customer;
 
     public Portfolio convertToEntity() throws RuntimeException {
         return modelMapper.map(this, Portfolio.class);

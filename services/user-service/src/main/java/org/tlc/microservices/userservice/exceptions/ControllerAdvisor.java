@@ -3,15 +3,19 @@ package org.tlc.microservices.userservice.exceptions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.modelmapper.MappingException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 @ResponseBody
@@ -47,4 +51,22 @@ public class ControllerAdvisor {
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
+    @ExceptionHandler(value = {DataIntegrityViolationException.class})
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public ErrorMessage daoConflictHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.CONFLICT.value(), "unique object already exists -> "+e.getMessage());
+    }
+
+
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage invalidArgumentHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage invalidArgumentTypeHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
 }

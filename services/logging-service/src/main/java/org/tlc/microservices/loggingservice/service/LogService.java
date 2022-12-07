@@ -54,4 +54,15 @@ public class LogService {
         createLogDTO.setMessage(op, occurrence);
         logRepository.save(createLogDTO.convertToEntity());
     }
+
+    public void create(String message, UUID user){
+        Boolean result = networkConnectionBreaker.run(
+                webClient.get().uri("http://user-service/user-exists?user="+user.toString()).retrieve().bodyToMono(Boolean.class),
+                throwable -> Mono.just(false)
+        ).block();
+//         if (!result){ throw new NotFoundException(user); }
+        createLogDTO.setUser(user);
+        createLogDTO.setMessage(message);
+        logRepository.save(createLogDTO.convertToEntity());
+    }
 }

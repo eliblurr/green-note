@@ -1,22 +1,47 @@
 package org.tlc.microservices.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.tlc.domain.base.logging.dto.LogDTO;
+import org.tlc.domain.base.logging.dto.LogEventDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
 import org.tlc.microservices.userservice.dto.EmailDTO;
 import org.tlc.microservices.userservice.dto.admin.UpdateAdminDTO;
+import org.tlc.microservices.userservice.kafka.LogProducer;
 import org.tlc.microservices.userservice.service.AdminService;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping("/api/users/admins")
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class AdminController {
 
     private final AdminService adminService;
+
+    // test
+    private final LogProducer logProducer;
+    @Autowired @Qualifier("logTopic") private NewTopic topic;
+    @PostMapping("/test")
+    @ResponseStatus(HttpStatus.CREATED)
+    void sdn(){
+
+        logProducer.setTopic(topic);
+
+        System.out.println(topic.name());
+//        logProducer.
+        LogEventDTO logEventDTO = new LogEventDTO(
+                "sending...", "pending",
+                new LogDTO(UUID.randomUUID(), "this message")
+        );
+        logProducer.sendMessage(logEventDTO);
+    }
+    // test
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)

@@ -1,6 +1,8 @@
 package org.tlc.microservices.userservice.dto.portfolio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -23,7 +25,6 @@ public class PortfolioDTO {
     private Boolean is_default;
     private Timestamp updated;
     private Timestamp created;
-    private Customer customer;
 
     public static PortfolioDTO convertToDTO(Portfolio portfolio){return modelMapper.map(portfolio, PortfolioDTO.class);}
 
