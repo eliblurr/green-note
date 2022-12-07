@@ -17,7 +17,7 @@ public class TickerService {
     }
 
     public Boolean reachedMaxPriceList(Queue<Double> priceArray){
-        return priceArray.size()>11;
+        return priceArray.size()>9;
     }
 
     public void AddTickerPrices(String ticker, Double price){

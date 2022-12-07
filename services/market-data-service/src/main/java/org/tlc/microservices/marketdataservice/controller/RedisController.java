@@ -33,6 +33,14 @@ public class RedisController {
 
         logger.info(">> publishing : {}", redisMessage);
     }
+
+//    @PostMapping("/PricesPublish")
+//    public void notificationPublish(@RequestBody ReportingServiceDto redisMessage) {
+//        messagePublish.publish(redisMessage.toString());
+//        this.repository.add(redisMessage);
+//
+//        logger.info(">> publishing : {}", redisMessage);
+//    }
 }
 
 
