@@ -14,6 +14,7 @@ import org.tlc.microservices.userservice.dto.customer.CreateCustomerDTO;
 import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
 import org.tlc.microservices.userservice.dto.customer.UpdateCustomerBalanceDTO;
 import org.tlc.microservices.userservice.dto.customer.UpdateCustomerDTO;
+import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.product.PortfolioProductDTO;
 import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
 import org.tlc.microservices.userservice.exceptions.NotFoundException;
@@ -56,15 +57,12 @@ public class CustomerService {
     public CustomerDTO create(CreateCustomerDTO payload) {
         payload.setPassword(passwordEncoder.encode(payload.getPassword()));
 
-//        adminRepository.save(payload.convertToEntity())
+        Customer customer = customerRepository.save(payload.convertToEntity());
+        Portfolio portfolio = portfolioRepository.save(
+                new Portfolio("default portfolio", true, customer)
+        );
 
-        Portfolio portfolio = portfolioRepository.save(new Portfolio("default portfolio", true));
-
-
-        payload.getPortfolios().add(portfolio);
-
-
-        return CustomerDTO.convertToDTO( customerRepository.save(payload.convertToEntity()) );
+        return CustomerDTO.convertToDTO( customer );
     }
 
     @Transactional(readOnly = true)

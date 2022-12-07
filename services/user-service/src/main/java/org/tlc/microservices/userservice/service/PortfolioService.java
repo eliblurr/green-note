@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.portfolio.CreatePortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.UpdatePortfolioDTO;
@@ -15,7 +16,9 @@ import org.tlc.microservices.userservice.exceptions.BadOperationException;
 import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
 import org.tlc.microservices.userservice.exceptions.NotFoundException;
 import org.tlc.microservices.userservice.model.Portfolio;
+import org.tlc.microservices.userservice.model.PortfolioProduct;
 import org.tlc.microservices.userservice.repository.CustomerRepository;
+import org.tlc.microservices.userservice.repository.PortfolioProductRepository;
 import org.tlc.microservices.userservice.repository.PortfolioRepository;
 import org.tlc.microservices.userservice.utils.Utils;
 
@@ -28,6 +31,9 @@ public class PortfolioService {
 
     @Autowired
     private PortfolioRepository portfolioRepository;
+
+    @Autowired
+    private PortfolioProductRepository portfolioProductRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -50,9 +56,11 @@ public class PortfolioService {
     }
 
     public void removeById(UUID id){
-        if (portfolioRepository.portfolioIsDefault(id)){
-            throw new BadOperationException("you cannot delete default portfolio");
+
+        if (portfolioProductRepository.countPortfolioProducts(id)>0){
+            throw new BadOperationException("you have products in this portfolio, try moving them to another portfolio");
         }
+
         portfolioRepository.deleteById(id);
     }
 
@@ -69,8 +77,10 @@ public class PortfolioService {
         // make sure if is_active=false in payload and portfolio is_default throw bad operation
         Portfolio portfolio = portfolioRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 
-        if (portfolio.getIs_default() && !payload.getIs_active()){
-            throw new BadOperationException("you cannot set default portfolio is_active to false");
+        if (portfolio.getIs_default()){
+            if (payload.getIs_active() != null && !payload.getIs_active()){
+                throw new BadOperationException("you cannot set default portfolio is_active to false");
+            }
         }
 
         try{ objectMapper.readerForUpdating(portfolio).readValue(objectMapper.writeValueAsString(payload));}

@@ -64,7 +64,7 @@ public class CustomerController {
 
     @PatchMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    CustomerDTO updateById(@PathVariable("id") UUID id, UpdateCustomerDTO payload){
+    CustomerDTO updateById(@PathVariable("id") UUID id, @RequestBody UpdateCustomerDTO payload){
         return customerService.updateById(id, payload);
     }
 

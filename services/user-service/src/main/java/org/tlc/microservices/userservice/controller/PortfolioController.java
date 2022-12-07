@@ -3,6 +3,7 @@ package org.tlc.microservices.userservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
 import org.tlc.microservices.userservice.dto.portfolio.CreatePortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.portfolio.UpdatePortfolioDTO;
@@ -54,4 +55,5 @@ public class PortfolioController {
     PortfolioDTO update(@PathVariable("id") UUID id, @RequestBody UpdatePortfolioDTO payload){
         return portfolioService.updateById(id, payload);
     }
+
 }

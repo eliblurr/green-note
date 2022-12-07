@@ -7,6 +7,10 @@ public class NotFoundException extends RuntimeException {
         super("Object not found");
     }
 
+    public NotFoundException(String message) {
+        super(message);
+    }
+
     public NotFoundException(UUID id) {
         super("Object with Id "+id.toString()+" not found");
     }

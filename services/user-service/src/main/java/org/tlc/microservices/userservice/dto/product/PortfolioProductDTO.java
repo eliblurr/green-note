@@ -24,7 +24,7 @@ public class PortfolioProductDTO {
     private Timestamp updated;
     private Timestamp created;
     private Side side;
-    private Portfolio portfolio;
+//    private Portfolio portfolio;
 
     public static PortfolioProductDTO convertToDTO(PortfolioProduct product){return modelMapper.map(product, PortfolioProductDTO.class);}
 

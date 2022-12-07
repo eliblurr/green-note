@@ -17,7 +17,10 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "portfolio_product")
+//@Table(name = "portfolio_product")
+@Table(name = "portfolio_product", uniqueConstraints = {
+        @UniqueConstraint(name = "product_portfolio_constraint",columnNames = {"ticker", "portfolio_id"})
+})
 public class PortfolioProduct {
 
     @Id

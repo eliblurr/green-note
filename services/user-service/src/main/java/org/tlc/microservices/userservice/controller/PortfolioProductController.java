@@ -45,7 +45,7 @@ public class PortfolioProductController {
     @ResponseStatus(HttpStatus.CREATED)
     PortfolioProductDTO create(
             @RequestBody CreatePortfolioProductDTO payload,
-            @PathVariable("id") UUID id
+            @PathVariable("id") UUID id // portfolio_id
     ){ return portfolioProductService.create(id, payload);}
 
     @PatchMapping(value = {"/portfolio-products/{id}", "/portfolio-products/{id}/"})

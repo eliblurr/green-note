@@ -10,8 +10,8 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaConfig {
 
-    @Value("spring.kafka.topic.logging.name")
-    private String logTopic;
+    @Value("${spring.kafka.topic.logging.name}")
+    public String logTopic;
 
     @Bean
     @Qualifier("logTopic")
