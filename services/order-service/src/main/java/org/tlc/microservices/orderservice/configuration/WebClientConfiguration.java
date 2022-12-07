@@ -8,17 +8,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfiguration {
 
     @Bean
-    public WebClient webClientBean() {
-        return WebClient.create();
+    public WebClient.Builder getWebClientBuilder(){
+        return WebClient.builder();
     }
 
 
-/*    @Bean
-    public WebClient getWebClientToExchange()
-    {
-        //build webclient to connect to exchange
-        return WebClient.builder()
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-    }*/
 }

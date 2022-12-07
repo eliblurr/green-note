@@ -1,10 +1,11 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
-
+import org.springframework.stereotype.Component;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 
 import java.util.Arrays;
 import java.util.OptionalDouble;
 
+@Component
 public class HoldOrderProcessor extends OrderProcessor {
     public void processOrder(OrderRequestDTO newOrder) {
 

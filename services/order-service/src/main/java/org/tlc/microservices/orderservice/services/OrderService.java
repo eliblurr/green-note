@@ -30,15 +30,14 @@ public class OrderService {
         //this webclient will be replaced with a redis publisher
     }
 
-    public HttpStatus placeOrder(OrderRequestDTO order){
+    public Response placeOrder(OrderRequestDTO order){
 
         // validate order
         Response resp = validator.validate(order);
         if (!resp.isSuccess()) {
             order.setStatus(OrderStatus.REJECTED);
             saveOrder(order);
-            return HttpStatus.UNPROCESSABLE_ENTITY;
-        }
+            return resp;}
 
         //for valid order choose strategy
 
@@ -48,7 +47,7 @@ public class OrderService {
 
         order.setStatus(OrderStatus.ACCEPTED);
         saveOrder(order);
-        return HttpStatus.CREATED;
+        return resp;
     }
 
 
