@@ -23,8 +23,6 @@ import java.sql.Timestamp;
 public class OrderCreationDTO implements DTOToModel<OrderTrade> {
     private static final ModelMapper modelMapper = new ModelMapper();
 
-
-
     private int clientID;
     private String product;
     private double price;

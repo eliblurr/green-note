@@ -9,8 +9,4 @@ import org.tlc.microservices.orderservice.Response;
 @Component
 public class OrderValidator {
 
-    public Response validate(OrderRequestDTO order) {
-        return new Response(true, "order is valid");
-    }
-
 }

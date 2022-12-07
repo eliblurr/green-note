@@ -6,11 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
 import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
 import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
-import org.tlc.microservices.reportingservice.model.enums.OrderType;
+import org.tlc.microservices.reportingservice.model.enums.OrderSplit;
 import org.tlc.microservices.reportingservice.model.enums.Side;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -31,7 +29,7 @@ public class OrderTrade {
     private Side side;
     private OrderPosition position;
     private OrderStatus status;
-    private OrderType type;
+    private OrderSplit split;
 //    @Column(columnDefinition = "CURRENT_TIMESTAMP")
     private LocalDateTime created;
     private LocalDateTime updated;

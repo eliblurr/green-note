@@ -1,6 +1,6 @@
 package org.tlc.microservices.reportingservice.model.enums;
 
-public enum OrderType {
+public enum OrderSplit {
     SPLIT,
     SINGLE
 }
