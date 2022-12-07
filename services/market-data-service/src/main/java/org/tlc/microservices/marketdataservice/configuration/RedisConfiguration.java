@@ -19,6 +19,11 @@ public class RedisConfiguration {
         return new ChannelTopic("GreenNote");
     }
 
+//    @Bean
+//    public ChannelTopic PricesTopic(){
+//        return new ChannelTopic("NotificationTopic");
+//    }
+
     @Bean
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
     {
@@ -33,4 +38,9 @@ public class RedisConfiguration {
     {
         return new RedisMessagePublish(redisTemplate(redisConnectionFactory),topic());
     }
+
+//    @Bean
+//    public RedisMessagePublish PricesPublish(){
+//        return new RedisMessagePublish(redisTemplate(redisConnectionFactory),notificationTopic());
+//    }
 }
