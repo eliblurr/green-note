@@ -18,12 +18,12 @@ public class PortfolioListener {
 
     @PreUpdate
     private void beforeAnyUpdate(Portfolio portfolio) {
-        if (portfolio.getIs_default()){
-            Optional<Portfolio> _portfolio = Optional.ofNullable(portfolioRepository.findOneByIsDefault(portfolio.getCustomer().getId()));
-            if (!_portfolio.isPresent()){
-                    throw new BadOperationException("default portfolio already exists");
-            }
-        }
+//        if (portfolio.getIs_default()){
+//            Optional<Portfolio> _portfolio = Optional.ofNullable(portfolioRepository.findOneByIsDefault(portfolio.getCustomer().getId()));
+//            if (!_portfolio.isPresent()){
+//                    throw new BadOperationException("default portfolio already exists");
+//            }
+//        }
     }
 
     @PreRemove
