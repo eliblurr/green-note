@@ -1,48 +1,46 @@
 package org.tlc.microservices.orderservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
 import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
-import org.tlc.microservices.orderservice.dto.enums.Side;
 import org.tlc.microservices.orderservice.services.OrderService;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class OrderControllerTest {
     @MockBean
     private OrderService orderService;
 
-    @Autowired
-    private MockMvc mockMvc;
 
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
-    public void makeOrderWithValidRequestTest(){
-        //g
-//        OrderRequestDTO orderRequest = new OrderRequestDTO(2,"APPL",1.5,100,1, Side.BUY, OrderPosition.NORMAL,OrderStatus.ACCEPTED);
+    public void makeOrderWithValidRequestTest() {
+        //given an order request DTO
 
-//        doReturn(HttpStatus.OK).when(orderService).saveOrder(any());
-        //w
+        OrderRequestDTO orderRequest = new OrderRequestDTO(2, "APPL", 200, 100, 1, "BUY", OrderPosition.NORMAL, OrderStatus.ACCEPTED, "MARKET");
+        Response expectedResponse = new Response(true, "Order placed successfully");
 
-        //then verify that both methods were called
-//        verify();
+        doReturn(expectedResponse).when(orderService).placeOrder(any());
+        //when the order request is passed to the orderService
+        Response actualResponse = orderService.placeOrder(orderRequest);
+        //when the orderController receives the order
+
+
+        //then verify that orderService's placeOrder method was called once
+        Assertions.assertEquals(expectedResponse,actualResponse);
     }
+
 
 }

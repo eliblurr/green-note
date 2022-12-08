@@ -1,12 +1,13 @@
 package org.tlc.microservices.orderservice.services;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.Response;
 
 //validator takes data from market data service and ensures that the order can be made
 
-@Component
+@Service
 public class OrderValidator {
     private final Response VALID_ORDER = new Response(true, "order is valid");
     private final Response INVALID_QUANTITY = new Response(false, "user does not have enough of the product in their inventory");
@@ -18,7 +19,7 @@ public class OrderValidator {
         //make request ot user service for inventory data
 //        ClientInventoryDTO
         if(order.getSide().equals("SELL")){
-            int numberOfProductInInventory = 0;// data received from inventory service
+            int numberOfProductInInventory = 10_000;// data received from inventory service
             int numberOfProductsToSell = order.getQuantity();
             if(numberOfProductInInventory<numberOfProductsToSell){
                 return INVALID_QUANTITY;
@@ -39,23 +40,22 @@ public class OrderValidator {
     }
 
     public Response checkIfExchangeWillAcceptOrder(OrderRequestDTO order){
-        double maxPriceShift = 0;//retrieve from market data service
+        double maxPriceShift = 1;//retrieve from market data service
         double lastTradedPrice = 0; // retrieve from market data service
-        double askPrice = 0; // from market data service. determines the lowest price being sold at.
+        double askPrice = 1.5; // from market data service. determines the lowest price being sold at.
         //acceptable bids lastTradedPrice for buying and askPrice for selling,
         // +/-  maxPriceShift
 
-        if (order.getSide().equals("BUY")){
-            if(Math.abs(order.getPrice() - lastTradedPrice) < maxPriceShift ){
+        if (order.getSide().equals("SELL")){
+            if(Math.abs(order.getPrice() - askPrice) <maxPriceShift){
                 return VALID_ORDER;
             } else{
                 return UNREASONABLE_PRICE;
             }
         }
 
-        if (order.getSide().equals("SELL")){
-            if(Math.abs(order.getPrice() - askPrice) <maxPriceShift){
-
+        if (order.getSide().equals("BUY")){
+            if(Math.abs(order.getPrice() - lastTradedPrice) < maxPriceShift ){
                 return VALID_ORDER;
             } else{
                 return UNREASONABLE_PRICE;

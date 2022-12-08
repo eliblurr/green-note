@@ -1,9 +1,10 @@
 package org.tlc.microservices.orderservice.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.orderservice.dto.enums.*;
+
 
 @Component
 @AllArgsConstructor
@@ -12,8 +13,7 @@ import org.tlc.microservices.orderservice.dto.enums.*;
 @Getter
 @ToString
 public class OrderRequestDTO {
-   // @Autowired
-    private static final ModelMapper modelMapper = new ModelMapper();
+
 
     private int clientID;
     private String product;
@@ -22,7 +22,6 @@ public class OrderRequestDTO {
     private int portfolioID;
     private String side;
     private OrderPosition position;
-
     private OrderStatus status;
     private String type;
 

@@ -1,14 +1,14 @@
 package org.tlc.microservices.orderservice.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.services.OrderService;
-import org.tlc.microservices.orderservice.services.processingstrategies.OrderProcessor;
 
 @RestController
 public class OrderController {
@@ -18,7 +18,7 @@ public class OrderController {
 
     @PostMapping("/orders")
 //    @ResponseStatus(HttpStatus.OK)
-    public Response makeOrder(@RequestBody OrderRequestDTO order) {
+    public Response makeOrder(@Validated @RequestBody OrderRequestDTO order) {
         return orderService.placeOrder(order);
     }
 

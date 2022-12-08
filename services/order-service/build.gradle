@@ -1,4 +1,5 @@
 configurations {
+	testImplementation.exclude group: 'com.vaadin.external.google', module: 'android-json'
 	compileOnly{
 		extendsFrom annotationProcessor
 	}
@@ -16,9 +17,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 	implementation 'org.modelmapper:modelmapper:3.1.0'
-
-
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.4'
+	implementation 'org.hibernate.validator:hibernate-validator-annotation-processor:7.0.5.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.0'
+
 
 }
 
