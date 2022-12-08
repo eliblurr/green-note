@@ -3,11 +3,11 @@ package org.tlc.microservices.reportingservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.modelmapper.ModelMapper;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderSplit;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
-import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
-import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
-import org.tlc.microservices.reportingservice.model.enums.OrderSplit;
-import org.tlc.microservices.reportingservice.model.enums.Side;
 
 import java.time.LocalDateTime;
 

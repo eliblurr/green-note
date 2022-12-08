@@ -1,18 +1,16 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.tlc.microservices.orderservice.configuration.WebClientConfiguration;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.Map;
+
 
 public abstract class OrderProcessor {
     @Autowired
@@ -26,8 +24,8 @@ public abstract class OrderProcessor {
         this.exchanges.put("MAL2", "https://exchange2.matraining.com/");
     }
 
-    public void placeOrder(OrderRequestDTO newOrder, String key) {
-        String response = webClientBuilder.build()
+    public String placeOrder(OrderRequestDTO newOrder, String key) {
+        String orderLegID = webClientBuilder.build()
                 .post()
                 .uri(exchanges.get(key) + apiKey + "/order")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -37,10 +35,16 @@ public abstract class OrderProcessor {
                 .bodyToMono(String.class)
                 .block();
 
-        System.out.println(response);
+        System.out.println(orderLegID);
+        return orderLegID;
     }
 
-    public abstract void processOrder(OrderRequestDTO order);
+    public void createOrderLeg(String OrderLegID){
+
+
+    }
+
+    public abstract String processOrder(OrderRequestDTO order);
 
 
 }

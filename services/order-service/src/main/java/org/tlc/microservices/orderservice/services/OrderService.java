@@ -1,6 +1,5 @@
 package org.tlc.microservices.orderservice.services;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -28,7 +27,6 @@ public class OrderService {
 
 
     public Response placeOrder(@Validated OrderRequestDTO order){
-
         // validate order
         Response resp = validator.validate(order);
         if (!resp.isSuccess()) {
@@ -37,17 +35,9 @@ public class OrderService {
             return resp;
         }
 
-        //for valid order choose strategy
-
-        //use strategy to process order
-
         orderProcessor.processOrder(order);
-
         order.setStatus(OrderStatus.ACCEPTED);
         orderPublisher.saveOrder(order);
         return resp;
     }
-
-
-
 }

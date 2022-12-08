@@ -12,7 +12,10 @@ public class DefaultOrderProcessor extends OrderProcessor {
 
 
     @Override
-    public void processOrder(OrderRequestDTO order) {
-        super.placeOrder(order,"MAL1");
+    public  String processOrder(OrderRequestDTO order) {
+        return super.placeOrder(order,"MAL1");
     }
+
+
+
 }

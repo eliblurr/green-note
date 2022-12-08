@@ -10,6 +10,8 @@ import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
 import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
+import org.tlc.microservices.orderservice.dto.enums.OrderType;
+import org.tlc.microservices.orderservice.dto.enums.Side;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import org.tlc.microservices.orderservice.services.processingstrategies.OrderProcessor;
 
@@ -36,7 +38,7 @@ class OrderServiceTest {
     @Test
     void validateValidOrderTest() {
       //GIVEN a valid order request
-        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, 1, "BUY", OrderPosition.NORMAL, OrderStatus.ACCEPTED, "MARKET");
+        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, 1, Side.BUY, OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.MARKET);
         //-- and a valid response message
         Response expectedResponse = new Response(true, "Valid Order Request");
         //and a mocked OrderValidator
@@ -58,7 +60,7 @@ class OrderServiceTest {
     @Test
     void validateInvalidOrderTest() {
         //GIVEN an invalid order request
-        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, -1, "BUY", OrderPosition.NORMAL, OrderStatus.ACCEPTED, "MARKET");
+        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, -1, Side.BUY                                                            , OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.LIMIT);
         //-- and a valid response message
         Response expectedResponse = new Response(false, "Invalid Order Request");
         //and a mocked OrderValidator

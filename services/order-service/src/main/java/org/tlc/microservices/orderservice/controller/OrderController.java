@@ -19,6 +19,7 @@ public class OrderController {
     @PostMapping("/orders")
 //    @ResponseStatus(HttpStatus.OK)
     public Response makeOrder(@Validated @RequestBody OrderRequestDTO order) {
+        System.out.println(order);
         return orderService.placeOrder(order);
     }
 

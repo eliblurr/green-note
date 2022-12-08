@@ -1,19 +1,16 @@
 package org.tlc.microservices.reportingservice.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
 import org.tlc.microservices.reportingservice.model.*;
-import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
-import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
-import org.tlc.microservices.reportingservice.model.enums.Side;
-
-import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor

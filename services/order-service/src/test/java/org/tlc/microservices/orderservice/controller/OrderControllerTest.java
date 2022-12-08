@@ -12,6 +12,8 @@ import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
 import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
+import org.tlc.microservices.orderservice.dto.enums.OrderType;
+import org.tlc.microservices.orderservice.dto.enums.Side;
 import org.tlc.microservices.orderservice.services.OrderService;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -29,7 +31,7 @@ class OrderControllerTest {
     public void makeOrderWithValidRequestTest() {
         //given an order request DTO
 
-        OrderRequestDTO orderRequest = new OrderRequestDTO(2, "APPL", 200, 100, 1, "BUY", OrderPosition.NORMAL, OrderStatus.ACCEPTED, "MARKET");
+        OrderRequestDTO orderRequest = new OrderRequestDTO(2, "APPL", 200, 100, 1, Side.BUY, OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.MARKET);
         Response expectedResponse = new Response(true, "Order placed successfully");
 
         doReturn(expectedResponse).when(orderService).placeOrder(any());

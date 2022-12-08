@@ -1,5 +1,6 @@
 package org.tlc.microservices.orderservice.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -13,17 +14,15 @@ import org.tlc.microservices.orderservice.dto.enums.*;
 @Getter
 @ToString
 public class OrderRequestDTO {
-
-
     private int clientID;
     private String product;
     private double price;
     private int quantity;
     private int portfolioID;
-    private String side;
+    private Side side;
     private OrderPosition position;
     private OrderStatus status;
-    private String type;
+    private OrderType type;
 
 
 }

@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderSplit;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
 import org.tlc.microservices.reportingservice.model.*;
-import org.tlc.microservices.reportingservice.model.enums.OrderPosition;
-import org.tlc.microservices.reportingservice.model.enums.OrderStatus;
-import org.tlc.microservices.reportingservice.model.enums.OrderSplit;
-import org.tlc.microservices.reportingservice.model.enums.Side;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 @Component
 public class ReadOrderDTO implements DTOToModel<OrderTrade> {
     private static final ModelMapper modelMapper = new ModelMapper();
+
     private int orderID;
     private int clientID;
     private double price;
@@ -39,7 +40,5 @@ public class ReadOrderDTO implements DTOToModel<OrderTrade> {
         return modelMapper.map(this, OrderTrade.class);
     }
 
-    //constructors
 
-//getters and setters
 }

@@ -28,8 +28,8 @@ public class CreateOrderOnExchangeDTO {
         this.product = orderRequestDTO.getProduct();
         this.price = orderRequestDTO.getPrice();
         this.quantity = orderRequestDTO.getQuantity();
-        this.side = orderRequestDTO.getSide();
-        this.type = orderRequestDTO.getType();
+        this.side = orderRequestDTO.getSide().name();
+        this.type = orderRequestDTO.getType().name();
     }
 
 }
