@@ -1,19 +1,16 @@
 package org.tlc.microservices.orderservice.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
-import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
-import org.tlc.microservices.orderservice.dto.enums.OrderType;
-import org.tlc.microservices.orderservice.dto.enums.Side;
+import org.tlc.domain.base.order.enums.OrderType;
 import org.tlc.microservices.orderservice.services.OrderService;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;

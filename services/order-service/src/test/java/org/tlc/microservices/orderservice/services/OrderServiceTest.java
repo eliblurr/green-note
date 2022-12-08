@@ -6,16 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
-import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
-import org.tlc.microservices.orderservice.dto.enums.OrderType;
-import org.tlc.microservices.orderservice.dto.enums.Side;
+import org.tlc.domain.base.order.enums.OrderType;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
-import org.tlc.microservices.orderservice.services.processingstrategies.OrderProcessor;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -60,7 +58,7 @@ class OrderServiceTest {
     @Test
     void validateInvalidOrderTest() {
         //GIVEN an invalid order request
-        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, -1, Side.BUY                                                            , OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.LIMIT);
+        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, -1, Side.BUY, OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.LIMIT);
         //-- and a valid response message
         Response expectedResponse = new Response(false, "Invalid Order Request");
         //and a mocked OrderValidator

@@ -1,22 +1,23 @@
 package org.tlc.microservices.orderservice.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.OrderPosition;
 import org.tlc.domain.base.order.enums.OrderStatus;
-import org.tlc.domain.base.order.enums.OrderType;
 import org.tlc.domain.base.order.enums.Side;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
-
-
-@Component
+//@Component
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-@ToString
-public class OrderRequestDTO {
+@Setter
+public class SaveOrderDTO {
+    private UUID OrderID;
     private int clientID;
     private String product;
     private double price;
@@ -25,7 +26,5 @@ public class OrderRequestDTO {
     private Side side;
     private OrderPosition position;
     private OrderStatus status;
-    private OrderType type;
-
-
+    LocalDateTime created;
 }

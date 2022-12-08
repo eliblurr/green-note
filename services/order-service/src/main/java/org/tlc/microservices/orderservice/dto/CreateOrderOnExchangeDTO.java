@@ -3,9 +3,6 @@ package org.tlc.microservices.orderservice.dto;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
-import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
-import org.tlc.microservices.orderservice.dto.enums.Side;
 
 @Component
 @AllArgsConstructor

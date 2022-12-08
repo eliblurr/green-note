@@ -4,7 +4,7 @@
 //import org.springframework.stereotype.Component;
 //import org.tlc.microservices.orderservice.Response;
 //import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-//import org.tlc.microservices.orderservice.dto.enums.OrderType;
+//import org.tlc.domain.base.order.enums.OrderType;
 //
 //@Component
 //public class MasterOrderProcessor {

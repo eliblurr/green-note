@@ -1,15 +1,14 @@
 package org.tlc.microservices.orderservice.services;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.dto.enums.OrderPosition;
-import org.tlc.microservices.orderservice.dto.enums.OrderStatus;
-import org.tlc.microservices.orderservice.dto.enums.OrderType;
-import org.tlc.microservices.orderservice.dto.enums.Side;
+import org.tlc.domain.base.order.enums.OrderType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
