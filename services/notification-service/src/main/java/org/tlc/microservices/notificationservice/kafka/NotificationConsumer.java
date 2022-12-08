@@ -13,6 +13,7 @@ public class NotificationConsumer implements KafkaConsumer<SocketPubSubDTO> {
     @Autowired private NotificationService notificationService;
 
     @Override
-    @KafkaListener(topics = "${spring.kafka.topic.notification.first.name}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "spring.kafka.topic.notification.transactions.name", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(SocketPubSubDTO obj) { notificationService.sendMessage(obj.getContent());}
+
 }
