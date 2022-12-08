@@ -17,9 +17,6 @@ public class LogConsumer implements KafkaConsumer<LogEventDTO> {
             groupId = "${spring.kafka.consumer.group-id}")
     public void consume(LogEventDTO obj) {
 
-//        System.out.println("\n\n"+obj.toString());
-
-
         // save to database here
         logService.create(obj.getLogDTO().getMessage(), obj.getLogDTO().getUser());
 

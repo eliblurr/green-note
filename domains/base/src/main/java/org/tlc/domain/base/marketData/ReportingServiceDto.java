@@ -1,35 +1,27 @@
-package org.tlc.microservices.marketdataservice.dto;
+package org.tlc.domain.base.marketData;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.tlc.microservices.marketdataservice.mapper.ReportingServiceMapper;
-import org.tlc.microservices.marketdataservice.model.WebHookData;
 
 import java.sql.Timestamp;
 
 @Data
-public class ReportingServiceDto implements ReportingServiceMapper {
-    @JsonProperty
+public class ReportingServiceDto {
     private String orderType;
-    @JsonProperty
     private String product;
-    @JsonProperty
+
     private String side;
-    @JsonProperty
+
     private String orderID;
-    @JsonProperty
+
     private Double price;
-    @JsonProperty
+
     private int qty;
-    @JsonProperty
+
     private String exchange;
-    @JsonProperty
+
     private Timestamp timestamp;
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+//    private static final ModelMapper modelMapper = new ModelMapper();
 
     public ReportingServiceDto(String orderType, String product, String side, String orderID, Double price, int qty, String exchange, Timestamp timestamp) {
         this.orderType = orderType;
@@ -47,7 +39,7 @@ public class ReportingServiceDto implements ReportingServiceMapper {
 
     @Override
     public String toString() {
-        return "Transfered Data{" +
+        return "{" +
                 "orderType='" + orderType + '\'' +
                 ", product='" + product + '\'' +
                 ", side='" + side + '\'' +
@@ -56,7 +48,7 @@ public class ReportingServiceDto implements ReportingServiceMapper {
                 ", qty=" + qty +
                 ", exchange='" + exchange + '\'' +
                 ", timestamp=" + timestamp +
-                '}';
+                '}'+'}';
     }
 
     public String getOrderType() {
@@ -123,8 +115,4 @@ public class ReportingServiceDto implements ReportingServiceMapper {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public Object convertToEntity() throws RuntimeException{
-        return modelMapper.map(this, WebHookData.class);
-    }
 }
