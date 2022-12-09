@@ -17,8 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.kafka:spring-kafka:3.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	implementation 'org.springframework.boot:spring-boot-starter-security:3.0.0'
-
+	implementation 'com.auth0:java-jwt:4.2.1'
 //	local project dependency
 	implementation project(':domains:base')
 

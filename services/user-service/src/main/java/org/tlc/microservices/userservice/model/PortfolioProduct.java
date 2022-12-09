@@ -35,6 +35,9 @@ public class PortfolioProduct {
     @NonNull
     private Integer quantity;
 
+    @Column(name = "price")
+    private double unit_price;
+
     @Column(name = "updated")
     @UpdateTimestamp
     private Timestamp updated;

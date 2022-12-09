@@ -3,13 +3,11 @@ package org.tlc.microservices.userservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.tlc.domain.base.dto.ClientValidationDTO;
 import org.tlc.microservices.userservice.dto.EmailDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
-import org.tlc.microservices.userservice.dto.customer.CreateCustomerDTO;
-import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
-import org.tlc.microservices.userservice.dto.customer.UpdateCustomerBalanceDTO;
-import org.tlc.microservices.userservice.dto.customer.UpdateCustomerDTO;
+import org.tlc.microservices.userservice.dto.customer.*;
 import org.tlc.microservices.userservice.service.AdminService;
 import org.tlc.microservices.userservice.service.CustomerService;
 
@@ -70,8 +68,14 @@ public class CustomerController {
 
     @PatchMapping(value = {"/{id}/balance", "/{id}/balance/"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    CustomerDTO updateBalanceById(@PathVariable("id") UUID id, UpdateCustomerBalanceDTO payload){
+    CustomerDTO updateBalanceById(@PathVariable("id") UUID id, @RequestBody UpdateCustomerBalanceDTO payload){
         return customerService.updateBalanceById(id, payload);
+    }
+
+    @PostMapping(value = {"/validate-customer", "/validate-customer/"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    ClientValidationDTO validateCustomer(@RequestBody ValidateCustomerDTO payload){
+        return customerService.validateCustomer(payload);
     }
 
 }

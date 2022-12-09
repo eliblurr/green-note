@@ -7,12 +7,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.kafka:spring-kafka:3.0.0'
+	implementation 'org.springframework.cloud:spring-cloud-circuitbreaker-resilience4j:2.1.5'
+	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:2.1.5'
+	//	local project dependency
 	implementation project(':domains:base')
-
-
-
-
-
 }
 
 dependencyManagement {

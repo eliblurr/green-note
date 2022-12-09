@@ -1,11 +1,9 @@
 package org.tlc.microservices.userservice.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.tlc.microservices.userservice.listeners.PortfolioListener;
 
 import java.sql.Timestamp;
@@ -54,6 +52,9 @@ public class Portfolio {
 
     @OneToMany(mappedBy = "portfolio")
     private List<PortfolioProduct> products;
+
+    @Formula("(select sum(p.unit_price*p.quantity) from portfolio_product p where p.portfolio_id=id)")
+    private double balance;
 
     public Portfolio(String default_portfolio, boolean b, Customer customer) {
         this.name = default_portfolio;
