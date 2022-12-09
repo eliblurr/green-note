@@ -20,7 +20,5 @@ public class LogConsumer implements KafkaConsumer<LogEventDTO> {
         // save to database here
         logService.create(obj.getLogDTO().getMessage(), obj.getLogDTO().getUser());
 
-
-
     }
 }

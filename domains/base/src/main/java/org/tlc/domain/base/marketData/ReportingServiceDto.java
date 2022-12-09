@@ -19,11 +19,15 @@ public class ReportingServiceDto {
 
     private String exchange;
 
+    private int cumQty;
+
+    private Double cumPrx;
     private Timestamp timestamp;
 
 //    private static final ModelMapper modelMapper = new ModelMapper();
 
-    public ReportingServiceDto(String orderType, String product, String side, String orderID, Double price, int qty, String exchange, Timestamp timestamp) {
+
+    public ReportingServiceDto(String orderType, String product, String side, String orderID, Double price, int qty, String exchange, int cumQty, Double cumPrx, Timestamp timestamp) {
         this.orderType = orderType;
         this.product = product;
         this.side = side;
@@ -31,10 +35,28 @@ public class ReportingServiceDto {
         this.price = price;
         this.qty = qty;
         this.exchange = exchange;
+        this.cumQty = cumQty;
+        this.cumPrx = cumPrx;
         this.timestamp = timestamp;
     }
 
     public ReportingServiceDto() {
+    }
+
+    public int getCumQty() {
+        return cumQty;
+    }
+
+    public void setCumQty(int cumQty) {
+        this.cumQty = cumQty;
+    }
+
+    public Double getCumPrx() {
+        return cumPrx;
+    }
+
+    public void setCumPrx(Double cumPrx) {
+        this.cumPrx = cumPrx;
     }
 
     @Override
@@ -47,8 +69,10 @@ public class ReportingServiceDto {
                 ", price=" + price +
                 ", qty=" + qty +
                 ", exchange='" + exchange + '\'' +
+                ", cumQty=" + cumQty +
+                ", cumPrx=" + cumPrx +
                 ", timestamp=" + timestamp +
-                '}'+'}';
+                '}';
     }
 
     public String getOrderType() {
