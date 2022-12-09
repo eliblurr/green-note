@@ -56,7 +56,7 @@ public class WebHookController {
      *
      * @param newData returns an Object
      * @throws ParseException
-     * listen to the exchange using webhook and immediately publish on redis
+     * listen to the exchange using webhook and immediately publish on kafka
      */
     @PostMapping
     public void marketData(@RequestBody ReportingServiceDto newData) {
@@ -74,7 +74,6 @@ public class WebHookController {
         orderingServicePublisher.setTopic(topic2);
         System.out.println(topic2.name());
         orderingServicePublisher.sendMessage(orderingServiceDto);
-
     }
 
 
