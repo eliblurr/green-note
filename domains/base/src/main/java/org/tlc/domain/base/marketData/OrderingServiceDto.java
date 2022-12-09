@@ -1,7 +1,8 @@
 package org.tlc.domain.base.marketData;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,6 +11,9 @@ import java.util.Map;
 import java.util.Queue;
 
 @Component
+@Data
+@Setter
+@Getter
 public class OrderingServiceDto {
     private String exchangeName;
     private Map<String, HashMap<String, Queue<Double>>> tickers = new HashMap<>();
