@@ -1,9 +1,18 @@
 package org.tlc.microservices.orderservice.services;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.order.enums.Side;
+import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.Response;
+import org.tlc.microservices.orderservice.dto.ProductDataDTO;
+import reactor.core.publisher.Mono;
 
 //validator takes data from market data service and ensures that the order can be made
 
@@ -14,6 +23,13 @@ public class OrderValidator {
     private final Response UNREASONABLE_PRICE = new Response(false, "Price set is unlikely to be accepted by exchange");
     private final Response INSUFFICIENT_FUNDS = new Response(false, "Not enough funds in account for this transaction");
     private final Response INVALID_REQUEST = new Response(false, "Request received was not valid");
+
+    @Setter @Getter
+    private OrderingServiceDto marketData;
+    @Autowired
+    WebClient.Builder webClientBuilder;
+
+
 
     public Response validate(OrderRequestDTO order) {
 
@@ -41,9 +57,11 @@ public class OrderValidator {
     }
 
     public Response checkIfExchangeWillAcceptOrder(OrderRequestDTO order){
-        double maxPriceShift = 1;//retrieve from market data service
-        double lastTradedPrice = 0; // retrieve from market data service
-        double askPrice = 1.5; // from market data service. determines the lowest price being sold at.
+        ProductDataDTO productDataDTO = getProductData(order.getProduct());
+        double maxPriceShift = productDataDTO.getMAX_PRICE_SHIFT();//retrieve from market data service
+        double lastTradedPrice = productDataDTO.getLAST_TRADED_PRICE(); // retrieved from market data service
+
+        double askPrice = productDataDTO.getASK_PRICE(); // from market data service. determines the lowest price being sold at.
         //acceptable bids lastTradedPrice for buying and askPrice for selling,
         // +/-  maxPriceShift
 
@@ -63,5 +81,14 @@ public class OrderValidator {
             }
         }
         return INVALID_REQUEST;
+    }
+
+    public ProductDataDTO getProductData(String product){
+        return webClientBuilder.build()
+                .get()
+                .uri("https://exchange.matraining.com/pd/" + product)
+                .retrieve()
+                .bodyToMono(ProductDataDTO.class)
+                .block();
     }
 }

@@ -38,7 +38,6 @@ public abstract class OrderProcessor {
                 .bodyToMono(String.class)
                 .block();
 //        UUID tradeID = UUID.fromString(exchangeResponse);
-        System.out.println(exchangeResponse);
 
         return new SaveTradeDTO.SaveTradeDTOBuilder(exchangeResponse,
                 newOrder.getOrderID(),
