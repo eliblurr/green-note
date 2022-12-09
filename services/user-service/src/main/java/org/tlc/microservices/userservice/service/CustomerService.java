@@ -9,11 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.tlc.domain.base.dto.ClientValidationDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
-import org.tlc.microservices.userservice.dto.customer.CreateCustomerDTO;
-import org.tlc.microservices.userservice.dto.customer.CustomerDTO;
-import org.tlc.microservices.userservice.dto.customer.UpdateCustomerBalanceDTO;
-import org.tlc.microservices.userservice.dto.customer.UpdateCustomerDTO;
+import org.tlc.microservices.userservice.dto.customer.*;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.product.PortfolioProductDTO;
 import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
@@ -21,11 +19,14 @@ import org.tlc.microservices.userservice.exceptions.NotFoundException;
 import org.tlc.microservices.userservice.model.Admin;
 import org.tlc.microservices.userservice.model.Customer;
 import org.tlc.microservices.userservice.model.Portfolio;
+import org.tlc.microservices.userservice.model.PortfolioProduct;
 import org.tlc.microservices.userservice.repository.CustomerRepository;
+import org.tlc.microservices.userservice.repository.PortfolioProductRepository;
 import org.tlc.microservices.userservice.repository.PortfolioRepository;
 import org.tlc.microservices.userservice.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,15 +54,10 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
-
     public CustomerDTO create(CreateCustomerDTO payload) {
         payload.setPassword(passwordEncoder.encode(payload.getPassword()));
-
         Customer customer = customerRepository.save(payload.convertToEntity());
-        Portfolio portfolio = portfolioRepository.save(
-                new Portfolio("default portfolio", true, customer)
-        );
-
+        Portfolio portfolio = portfolioRepository.save(new Portfolio("default portfolio", true, customer));
         return CustomerDTO.convertToDTO( customer );
     }
 
@@ -88,6 +84,38 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
         customer.setBalance(customer.getBalance() + payload.getBalance());
         return CustomerDTO.convertToDTO( customerRepository.save(customer) );
+    }
+
+    @Autowired
+    private PortfolioProductRepository portfolioProductRepository;
+
+    public ClientValidationDTO validateCustomer(ValidateCustomerDTO payload){
+
+        Optional<Customer> customer = customerRepository.findById(payload.getCustomer());
+        Optional<Portfolio> portfolio = portfolioRepository.findById(payload.getPortfolio());
+        Optional<PortfolioProduct> portfolioProduct = portfolioProductRepository.findOneByPortfolioAndProduct(payload.getPortfolio(), payload.getProduct());
+
+        if(customer.isPresent() || portfolio.isEmpty() || portfolioProduct.isEmpty()){ return new ClientValidationDTO();}
+
+        ClientValidationDTO response =  new ClientValidationDTO();
+
+        response.setCustomerExist(true);
+        response.setPortfolioBalance(portfolio.get().getBalance());
+        response.setCanShort(customer.get().getCan_short());
+        response.setProductQuantity(portfolioProduct.get().getQuantity());
+        response.setProductTotalValue(portfolioProduct.get().getQuantity()*portfolioProduct.get().getUnit_price());
+        response.setPortfolioHasProduct(
+                portfolioProductRepository.productInPortfolio(
+                        payload.getProduct(), payload.getPortfolio()
+                )
+        );
+        response.setUserOwnsPortfolio(
+                portfolioRepository.userOwnsPortfolio(
+                        payload.getPortfolio(),
+                        payload.getCustomer()
+                )
+        );
+        return response;
     }
 
 }

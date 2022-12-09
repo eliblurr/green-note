@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -40,7 +42,4 @@ public class Admin {
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean is_active = true;
 
-    public void setPassword(String password) {
-        this.password = password; // hash password here
-    }
 }
