@@ -3,20 +3,22 @@ package org.tlc.microservices.marketdataservice.controller;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
 import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
+import org.tlc.microservices.marketdataservice.model.GetExchangePd;
 import org.tlc.microservices.marketdataservice.service.KafkaPublish;
 import org.tlc.microservices.marketdataservice.service.OrderingServicePublisher;
 
-
 import java.text.ParseException;
 
-
 @RestController
+@EnableCaching
+
 @RequestMapping("api/WebHook/newOrder")
 public class WebHookController {
     @Autowired
@@ -30,6 +32,9 @@ public class WebHookController {
     @Autowired
     private OrderingServicePublisher orderingServicePublisher;
 
+    @Autowired
+    private GetExchangePd getExchangePd;
+
     @Autowired @Qualifier("reportTopic") private NewTopic topic;
     @Autowired @Qualifier("orderTopic") private NewTopic topic2;
 
@@ -42,6 +47,7 @@ public class WebHookController {
      * get market data market information
      */
     @GetMapping("/GetExchangeProduct")
+    @Cacheable
     public ExchangeProducts[] getExchangeProduct(){
         return webClientBuilder.build()
                 .get()

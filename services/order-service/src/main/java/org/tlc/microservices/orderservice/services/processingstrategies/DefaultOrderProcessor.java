@@ -12,12 +12,9 @@ public class DefaultOrderProcessor extends OrderProcessor {
 //    @Autowired
 //    OrderProcessor orderProcessor;
 
-
     @Override
     public SaveTradeDTO processOrder(SaveOrderDTO order) {
         return super.placeOrder(order,"MAL1");
     }
-
-
 
 }
