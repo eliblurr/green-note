@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.tlc.domain.base.order.enums.TradeStatus;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
@@ -12,6 +13,7 @@ import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 
 public abstract class OrderProcessor {
@@ -26,8 +28,8 @@ public abstract class OrderProcessor {
         this.exchanges.put("MAL2", "https://exchange2.matraining.com/");
     }
 
-    public String placeOrder(OrderRequestDTO newOrder, String key) {
-        String orderLegID = webClientBuilder.build()
+    public SaveTradeDTO placeOrder(SaveOrderDTO newOrder, String key) {
+        String exchangeResponse = webClientBuilder.build()
                 .post()
                 .uri(exchanges.get(key) + apiKey + "/order")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -36,17 +38,23 @@ public abstract class OrderProcessor {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
+//        UUID tradeID = UUID.fromString(exchangeResponse);
+        System.out.println(exchangeResponse);
 
-        System.out.println(orderLegID);
-        return orderLegID;
+        return new SaveTradeDTO.SaveTradeDTOBuilder(exchangeResponse,
+                newOrder.getOrderID(),
+                TradeStatus.OPEN,
+                newOrder.getQuantity(),
+                newOrder.getSide(),
+                exchanges.get(key),
+                newOrder.getPrice())
+                .build();
+
     }
 
-    public void createOrderLeg(String OrderLegID){
-        SaveOrderDTO trade  = new SaveTradeDTO.SaveTradeDTOBuilder();
 
-    }
 
-    public abstract String processOrder(OrderRequestDTO order);
+    public abstract SaveTradeDTO processOrder(SaveOrderDTO order);
 
 
 }

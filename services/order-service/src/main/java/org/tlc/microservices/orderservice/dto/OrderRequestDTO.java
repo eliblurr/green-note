@@ -10,7 +10,6 @@ import org.tlc.domain.base.order.enums.Side;
 import java.util.UUID;
 
 
-@Component
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -24,7 +23,6 @@ public class OrderRequestDTO {
     private int portfolioID;
     private Side side;
     private OrderPosition position;
-    private OrderStatus status;
     private OrderType type;
 
 

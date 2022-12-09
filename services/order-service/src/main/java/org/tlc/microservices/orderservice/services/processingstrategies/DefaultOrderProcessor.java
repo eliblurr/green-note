@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
+import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 
 @Component
 public class DefaultOrderProcessor extends OrderProcessor {
@@ -12,7 +14,7 @@ public class DefaultOrderProcessor extends OrderProcessor {
 
 
     @Override
-    public  String processOrder(OrderRequestDTO order) {
+    public SaveTradeDTO processOrder(SaveOrderDTO order) {
         return super.placeOrder(order,"MAL1");
     }
 

@@ -21,7 +21,7 @@ public class CreateOrderOnExchangeDTO {
     private String side;
     private String type;
 
-    public CreateOrderOnExchangeDTO(OrderRequestDTO orderRequestDTO) {
+    public CreateOrderOnExchangeDTO(SaveOrderDTO orderRequestDTO) {
         this.product = orderRequestDTO.getProduct();
         this.price = orderRequestDTO.getPrice();
         this.quantity = orderRequestDTO.getQuantity();
