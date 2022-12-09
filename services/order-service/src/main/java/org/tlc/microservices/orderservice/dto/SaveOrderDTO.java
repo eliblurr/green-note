@@ -1,9 +1,6 @@
 package org.tlc.microservices.orderservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.OrderPosition;
 import org.tlc.domain.base.order.enums.OrderStatus;
@@ -16,8 +13,7 @@ import java.util.UUID;
 //@Component
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class SaveOrderDTO {
     private UUID orderID;
     private int clientID;

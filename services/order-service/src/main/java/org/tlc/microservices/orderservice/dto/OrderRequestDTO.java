@@ -12,9 +12,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class OrderRequestDTO {
     private int clientID;
     private String product;

@@ -2,14 +2,19 @@ package org.tlc.microservices.orderservice.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.microservices.orderservice.Response;
+import org.tlc.microservices.orderservice.dto.CheckOrderStatusDTO;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
+
+import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -22,7 +27,11 @@ public class OrderService {
     private OrderPublisher orderPublisher;
     @Autowired
     private  ModelMapper modelMapper;
+    @Autowired
+    WebClient.Builder webClientBuilder;
 
+    @Value("${environment.apikey}")
+    private String apiKey;
 
     public Response placeOrder(@Validated OrderRequestDTO orderRequest){
         // validate order
@@ -36,10 +45,17 @@ public class OrderService {
 
         SaveOrderDTO order = new SaveOrderDTO(orderRequest,OrderStatus.ACCEPTED);
         SaveTradeDTO trade = orderProcessor.processOrder(order);
+        //will be replaced with a list of trades
         System.out.println(trade);
         orderPublisher.saveOrder(order);
+        orderPublisher.saveTrades(trade);
 
         System.out.println(order);
         return resp;
     }
+
+//    public Response checkOrderStatus(CheckOrderStatusDTO checkStatusDTO){
+//        //fetch exchange link using key
+//        webClientBuilder.build().get().uri("https://exchange.matraining.com/" + apiKey).retrieve().bodyToMono()
+//    }
 }

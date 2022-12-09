@@ -2,19 +2,11 @@ package org.tlc.microservices.orderservice.dto;
 
 import lombok.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
 
-@Component
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class CreateOrderOnExchangeDTO {
- //DTO for placing order on exchange
-   // @Autowired
-    private static final ModelMapper modelMapper = new ModelMapper();
-
     private String product;
     private int quantity;
     private double price;

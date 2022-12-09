@@ -8,10 +8,7 @@ import org.tlc.domain.base.order.enums.TradeStatus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-//@Component
-@Getter
-@Setter
-@ToString
+@Data
 public class SaveTradeDTO {
     private String tradeID;
     private UUID orderID;
