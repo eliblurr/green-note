@@ -6,10 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Setter
 @Getter
 @Component
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdatePortfolioProductDTO {
-    @Nullable private Integer quantity;
+    private Integer quantity;
+    private UUID targetPortfolio;
 }

@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
 import org.tlc.microservices.reportingservice.dto.ReadOrderDTO;
 import org.tlc.microservices.reportingservice.model.OrderTrade;
@@ -16,6 +17,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+//    @Autowired
+//    WebClient.Builder webClientBuilder;
     private static final ModelMapper modelMapper = new ModelMapper();
 
 
@@ -36,4 +40,7 @@ public class OrderService {
 //        //do some data validation
 //      /// orderRepository.save(order);
 //    }
+
+
+
 }

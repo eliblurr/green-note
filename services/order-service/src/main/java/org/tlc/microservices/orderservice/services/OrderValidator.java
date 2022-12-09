@@ -3,7 +3,7 @@ package org.tlc.microservices.orderservice.services;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.Response;
+import org.tlc.domain.base.order.Response;
 
 //validator takes data from market data service and ensures that the order can be made
 

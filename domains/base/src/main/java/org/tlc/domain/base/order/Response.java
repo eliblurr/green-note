@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice;
+package org.tlc.domain.base.order;
 
 public class Response {
     final boolean success;

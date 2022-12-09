@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api/users/customers")
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class CustomerController {
@@ -64,7 +64,7 @@ public class CustomerController {
 
     @PatchMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    CustomerDTO updateById(@PathVariable("id") UUID id, UpdateCustomerDTO payload){
+    CustomerDTO updateById(@PathVariable("id") UUID id, @RequestBody UpdateCustomerDTO payload){
         return customerService.updateById(id, payload);
     }
 

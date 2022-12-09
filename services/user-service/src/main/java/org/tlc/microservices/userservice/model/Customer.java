@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
+import java.util.Currency;
 
 @Entity
 @Setter
@@ -32,7 +33,8 @@ public class Customer {
     @NonNull
     private String password; //hash password before save .i.e. override setter .. implement encryption with springboot Security
 
-    @Column(name = "balance", columnDefinition = "money default 0")
+//    add formula here
+    @Column(name = "balance")
     private Double balance = 0.0;
 
     @Column(name = "updated")

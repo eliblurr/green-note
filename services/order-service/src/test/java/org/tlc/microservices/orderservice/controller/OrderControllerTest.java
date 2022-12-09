@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.tlc.domain.base.order.enums.OrderPosition;
 import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.enums.Side;
-import org.tlc.microservices.orderservice.Response;
+import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.OrderType;
 import org.tlc.microservices.orderservice.services.OrderService;

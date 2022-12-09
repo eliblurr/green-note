@@ -20,4 +20,6 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     Boolean customerExistsById(@Param("user") UUID user);
 
     Page<Customer> findAll(Pageable pageable);
+
+    Customer findOneByEmail(String email);
 }
