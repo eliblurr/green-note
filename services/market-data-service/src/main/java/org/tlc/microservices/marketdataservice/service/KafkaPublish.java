@@ -15,7 +15,7 @@ import org.tlc.domain.base.marketData.ReportingServiceDto;
 @Getter
 @Setter
 public class KafkaPublish extends KafkaProducer<ReportingServiceDto> {
-        public KafkaPublish(@Autowired @Qualifier("reportTopic") NewTopic topic, KafkaTemplate<String, ReportingServiceDto> kafkaTemplate) {
+        public KafkaPublish(@Autowired NewTopic topic, KafkaTemplate<String, ReportingServiceDto> kafkaTemplate) {
             super(topic, kafkaTemplate);
         }
     }

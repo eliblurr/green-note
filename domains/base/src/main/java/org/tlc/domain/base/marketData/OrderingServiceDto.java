@@ -1,11 +1,14 @@
 package org.tlc.domain.base.marketData;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-
+@Component
 public class OrderingServiceDto {
     private String exchangeName;
     private Map<String, HashMap<String, Queue<Double>>> tickers = new HashMap<>();

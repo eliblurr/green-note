@@ -3,12 +3,14 @@ package org.tlc.microservices.marketdataservice.controller;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
 import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
 import org.tlc.microservices.marketdataservice.service.KafkaPublish;
+import org.tlc.microservices.marketdataservice.service.OrderingServicePublisher;
 
 
 import java.text.ParseException;
@@ -20,12 +22,16 @@ public class WebHookController {
     @Autowired
     WebClient.Builder webClientBuilder;
 
-    OrderingServiceDto orderingServiceDto = new OrderingServiceDto();
+    @Autowired
+    OrderingServiceDto orderingServiceDto;
 
     @Autowired
     private KafkaPublish KafkaPublish;
+    @Autowired
+    private OrderingServicePublisher orderingServicePublisher;
 
     @Autowired @Qualifier("reportTopic") private NewTopic topic;
+    @Autowired @Qualifier("orderTopic") private NewTopic topic2;
 
     public WebHookController() {
     }
@@ -65,7 +71,9 @@ public class WebHookController {
         orderingServiceDto.setExchangeName(newData.getExchange());
         orderingServiceDto.AddTickerPrices(newData.getProduct(),newData.getPrice(),newData.getSide());
         System.out.println("ordering service: "+orderingServiceDto.toString());
-//        KafkaPublish.sendMessage(orderingServiceDto);
+        orderingServicePublisher.setTopic(topic2);
+        System.out.println(topic2.name());
+        orderingServicePublisher.sendMessage(orderingServiceDto);
 
     }
 
