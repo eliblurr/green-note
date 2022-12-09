@@ -1,6 +1,7 @@
 package org.tlc.domain.base.marketData;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
