@@ -1,0 +1,106 @@
+version: "3.9"
+
+volumes:
+  api-data:
+  pgadmin_data:
+  postgres_data:
+  kafka_data:
+  redis_data:
+    driver: local
+
+networks:
+  green-note-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgis/postgis:12-master
+    container_name: green-note-postgres
+    restart: always
+    networks:
+      - green-note-network
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+
+  pgadmin:
+    build:
+      context: ./pgadmin
+      dockerfile: dockerfile
+      container_name: green-note-pgadmin
+      restart: always
+      expose:
+        - 80
+      environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      volumes:
+        - pgadmin_data:/var/lib/pgadmin
+      networks:
+        - green-note-network
+      depends_on:
+        - postgres
+
+  redis:
+
+  kafka-zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: kafka-zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - green-note-network
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-broker
+    restart: always
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - green-note-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+    restart: always
+    ports:
+      - ${API_PORT}:2000
+      - ${PGADMIN_PORT}:2001
+    networks:
+      - green-note-network
+    depends_on:
+        - api
+    volumes_from:
+      - api:rw
+
+  api:
+    command: "echo 'I WILL EXECUTE'"
+    container_name: green-note-pgadmin
+    restart: always
+    expose:
+      - 80
+    networks:
+      - green-note-network
+    depends_on:
+      - postgres
+    volumes:
+      - api-data:/home/green-note/api/web/
