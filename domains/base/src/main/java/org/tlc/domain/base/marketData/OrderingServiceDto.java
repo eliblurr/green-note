@@ -18,6 +18,7 @@ public class OrderingServiceDto {
     private String exchangeName;
     private Map<String, HashMap<String, Queue<Double>>> tickers = new HashMap<>();
 
+
     public OrderingServiceDto() {
     }
 

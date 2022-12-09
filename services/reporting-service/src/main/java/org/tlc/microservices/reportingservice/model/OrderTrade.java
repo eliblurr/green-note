@@ -1,146 +1,52 @@
 package org.tlc.microservices.reportingservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
 import org.modelmapper.ModelMapper;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderSplit;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.Side;
+import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 @Entity
-
 public class OrderTrade {
-    private static final ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper = new ModelMapper();//unneccessary?
 
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) int orderID;
+    private @Id @GeneratedValue(strategy = GenerationType.AUTO) Long orderID;
     private int clientID;
+    private String product;
     private double price;
-    private String ticker;
-    private Timestamp created;
-    private Timestamp updated;
-    private OrderStatus status;
     private int quantity;
-    private Side side;
-    private OrderType type;
     private int portfolioID; //dependency
+    private Side side;
     private OrderPosition position;
+    private OrderStatus status;
+    private OrderSplit split;
+//    @Column(columnDefinition = "CURRENT_TIMESTAMP")
+    private LocalDateTime created;
+    private LocalDateTime updated;
 
-//Constructors
-    public OrderTrade() {
+    //Constructors
+    public OrderTrade(OrderCreationDTO orderCreationDTO){
+        this.clientID = orderCreationDTO.getClientID();
+        this.product = orderCreationDTO.getProduct();
+        this.price = orderCreationDTO.getPrice();
+        this.quantity = orderCreationDTO.getQuantity();
+        this.portfolioID = orderCreationDTO.getPortfolioID();
+        this.side=orderCreationDTO.getSide();
+        this.position = orderCreationDTO.getPosition();
+        this.status = orderCreationDTO.getStatus();
+        this.created = LocalDateTime.now();
     }
 
-    public OrderTrade(int orderID, int clientID, double price, String ticker, Timestamp created, Timestamp updated, OrderStatus status, int quantity, Side side, OrderType type, int portfolioID, OrderPosition position) {
-        this.orderID = orderID;
-        this.clientID = clientID;
-        this.price = price;
-        this.ticker = ticker;
-        this.created = created;
-        this.updated = updated;
-        this.status = status;
-        this.quantity = quantity;
-        this.side = side;
-        this.type = type;
-        this.portfolioID = portfolioID;
-        this.position = position;
-    }
     //Setters and getters
 
-
-    public int getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
-    }
-
-    public int getClientID() {
-        return clientID;
-    }
-
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
-    public Timestamp getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Timestamp updated) {
-        this.updated = updated;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Side getSide() {
-        return side;
-    }
-
-    public void setSide(Side side) {
-        this.side = side;
-    }
-
-    public OrderType getType() {
-        return type;
-    }
-
-    public void setType(OrderType type) {
-        this.type = type;
-    }
-
-    public int getPortfolioID() {
-        return portfolioID;
-    }
-
-    public void setPortfolioID(int portfolioID) {
-        this.portfolioID = portfolioID;
-    }
-
-    public OrderPosition getPosition() {
-        return position;
-    }
-
-    public void setPosition(OrderPosition position) {
-        this.position = position;
-    }
 }

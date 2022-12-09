@@ -7,7 +7,8 @@ configurations {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	compileOnly 'org.projectlombok:lombok'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.kafka:spring-kafka:3.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
