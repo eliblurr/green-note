@@ -49,8 +49,4 @@ subprojects {
 		ignoreFailures = true
 	}
 
-	jar {
-		enabled = false
-	}
-
 }
