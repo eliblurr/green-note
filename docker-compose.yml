@@ -120,6 +120,8 @@ services:
     restart: always
     networks:
       - green-note-network
+    depends_on:
+      - discovery-server
     volumes:
       - api-gateway-data:/usr/app/data/
     expose:
