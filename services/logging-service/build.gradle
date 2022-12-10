@@ -34,7 +34,3 @@ dependencyManagement {
 test {
 	ignoreFailures = true
 }
-
-jar {
-	enabled = false
-}
