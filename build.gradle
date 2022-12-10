@@ -48,4 +48,9 @@ subprojects {
 	test {
 		ignoreFailures = true
 	}
+
+	jar {
+		enabled = false
+	}
+
 }
