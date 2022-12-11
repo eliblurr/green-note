@@ -1,9 +1,5 @@
 package org.tlc.microservices.reportingservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;

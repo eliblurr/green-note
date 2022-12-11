@@ -5,17 +5,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.modelmapper.ModelMapper;
+import org.tlc.domain.base.order.enums.OrderPosition;
+import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.order.enums.OrderType;
+import org.tlc.domain.base.order.enums.Side;
 
 import java.sql.Timestamp;
-
+import java.util.UUID;
 
 @Entity
-
 public class OrderTrade {
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) int orderID;
-    private int clientID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private UUID trade;
+    private int client;
     private double price;
     private String ticker;
     private Timestamp created;
@@ -32,8 +38,8 @@ public class OrderTrade {
     }
 
     public OrderTrade(int orderID, int clientID, double price, String ticker, Timestamp created, Timestamp updated, OrderStatus status, int quantity, Side side, OrderType type, int portfolioID, OrderPosition position) {
-        this.orderID = orderID;
-        this.clientID = clientID;
+//        this.orderID = orderID;
+//        this.clientID = clientID;
         this.price = price;
         this.ticker = ticker;
         this.created = created;

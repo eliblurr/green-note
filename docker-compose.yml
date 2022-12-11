@@ -1,6 +1,7 @@
 version: "3.9"
 
 volumes:
+  reporting-service-data:
   user-service-data:
   discovery-data:
   notification-service-data:
@@ -206,7 +207,30 @@ services:
       JWT_EXPIRATION_IN_MINUTES: ${JWT_EXPIRATION_IN_MINUTES:-200}
       JWT_REFRESH_EXPIRATION_IN_MINUTES: ${JWT_REFRESH_EXPIRATION_IN_MINUTES:-1000}
 
-#reporting-service
+  reporting-service:
+    build:
+      context: .
+      dockerfile: ./services/reporting-service/dockerfile
+    image: green-note-reporting-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - reporting-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+
 #order-service
 #market-data-service
 

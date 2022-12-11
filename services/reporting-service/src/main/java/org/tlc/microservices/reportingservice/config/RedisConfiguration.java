@@ -1,4 +1,4 @@
-package org.tlc.microservices.reportingservice.configuration;
+package org.tlc.microservices.reportingservice.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

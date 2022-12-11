@@ -18,12 +18,12 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-
     @GetMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
     List<ReadOrderDTO> all() {
         return orderService.getAllOrders();
     }
 
+//    endpoint to verify there are no active orders on exchange you want to delete
 
 }
