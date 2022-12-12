@@ -1,6 +1,8 @@
 version: "3.9"
 
 volumes:
+  market-data-service-data:
+  order-service-data:
   reporting-service-data:
   user-service-data:
   discovery-data:
@@ -231,23 +233,50 @@ services:
       DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
       KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
 
-#order-service
-#market-data-service
+  order-service:
+    build:
+      context: .
+      dockerfile: ./services/order-service/dockerfile
+    image: green-note-order-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - order-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
 
-#    volumes_from:
-#      - api:rw
-#
-# redis:
-#
-#  api:
-#    command: "echo 'I WILL EXECUTE'"
-#    container_name: green-note-pgadmin
-#    restart: always
-#    expose:
-#      - 80
-#    networks:
-#      - green-note-network
-#    depends_on:
-#      - postgres
-#    volumes:
-#      - api-data:/home/green-note/api/web/
+  market-data-service:
+    build:
+      context: .
+      dockerfile: ./services/market-data-service/dockerfile
+    image: green-note-market-data-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - market-data-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
