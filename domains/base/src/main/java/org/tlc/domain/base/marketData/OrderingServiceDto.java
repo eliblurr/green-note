@@ -5,36 +5,69 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 @Component
 @Data
 @Setter
 @Getter
 public class OrderingServiceDto {
-    private String exchangeName;
+    private Map[] ExchangeList = new Map[2];
     private Map<String, HashMap<String, Queue<TickerPriceDto>>> tickers = new HashMap<>();
 
     public OrderingServiceDto() {
     }
 
-    public OrderingServiceDto(String exchangeName, HashMap<String, HashMap<String, Queue<TickerPriceDto>>> tickers) {
-        this.exchangeName = exchangeName;
+    public OrderingServiceDto(HashMap<String, HashMap<String, Queue<TickerPriceDto>>> tickers) {
         this.tickers = tickers;
     }
+
+    /**
+     *
+     * @param ticker
+     * @return
+     * check if a ticker exists
+     */
 
     public Boolean tickerExist(String ticker){
         return tickers.containsKey(ticker);
     }
 
+    /**
+     *
+     * @param priceArray
+     * @return Boolean
+     * mantaining 10 recent records for each ticker in each exchange
+     */
     public Boolean reachedMaxPriceList(Queue<TickerPriceDto> priceArray){
         return priceArray.size()>9;
     }
 
-    public void AddTickerPrices(String ticker, TickerPriceDto price, String side){
+    /**
+     *
+     * @param exchange
+     * @param ticker
+     * Add hashmap of tickers to either mal1 OR mal2
+     */
+    public void addTickerExchange(String exchange,Map<String, HashMap<String, Queue<TickerPriceDto>>> ticker){
+        if (exchange=="MAL1"){
+            ExchangeList[0]=ticker;
+        }
+        else{
+            ExchangeList[1] = ticker;
+        }
+    }
+
+    /**
+     *
+     * @param exchange
+     * @param ticker
+     * @param price
+     * @param side
+     * ADD incoming  trades in a queue and pop the old one
+     */
+
+    public void AddTickerPrices(String exchange,String ticker, TickerPriceDto price, String side){
         //add a ticker for the first time
         if (!tickerExist(ticker)){
             tickers.put(ticker, new HashMap<>());
@@ -54,18 +87,14 @@ public class OrderingServiceDto {
             tickers.get(ticker).get(side).remove();
             tickers.get(ticker).get(side).add(price);
         }
-
+        this.addTickerExchange(exchange,tickers);
     }
 
-    public void setExchangeName(String exchangeName) {
-        this.exchangeName = exchangeName;
-    }
 
     @Override
     public String toString() {
         return "OrderingServiceDto{" +
-                "exchangeName='" + exchangeName + '\'' +
-                ", tickers=" + tickers +
+                "Exchange List=" + Arrays.toString(ExchangeList) +
                 '}';
     }
 }

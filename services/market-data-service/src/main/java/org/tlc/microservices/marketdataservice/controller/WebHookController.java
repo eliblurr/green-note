@@ -4,7 +4,6 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
@@ -31,7 +30,7 @@ public class WebHookController {
     @Autowired @Qualifier("reportTopic") private NewTopic topic;
     @Autowired @Qualifier("orderTopic") private NewTopic topic2;
 
-    private final String webHooUrl = "https://d9e0-102-22-11-130.ngrok.io/api/WebHook/newOrder";
+    private final String webHookUrl = "https://d9e0-102-22-11-130.ngrok.io/api/WebHook/newOrder";
 
     public WebHookController() {
     }
@@ -43,20 +42,19 @@ public class WebHookController {
     @PostMapping("/Subscribe")
     public void exchangeSubscribe(){
         webClientBuilder.build()
-                .post().uri("https://exchange.matraining.com/pd/subscription").body(Mono.just(webHooUrl), String.class)
+                .post().uri("https://exchange.matraining.com/pd/subscription").body(Mono.just(webHookUrl), String.class)
                 .retrieve().bodyToFlux(String.class).subscribe(
                         confirmation-> {System.out.println("MAL1 Subscribed succesfully");},
                         System.out::println
                 );
 
         webClientBuilder.build()
-                .post().uri("https://exchange2.matraining.com/pd/subscription").body(Mono.just(webHooUrl), String.class)
+                .post().uri("https://exchange2.matraining.com/pd/subscription").body(Mono.just(webHookUrl), String.class)
                 .retrieve().bodyToFlux(String.class).subscribe(
                         confirmation-> {System.out.println("MAL2 Subscribed succesfully");},
                         System.out::println
                 );
     }
-
 
     /**
      *
@@ -74,9 +72,8 @@ public class WebHookController {
         KafkaPublish.sendMessage(newData);
 
         //publish to ordering service
-        orderingServiceDto.setExchangeName(newData.getExchange());
         TickerPriceDto tickerPriceDto = new TickerPriceDto(newData.getPrice(),newData.getQty());
-        orderingServiceDto.AddTickerPrices(newData.getProduct(),tickerPriceDto,newData.getSide());
+        orderingServiceDto.AddTickerPrices(newData.getExchange(),newData.getProduct(),tickerPriceDto,newData.getSide());
         System.out.println("ordering service: "+orderingServiceDto.toString());
         orderingServicePublisher.setTopic(topic2);
         System.out.println(topic2.name());
