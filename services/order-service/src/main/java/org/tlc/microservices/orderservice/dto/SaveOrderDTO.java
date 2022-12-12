@@ -38,5 +38,6 @@ public class SaveOrderDTO {
         this.portfolioId = orderRequest.getPortfolioId();
         this.position = orderRequest.getPosition();
         this.status = status;
+        this.created = LocalDateTime.now();
     }
 }

@@ -48,9 +48,6 @@ public abstract class OrderProcessor {
                 newOrder.getPrice())
                 .build();
     }
-
-
-
     public abstract SaveTradeDTO processOrder(SaveOrderDTO order);
 
 

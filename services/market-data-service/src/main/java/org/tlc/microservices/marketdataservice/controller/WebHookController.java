@@ -3,52 +3,58 @@ package org.tlc.microservices.marketdataservice.controller;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
-import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
+import org.tlc.domain.base.marketData.TickerPriceDto;
 import org.tlc.microservices.marketdataservice.service.KafkaPublish;
 import org.tlc.microservices.marketdataservice.service.OrderingServicePublisher;
-
+import reactor.core.publisher.Mono;
 
 import java.text.ParseException;
 
 
 @RestController
+@EnableCaching
 @RequestMapping("api/WebHook/newOrder")
 public class WebHookController {
-    @Autowired
-    WebClient.Builder webClientBuilder;
+    @Autowired WebClient.Builder webClientBuilder;
 
-    @Autowired
-    OrderingServiceDto orderingServiceDto;
+    @Autowired OrderingServiceDto orderingServiceDto;
 
-    @Autowired
-    private KafkaPublish KafkaPublish;
-    @Autowired
-    private OrderingServicePublisher orderingServicePublisher;
+    @Autowired private KafkaPublish KafkaPublish;
+    @Autowired private OrderingServicePublisher orderingServicePublisher;
 
     @Autowired @Qualifier("reportTopic") private NewTopic topic;
     @Autowired @Qualifier("orderTopic") private NewTopic topic2;
+
+    private final String webHooUrl = "https://d9e0-102-22-11-130.ngrok.io/api/WebHook/newOrder";
 
     public WebHookController() {
     }
 
     /**
      *
-     * @return web client builder
-     * get market data market information
+     * subscribes to exchange1 and exchange2
      */
-    @GetMapping("/GetExchangeProduct")
-    public ExchangeProducts[] getExchangeProduct(){
-        return webClientBuilder.build()
-                .get()
-                .uri("https://exchange.matraining.com/pd")
-                .retrieve()
-                .bodyToMono(ExchangeProducts[].class)
-                .block();
+    @PostMapping("/Subscribe")
+    public void exchangeSubscribe(){
+        webClientBuilder.build()
+                .post().uri("https://exchange.matraining.com/pd/subscription").body(Mono.just(webHooUrl), String.class)
+                .retrieve().bodyToFlux(String.class).subscribe(
+                        confirmation-> {System.out.println("MAL1 Subscribed succesfully");},
+                        System.out::println
+                );
+
+        webClientBuilder.build()
+                .post().uri("https://exchange2.matraining.com/pd/subscription").body(Mono.just(webHooUrl), String.class)
+                .retrieve().bodyToFlux(String.class).subscribe(
+                        confirmation-> {System.out.println("MAL2 Subscribed succesfully");},
+                        System.out::println
+                );
     }
 
 
@@ -56,7 +62,7 @@ public class WebHookController {
      *
      * @param newData returns an Object
      * @throws ParseException
-     * listen to the exchange using webhook and immediately publish on redis
+     * listen to the exchange using webhook and immediately publish on kafka
      */
     @PostMapping
     public void marketData(@RequestBody ReportingServiceDto newData) {
@@ -69,15 +75,11 @@ public class WebHookController {
 
         //publish to ordering service
         orderingServiceDto.setExchangeName(newData.getExchange());
-        orderingServiceDto.AddTickerPrices(newData.getProduct(),newData.getPrice(),newData.getSide());
+        TickerPriceDto tickerPriceDto = new TickerPriceDto(newData.getPrice(),newData.getQty());
+        orderingServiceDto.AddTickerPrices(newData.getProduct(),tickerPriceDto,newData.getSide());
         System.out.println("ordering service: "+orderingServiceDto.toString());
         orderingServicePublisher.setTopic(topic2);
         System.out.println(topic2.name());
         orderingServicePublisher.sendMessage(orderingServiceDto);
-
     }
-
-
-
-
 }
