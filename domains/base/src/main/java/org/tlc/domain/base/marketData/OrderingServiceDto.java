@@ -16,13 +16,12 @@ import java.util.Queue;
 @Getter
 public class OrderingServiceDto {
     private String exchangeName;
-    private Map<String, HashMap<String, Queue<Double>>> tickers = new HashMap<>();
-
+    private Map<String, HashMap<String, Queue<TickerPriceDto>>> tickers = new HashMap<>();
 
     public OrderingServiceDto() {
     }
 
-    public OrderingServiceDto(String exchangeName, HashMap<String, HashMap<String, Queue<Double>>> tickers) {
+    public OrderingServiceDto(String exchangeName, HashMap<String, HashMap<String, Queue<TickerPriceDto>>> tickers) {
         this.exchangeName = exchangeName;
         this.tickers = tickers;
     }
@@ -31,11 +30,11 @@ public class OrderingServiceDto {
         return tickers.containsKey(ticker);
     }
 
-    public Boolean reachedMaxPriceList(Queue<Double> priceArray){
+    public Boolean reachedMaxPriceList(Queue<TickerPriceDto> priceArray){
         return priceArray.size()>9;
     }
 
-    public void AddTickerPrices(String ticker, Double price, String side){
+    public void AddTickerPrices(String ticker, TickerPriceDto price, String side){
         //add a ticker for the first time
         if (!tickerExist(ticker)){
             tickers.put(ticker, new HashMap<>());
