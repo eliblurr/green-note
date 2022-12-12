@@ -40,14 +40,13 @@ public abstract class OrderProcessor {
 //        UUID tradeID = UUID.fromString(exchangeResponse);
 
         return new SaveTradeDTO.SaveTradeDTOBuilder(exchangeResponse,
-                newOrder.getOrderID(),
+                newOrder.getOrderId(),
                 TradeStatus.OPEN,
                 newOrder.getQuantity(),
                 newOrder.getSide(),
                 exchanges.get(key),
                 newOrder.getPrice())
                 .build();
-
     }
 
 

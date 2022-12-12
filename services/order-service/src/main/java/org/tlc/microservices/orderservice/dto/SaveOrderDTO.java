@@ -15,27 +15,27 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class SaveOrderDTO {
-    private UUID orderID;
-    private int clientID;
+    private UUID orderId;
+    private UUID clientId;
     private String product;
     private int quantity;
     private double price;
     private Side side;
     private OrderType type;
-    private int portfolioID;
+    private UUID portfolioId;
     private OrderPosition position;
     private OrderStatus status;
     LocalDateTime created;
 
     public SaveOrderDTO(OrderRequestDTO orderRequest, OrderStatus status) {
-        this.orderID = UUID.randomUUID();
-        this.clientID = orderRequest.getClientID();
+        this.orderId = UUID.randomUUID();
+        this.clientId = orderRequest.getClientId();
         this.product = orderRequest.getProduct();
         this.quantity = orderRequest.getQuantity();
         this.price = orderRequest.getPrice();
         this.side = orderRequest.getSide();
         this.type = orderRequest.getType();
-        this.portfolioID = orderRequest.getPortfolioID();
+        this.portfolioId = orderRequest.getPortfolioId();
         this.position = orderRequest.getPosition();
         this.status = status;
     }

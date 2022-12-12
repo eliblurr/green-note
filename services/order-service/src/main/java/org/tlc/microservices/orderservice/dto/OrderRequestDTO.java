@@ -14,11 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class OrderRequestDTO {
-    private int clientID;
+    private UUID clientId;
     private String product;
     private double price;
     private int quantity;
-    private int portfolioID;
+    private UUID portfolioId;
     private Side side;
     private OrderPosition position;
     private OrderType type;

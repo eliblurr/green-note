@@ -1,12 +1,14 @@
 package org.tlc.microservices.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDataDTO {
     @JsonProperty
     private String TICKER;

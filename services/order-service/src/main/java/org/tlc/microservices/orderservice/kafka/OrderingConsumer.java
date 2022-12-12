@@ -8,6 +8,7 @@ import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.microservices.orderservice.msdata.BuySideData;
 import org.tlc.microservices.orderservice.msdata.MarketServiceData;
 import org.tlc.microservices.orderservice.msdata.SellSideData;
+import org.tlc.microservices.orderservice.services.OrderProcessorStrategyPicker;
 import org.tlc.microservices.orderservice.services.OrderValidator;
 
 @Service
@@ -16,12 +17,13 @@ public class OrderingConsumer implements KafkaConsumer<OrderingServiceDto> {
     MarketServiceData marketServiceData;
     @Autowired
     OrderValidator orderValidator;
+    @Autowired
+    OrderProcessorStrategyPicker orderProcessorStrategyPicker;
     @Override
     @KafkaListener(topics = "${spring.kafka.topic.reporting.name}",
             groupId = "${spring.kafka.consumer.group-id}")
     public void consume(OrderingServiceDto obj) {
         orderValidator.setMarketData(obj);
-
         System.out.println("\n\n"+obj.toString());
     }
 }
