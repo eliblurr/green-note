@@ -1,7 +1,6 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
 
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.order.enums.OrderStatus;
-import org.tlc.domain.base.order.Response;
+import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
@@ -44,22 +44,19 @@ public class OrderService {
         SaveTradeDTO trade = orderProcessor.processOrder(order);
         //will be replaced with a list of trades
         System.out.println(trade);
-        orderPublisher.saveOrder(order);
-        orderPublisher.saveTrades(trade);
+        //orderPublisher.saveOrder(order);
+        //orderPublisher.saveTrades(trade);
 
         System.out.println(order);
+
         return resp;
     }
 
-    //    public Response checkOrderStatus(CheckOrderStatusDTO checkStatusDTO){
-//        //fetch exchange link using key
-//        webClientBuilder.build()
-//                .get()
-//                .uri("https://exchange.matraining.com/" + apiKey +"/order" + checkStatusDTO.getTradeID())
-//                .retrieve().bodyToMono()
-//    }
 
-    //public void updateOrder(){}
+
+    public void updateOrder(){
+
+    }
 
 
 }

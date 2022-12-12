@@ -1,9 +1,6 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 

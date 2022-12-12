@@ -3,11 +3,9 @@ package org.tlc.microservices.orderservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
-import org.tlc.domain.base.order.enums.OrderStatus;
+import org.tlc.domain.base.marketData.TickerPriceDto;
 import org.tlc.domain.base.order.enums.Side;
-import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import org.tlc.microservices.orderservice.services.processingstrategies.SplitOrderProcessor;
 
@@ -22,8 +20,7 @@ public class OrderProcessorStrategyPicker {
     SplitOrderProcessor splitOrderProcessor;
     @Autowired
     OrderValidator orderValidator;
-    @Autowired
-    Iterator<Double> queueIterator;
+
 
 
 
@@ -39,7 +36,7 @@ public class OrderProcessorStrategyPicker {
         OrderingServiceDto marketdata = orderValidator.getMarketData();
 
 
-        Queue<Double> lastTenPrices = marketdata.getTickers().get(product).get(side);
+        Queue<TickerPriceDto> lastTenPrices = marketdata.getTickers().get(product).get(side);
 
         ///if md is empty just place default order
         if (!lastTenPrices.isEmpty()) {
@@ -51,18 +48,12 @@ public class OrderProcessorStrategyPicker {
             //next check for if the order can be split into multiple legs
             //first retrieve the last 10 prices avalailable to be traded at
             // then check if order can span multiple of these
-            queueIterator = lastTenPrices.iterator();
+            Iterator<TickerPriceDto> queueIterator = lastTenPrices.iterator();
             if(order.getSide().equals(Side.BUY)){
-                if(limitForPrice > lastTenPrices.price() && order.getQuantity() > LastTenPrices.quantity()){
-
-
-                }
-
-            }
-            if (orderTotal > ) {//if order total is  greater than product available at that price;
+                if(limitForPrice > lastTenPrices.element().getPrice() && order.getQuantity() > lastTenPrices.element().getQuantity()){
                 splitOrderProcessor.processOrder(order);
+                }
             }
-            if(lastTenPrices. > limitForPrice){}
 
             //
 
