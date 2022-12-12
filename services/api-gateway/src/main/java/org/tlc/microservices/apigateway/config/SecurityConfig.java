@@ -1,6 +1,7 @@
 package org.tlc.microservices.apigateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.gateway.config.conditional.ConditionalOnEnabledFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +23,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.server.WebFilter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -33,33 +39,89 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain authFilterChain(ServerHttpSecurity serverHttpSecurity){
-        return serverHttpSecurity.csrf().disable().exceptionHandling()
-//                .authenticationEntryPoint(jwtEntryPoint)
-//                .and().addFilterBefore(jwtTokenFilter(), SecurityWebFiltersOrder.AUTHORIZATION)
-                .and()
-                .authorizeExchange(exchange -> exchange.anyExchange().permitAll()).build();
+        return serverHttpSecurity.csrf().disable().cors().disable().authorizeExchange(
+                ex -> ex.anyExchange().permitAll()
+        ).build();
     }
-
-    public JwtFilter jwtTokenFilter() { return new JwtFilter();}
 
     @Bean
-    public SecurityFilterChain useJwtFilter(HttpSecurity http) throws Exception {
-//        System.out.println("\n\n I AM CALLED \n\n");
-        return http.addFilterBefore(jwtTokenFilter(), BasicAuthenticationFilter.class)
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
-                .authorizeHttpRequests()
-//                .anyRequest()
-//                .authorizeRequests().antMatchers("/api/v1/auth/**").permitAll()
-                .anyRequest().authenticated().and().build();
-
-
-//        http.addFilterBefore(jwtTokenFilter(), BasicAuthenticationFilter.class);
-
-//        return http.build();
-//        return http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class).build();
+    public SecurityWebFilterChain corsWebFilterChain(ServerHttpSecurity serverHttpSecurity){
+        return serverHttpSecurity.cors().and().build();
     }
+
+
+//    @Bean
+//    public SecurityFilterChain corsFilterChain(HttpSecurity http) throws Exception {
+//        http.cors();
+////                .and().csrf().disable();
+//        return http.build();
+//    }
+
+
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
+//        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+//    @Bean
+//    public SecurityWebFilterChain authFilterChain(ServerHttpSecurity serverHttpSecurity){
+//
+////        serverHttpSecurity.cors()
+//
+//        return serverHttpSecurity.csrf().disable().exceptionHandling()
+////                .authenticationEntryPoint(jwtEntryPoint)
+////                .and().addFilterBefore(jwtTokenFilter(), SecurityWebFiltersOrder.AUTHORIZATION)
+//                .and().cors().and()
+////                .cors("kkj")
+////                .cors(corsFilter()).
+//                .authorizeExchange(exchange -> exchange.anyExchange().permitAll()).build();
+//    }
+
+//    public JwtFilter jwtTokenFilter() { return new JwtFilter();}
+
+//    @Bean
+//    public SecurityFilterChain useJwtFilter(HttpSecurity http) throws Exception {
+////        System.out.println("\n\n I AM CALLED \n\n");
+//        return http.addFilterBefore(jwtTokenFilter(), BasicAuthenticationFilter.class)
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
+//                .authorizeHttpRequests()
+////                .anyRequest()
+////                .authorizeRequests().antMatchers("/api/v1/auth/**").permitAll()
+//                .anyRequest().authenticated().and().build();
+//
+//
+////        http.addFilterBefore(jwtTokenFilter(), BasicAuthenticationFilter.class);
+//
+////        return http.build();
+////        return http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class).build();
+//    }
+
+//    @Bean
+//    public CorsConfiguration corsConfiguration(){
+//        List<String> gbl = new ArrayList<>();
+//        gbl.add("*");
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader("*");
+//        config.addAllowedMethod("*");
+//        config.setAllowedHeaders(gbl);
+//        config.setAllowedMethods(gbl);
+//        config.setAllowedOrigins(gbl);
+//        return config;
+//    }
 
     @Bean
     public CorsFilter corsFilter() {
@@ -69,6 +131,13 @@ public class SecurityConfig {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+
+        List<String> gbl = new ArrayList<>();
+        gbl.add("*");
+
+        config.setAllowedHeaders(gbl);
+        config.setAllowedMethods(gbl);
+        config.setAllowedOrigins(gbl);
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

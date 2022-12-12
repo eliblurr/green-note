@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users/customers")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class CustomerController {
 
