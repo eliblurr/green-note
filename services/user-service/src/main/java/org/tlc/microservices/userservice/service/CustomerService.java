@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tlc.domain.base.dto.ClientValidationDTO;
+import org.tlc.domain.base.dto.ValidateCustomerDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.customer.*;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;

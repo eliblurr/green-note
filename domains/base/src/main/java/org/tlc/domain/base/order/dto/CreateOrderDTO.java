@@ -13,7 +13,6 @@ import java.util.UUID;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CreateOrderDTO {
 
     private UUID id;

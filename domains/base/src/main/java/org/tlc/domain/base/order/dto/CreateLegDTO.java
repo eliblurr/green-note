@@ -11,7 +11,6 @@ import java.util.UUID;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CreateLegDTO {
 
     private LegStatus status;
