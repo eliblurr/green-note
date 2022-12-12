@@ -1,9 +1,9 @@
 package org.tlc.microservices.reportingservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.OrderPosition;
@@ -13,32 +13,35 @@ import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.reportingservice.mapper.DTOToModel;
 import org.tlc.microservices.reportingservice.model.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Component
-public class ReadOrderDTO implements DTOToModel<OrderTrade> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrderDTO implements DTOToModel<Order> {
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    private int orderID;
-    private int clientID;
-    private double price;
+    private UUID id;
+    private UUID exchangeOrderId;
+    private UUID customer;
     private String product;
-    private LocalDateTime created;
-    private LocalDateTime updated;
-    private OrderStatus status;
+    private double price;
     private int quantity;
+    private UUID portfolio;
     private Side side;
-    private OrderSplit type;
-    private int portfolioID;
     private OrderPosition position;
+    private OrderStatus status;
+    private OrderSplit split;
+    private Timestamp updated;
+    private Timestamp created;
 
-    public OrderTrade convertToEntity() throws RuntimeException {
-        return modelMapper.map(this, OrderTrade.class);
+    public Order convertToEntity() throws RuntimeException {
+        return modelMapper.map(this, Order.class);
     }
-
 
 }

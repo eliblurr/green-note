@@ -1,0 +1,282 @@
+version: "3.9"
+
+volumes:
+  market-data-service-data:
+  order-service-data:
+  reporting-service-data:
+  user-service-data:
+  discovery-data:
+  notification-service-data:
+  api-gateway-data:
+  logging-service-data:
+  pgadmin_data:
+  postgres_data:
+  kafka_data:
+  redis_data:
+    driver: local
+
+networks:
+  green-note-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgis/postgis:12-master
+    container_name: green-note-postgres
+    restart: always
+    networks:
+      - green-note-network
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+
+  pgadmin:
+    build:
+      context: ./docker/pgadmin
+      dockerfile: dockerfile
+    container_name: green-note-pgadmin
+    restart: always
+    expose:
+      - 80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+     - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - green-note-network
+    depends_on:
+      - postgres
+
+  kafka-zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: kafka-zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${ZOOKEEPER_CLIENT_PORT:-2181}
+      ZOOKEEPER_TICK_TIME: ${ZOOKEEPER_TICK_TIME:-2000}
+    networks:
+      - green-note-network
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-broker
+    restart: always
+    ports:
+      - "${KAFKA_BROKER_PORT:-9092}:9092"
+    depends_on:
+      - kafka-zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOOKEEPER_CLIENT_PORT:-2181}"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:${KAFKA_BROKER_PORT:-9092},PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:-1}
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: ${KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:-1}
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: ${KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:-1}
+    networks:
+      - green-note-network
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: dockerfile
+    restart: always
+    ports:
+      - ${API_PORT}:2000
+      - ${PGADMIN_PORT}:2001
+    networks:
+      - green-note-network
+    depends_on:
+        - pgadmin
+
+  discovery-server:
+    build:
+      context: .
+      dockerfile: ./services/discovery-server/dockerfile
+    image: green-note-discovery-server
+    container_name: green-note-discovery-server
+    restart: always
+    networks:
+      - green-note-network
+    expose:
+      - ${DISCOVERY_SERVER_PORT:-8088}
+    volumes:
+      - discovery-data:/usr/app/data/
+    environment:
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      LEASE_RENEWAL_INTERVAL_IN_SECONDS: ${LEASE_RENEWAL_INTERVAL_IN_SECONDS:-5}
+      LEASE_EXPIRATION_DURATION_IN_SECONDS: ${LEASE_EXPIRATION_DURATION_IN_SECONDS:-30}
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./services/api-gateway/dockerfile
+    image: green-note-api-gateway
+    restart: always
+    networks:
+      - green-note-network
+    depends_on:
+      - discovery-server
+    volumes:
+      - api-gateway-data:/usr/app/data/
+    expose:
+      - 80
+    environment:
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      LEASE_RENEWAL_INTERVAL_IN_SECONDS: ${LEASE_RENEWAL_INTERVAL_IN_SECONDS:-5}
+      LEASE_EXPIRATION_DURATION_IN_SECONDS: ${LEASE_EXPIRATION_DURATION_IN_SECONDS:-30}
+
+  logging-service:
+    build:
+      context: .
+      dockerfile: ./services/logging-service/dockerfile
+    image: green-note-logging-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - logging-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./services/notification-service/dockerfile
+    image: green-note-notification-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - notification-service-data:/usr/app/data/
+    depends_on:
+      - kafka-broker
+    environment:
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./services/user-service/dockerfile
+    image: green-note-user-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - user-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+      APP_SECRET: ${APP_SECRET:-FQGOMGklQUnjLvtIkk5GibgvaE9Gxeap}
+      JWT_EXPIRATION_IN_MINUTES: ${JWT_EXPIRATION_IN_MINUTES:-200}
+      JWT_REFRESH_EXPIRATION_IN_MINUTES: ${JWT_REFRESH_EXPIRATION_IN_MINUTES:-1000}
+
+  reporting-service:
+    build:
+      context: .
+      dockerfile: ./services/reporting-service/dockerfile
+    image: green-note-reporting-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - reporting-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+
+  order-service:
+    build:
+      context: .
+      dockerfile: ./services/order-service/dockerfile
+    image: green-note-order-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - order-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}
+
+  market-data-service:
+    build:
+      context: .
+      dockerfile: ./services/market-data-service/dockerfile
+    image: green-note-market-data-service
+    restart: always
+    networks:
+      - green-note-network
+    volumes:
+      - market-data-service-data:/usr/app/data/
+    depends_on:
+      - postgres
+      - kafka-broker
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      KAFKA_HOST: kafka-broker
+      DISCOVERY_HOST: discovery-server
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
+      DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}
+      DISCOVERY_SERVER_PASSWORD: ${DISCOVERY_SERVER_PASSWORD:-password}
+      KAFKA_BROKER_PORT: ${KAFKA_BROKER_PORT:-9092}

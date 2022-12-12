@@ -1,9 +1,8 @@
 package org.tlc.microservices.orderservice.dto;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.Side;
-import org.tlc.domain.base.order.enums.TradeStatus;
+import org.tlc.domain.base.order.enums.LegStatus;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
 public class SaveTradeDTO {
     private String tradeID;
     private UUID orderID;
-    private TradeStatus status;
+    private LegStatus status;
     private int quantity;
     private Side side;
     private String exchangeID;
@@ -34,14 +33,14 @@ public class SaveTradeDTO {
     public static class SaveTradeDTOBuilder{
         private String tradeID;
         private UUID orderID;
-        private TradeStatus status;
+        private LegStatus status;
         private int quantity;
         private Side side;
         private String exchangeID;
         private double price;
         private LocalDateTime created;
 
-        public SaveTradeDTOBuilder(String tradeID, UUID orderID, TradeStatus status, int quantity, Side side, String exchangeID, double price) {
+        public SaveTradeDTOBuilder(String tradeID, UUID orderID, LegStatus status, int quantity, Side side, String exchangeID, double price) {
             this.tradeID = tradeID;
             this.orderID = orderID;
             this.status = status;

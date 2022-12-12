@@ -1,38 +1,36 @@
 package org.tlc.microservices.reportingservice.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.tlc.microservices.reportingservice.dto.OrderCreationDTO;
-import org.tlc.microservices.reportingservice.dto.ReadOrderDTO;
+import org.tlc.microservices.reportingservice.dto.OrderDTO;
 import org.tlc.microservices.reportingservice.services.OrderService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/orders")
+//@CrossOrigin(origins = "http://127.0.0.1:*")
+@RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class OrderController {
 
-//    @Autowired
-    private final OrderService orderService;
+    @Autowired private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
-
-
-    @GetMapping("/orders")
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<ReadOrderDTO> all() {
-        return orderService.getAllOrders();
-    }
+    public List<OrderDTO> read(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "created, asc") String[] sort,
+            @RequestParam(required = false) UUID customer
+    ) { return orderService.read(page, size, sort, customer); }
 
-    @PostMapping("/orders")
+    @GetMapping(value = {"/{id}", "/{id}/"})
     @ResponseStatus(HttpStatus.OK)
-    public  void createOrder(@RequestBody OrderCreationDTO orderCreationDTO){
-    orderService.saveOrder(orderCreationDTO);
+    OrderDTO readById(@PathVariable("id") UUID id){
+        return orderService.readById(id);
     }
-
-
-
-
 
 }

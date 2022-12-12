@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.tlc.domain.base.dto.ClientValidationDTO;
+import org.tlc.domain.base.dto.ValidateCustomerDTO;
 import org.tlc.microservices.userservice.dto.EmailDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.admin.CreateAdminDTO;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users/customers")
-//@CrossOrigin(origins = "http://127.0.0.1:8080")
+@CrossOrigin("*")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class CustomerController {
 

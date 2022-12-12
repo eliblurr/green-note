@@ -1,6 +1,6 @@
 package org.tlc.domain.base.order.enums;
 
-public enum TradeStatus {
+public enum LegStatus {
     OPEN,
     CLOSED,
     CANCELLED

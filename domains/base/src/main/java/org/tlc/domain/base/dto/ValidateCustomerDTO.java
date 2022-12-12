@@ -1,6 +1,5 @@
-package org.tlc.microservices.userservice.dto.customer;
+package org.tlc.domain.base.dto;
 
-import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
