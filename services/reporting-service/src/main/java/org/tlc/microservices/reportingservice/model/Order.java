@@ -13,20 +13,18 @@ import java.util.UUID;
 import org.tlc.domain.base.order.enums.OrderSplit;
 
 @Entity
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
-@RequiredArgsConstructor
 public class Order {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) private UUID id;
     @Column(name = "exchange_order_id", nullable = false) @NonNull private UUID exchangeOrderId;
     @Column(name = "customer", nullable = false) @NonNull private UUID customer;
     @Column(name = "product", nullable = false) @NonNull private String product;
-    @Column(name = "price", nullable = false) @NonNull private double price;
-    @Column(name = "quantity", nullable = false) @NonNull private int quantity;
+    @Column(name = "price", nullable = false)  private double price;
+    @Column(name = "quantity", nullable = false)  private int quantity;
     @Column(name = "portfolio", nullable = false) @NonNull private UUID portfolio;
     @Column(name = "side", nullable = false) @NonNull  private Side side;
     @Column(name = "position", nullable = false) @NonNull   private OrderPosition position;
@@ -34,6 +32,6 @@ public class Order {
     @Column(name = "split", nullable = false) @NonNull  private OrderSplit split;
     @Column(name = "updated") @UpdateTimestamp private Timestamp updated;
     @Column(name = "created", updatable = false) @CreationTimestamp private Timestamp created;
-    @OneToMany(mappedBy = "orders") private List<Leg> legs;
+    @OneToMany(mappedBy = "order", fetch =FetchType.EAGER, cascade = CascadeType.ALL) private List<Leg> legs;
 
 }

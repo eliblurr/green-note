@@ -4,18 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.dto.ClientValidationDTO;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.Response;
-import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
-import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.dto.ProductDataDTO;
-import org.tlc.microservices.orderservice.dto.ValidateCustomerDTO;
-import reactor.core.publisher.Mono;
+import org.tlc.domain.base.order.dto.OrderRequestDTO;
+import org.tlc.microservices.orderservice.configuration.dto.ProductDataDTO;
+import org.tlc.microservices.orderservice.configuration.dto.ValidateCustomerDTO;
 
 //validator takes data from market data service and ensures that the order can be made
 

@@ -1,15 +1,21 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
+import org.tlc.domain.base.order.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.configuration.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.services.OrderExecutor;
 
 @Component
-public class SplitOrderProcessor extends OrderProcessor{
+public class SplitOrderProcessor implements OrderProcessor{
+    @Autowired
+    ExchangesConfig exchangesConfig;
+    @Autowired
+    OrderExecutor orderExecutor;
 //    List<Exchange> exchanges;
     @Override
     public SaveTradeDTO processOrder(SaveOrderDTO order) {
-
-        return super.placeOrder(order,"MAL1");
+        return orderExecutor.placeOrder(order,"MAL1");
     }
 }

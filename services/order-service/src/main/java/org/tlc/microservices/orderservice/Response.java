@@ -1,11 +1,16 @@
 package org.tlc.microservices.orderservice;
 
 public enum Response {
-VALID_ORDER(true, "order is valid"),
-INVALID_QUANTITY(false, "user does not have enough of the product in their inventory"),
-UNREASONABLE_PRICE(false, "Price set is unlikely to be accepted by exchange"),
-INSUFFICIENT_FUNDS(false, "Not enough funds in account for this transaction"),
-INVALID_REQUEST(false, "Request received was not valid");
+    VALID_ORDER(true, "order is valid"),
+    INVALID_QUANTITY(false, "user does not have enough of the product in their inventory"),
+    UNREASONABLE_PRICE(false, "Price set is unlikely to be accepted by exchange"),
+    INSUFFICIENT_FUNDS(false, "Not enough funds in account for this transaction"),
+    INVALID_REQUEST(false, "Request received was not valid"),
+    ORDER_CANCELLED(true, "Order cancelled successfully"),
+    ORDER_NOT_CANCELLED(false, "Order could not be cancelled"),
+    ORDER_UPDATED(true, "Order updated successfully"),
+    ORDER_NOT_UPDATED(false, "Order could not be updated");
+
     Response(boolean success, String message) {
         this.success = success;
         this.message = message;

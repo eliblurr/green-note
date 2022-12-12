@@ -1,17 +1,19 @@
 package org.tlc.microservices.orderservice.services.processingstrategies;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.domain.base.order.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.configuration.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.services.OrderExecutor;
 
 @Component
-public class DefaultOrderProcessor extends OrderProcessor {
-//    @Autowired
-//    OrderProcessor orderProcessor;
+public class DefaultOrderProcessor implements OrderProcessor {
+    @Autowired
+    OrderExecutor orderExecutor;
 
     @Override
     public SaveTradeDTO processOrder(SaveOrderDTO order) {
-        return super.placeOrder(order,"MAL1");
+        return orderExecutor.placeOrder(order, "MAL1");
     }
 
 }

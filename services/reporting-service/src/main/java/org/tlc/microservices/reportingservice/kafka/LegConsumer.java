@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.tlc.domain.base.order.dto.CreateLegDTO;
 import org.tlc.domain.base.order.dto.UpdateLegDTO;
-import org.tlc.domain.base.order.dto.UpdateOrderDTO;
 import org.tlc.microservices.reportingservice.services.LegService;
 
 public class LegConsumer {

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.tlc.domain.base.kafka.KafkaConsumer;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
 import org.tlc.domain.base.order.dto.CreateOrderDTO;
-import org.tlc.domain.base.order.dto.UpdateOrderDTO;
+import org.tlc.domain.base.order.dto.SaveOrderDTO;
 import org.tlc.microservices.reportingservice.services.OrderService;
 
 @Service
@@ -22,15 +22,12 @@ public class OrderConsumer implements KafkaConsumer<ReportingServiceDto> {
         System.out.println("\n\n"+obj.toString());
     }
 
+
     @KafkaListener(topics = "${spring.kafka.topic.reporting.order.create.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(CreateOrderDTO createOrderDTO) {
         orderService.create(createOrderDTO);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.reporting.order.update.name}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consume(UpdateOrderDTO updateOrderDTO) {
-        orderService.updateStatus(updateOrderDTO.getOrderId(), updateOrderDTO.getStatus());
-//        orderService.updateById("", updateOrderDTO);
-    }
+
 
 }

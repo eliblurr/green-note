@@ -1,9 +1,8 @@
 package org.tlc.microservices.orderservice.services;
 
 import org.springframework.stereotype.Service;
-import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.domain.base.order.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.configuration.dto.SaveTradeDTO;
 
 import java.util.List;
 

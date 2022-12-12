@@ -1,7 +1,7 @@
-package org.tlc.microservices.orderservice.dto;
+package org.tlc.microservices.orderservice.configuration.dto;
 
 import lombok.*;
-import org.modelmapper.ModelMapper;
+import org.tlc.domain.base.order.dto.SaveOrderDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor

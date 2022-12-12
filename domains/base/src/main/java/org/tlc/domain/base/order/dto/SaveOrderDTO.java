@@ -1,7 +1,6 @@
-package org.tlc.microservices.orderservice.dto;
+package org.tlc.domain.base.order.dto;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.OrderPosition;
 import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.enums.OrderType;
