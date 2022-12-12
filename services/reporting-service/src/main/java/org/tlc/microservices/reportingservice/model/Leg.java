@@ -17,14 +17,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "legs")
-@RequiredArgsConstructor
 public class Leg {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) private UUID id;
-    @Column(name = "status", nullable = false) @NonNull private UUID tradeId;
-    @Column(name = "status", nullable = false) @NonNull private LegStatus status;
-    @Column(name = "quantity", nullable = false) @NonNull private int quantity;
-    @Column(name = "side", nullable = false) @NonNull private Side side;
+    @Column(name = "tradeId", nullable = false) private UUID tradeId;
+    @Column(name = "status", nullable = false) private LegStatus status;
+    @Column(name = "quantity", nullable = false) private int quantity;
+    @Column(name = "side", nullable = false) private Side side;
     @Column(name = "exchange_id") private UUID exchangeId;
     @Column(name = "price") private double price;
     @Column(name = "updated") @UpdateTimestamp private Timestamp updated;
