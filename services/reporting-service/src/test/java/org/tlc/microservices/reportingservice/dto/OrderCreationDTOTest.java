@@ -25,22 +25,22 @@ class OrderCreationDTOTest {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
-    @Test
-    public void whenMapGameWithExactMatch_thenConvertsToDTO() {
-        // when similar source object is provided
-        UUID exchangeOrderId = UUID.randomUUID();
-        UUID customer = UUID.randomUUID();
-        UUID portfolio = UUID.randomUUID();
-        CreateOrderDTO orderCreationDTO = new CreateOrderDTO(
-                exchangeOrderId, customer, "AAPL",
-                3.2, 20, portfolio, Side.BUY,
-                OrderPosition.NORMAL, OrderStatus.ACCEPTED,
-                OrderSplit.SINGLE
-        );
-        Order orderTrade = this.mapper.map(orderCreationDTO, Order.class);
-        // then it maps by default
-        assertEquals(orderCreationDTO.getQuantity(), orderCreationDTO.getQuantity());
-        assertEquals(orderTrade.getCustomer(), orderTrade.getCustomer());
-    }
+//    @Test
+//    public void whenMapGameWithExactMatch_thenConvertsToDTO() {
+//        // when similar source object is provided
+//        UUID exchangeOrderId = UUID.randomUUID();
+//        UUID customer = UUID.randomUUID();
+//        UUID portfolio = UUID.randomUUID();
+//        CreateOrderDTO orderCreationDTO = new CreateOrderDTO(
+//                exchangeOrderId, customer, "AAPL",
+//                3.2, 20, portfolio, Side.BUY,
+//                OrderPosition.NORMAL, OrderStatus.ACCEPTED,
+//                OrderSplit.SINGLE
+//        );
+//        Order orderTrade = this.mapper.map(orderCreationDTO, Order.class);
+//        // then it maps by default
+//        assertEquals(orderCreationDTO.getQuantity(), orderCreationDTO.getQuantity());
+//        assertEquals(orderTrade.getCustomer(), orderTrade.getCustomer());
+//    }
 
 }

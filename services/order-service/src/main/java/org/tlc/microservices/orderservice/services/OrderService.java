@@ -24,7 +24,8 @@ public class OrderService {
     @Autowired
     private OrderValidator validator;
     @Autowired
-    private OrderPublisher orderPublisher;
+    private PublishingService publishingService;
+
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -42,7 +43,7 @@ public class OrderService {
 //        SaveOrderDTO order = modelMapper.map(orderRequest, SaveOrderDTO.class);
         if (!resp.isSuccess()) {
             SaveOrderDTO order = new SaveOrderDTO(orderRequest, OrderStatus.REJECTED);
-            orderPublisher.saveOrder(order);
+            publishingService.saveOrder(order);
             return resp;
         }
 
@@ -50,11 +51,9 @@ public class OrderService {
         SaveTradeDTO trade = orderProcessor.processOrder(order);
         //will be replaced with a list of trades
         System.out.println(trade);
-        //orderPublisher.saveOrder(order);
+        publishingService.saveOrder(order);
         //orderPublisher.saveTrades(trade);
-
         System.out.println(order);
-
         return resp;
     }
 

@@ -39,4 +39,21 @@ public class SaveOrderDTO {
         this.status = status;
         this.created = LocalDateTime.now();
     }
+
+    @Override
+    public String toString() {
+        return "SaveOrderDTO{" +
+                "orderId=" + orderId +
+                ", clientId=" + clientId +
+                ", product='" + product + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", side=" + side +
+                ", type=" + type +
+                ", portfolioId=" + portfolioId +
+                ", position=" + position +
+                ", status=" + status +
+                ", created=" + created +
+                '}';
+    }
 }

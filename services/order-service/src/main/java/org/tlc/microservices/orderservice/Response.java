@@ -1,6 +1,7 @@
 package org.tlc.microservices.orderservice;
 
 public enum Response {
+    VALID_CLIENT(true, "Client is valid"),
     VALID_ORDER(true, "order is valid"),
     INVALID_QUANTITY(false, "user does not have enough of the product in their inventory"),
     UNREASONABLE_PRICE(false, "Price set is unlikely to be accepted by exchange"),
