@@ -20,26 +20,13 @@ public class OrderValidator {
     @Autowired
     ModelMapper modelMapper;
 
-
     public Response validate(OrderRequestDTO order) {
-
-//        make request ot user service for inventory data
         ValidateCustomerDTO customerInfo = modelMapper.map(order, ValidateCustomerDTO.class);
-
         Response validateClient = clientValidationService.validateCustomer(customerInfo, order);
-        if (validateClient.isSuccess()){
-
+        if (validateClient.isSuccess()) {
             return priceValidationService.validatePrice(order);
         }
         return validateClient;
-
     }
-
-
-
-
-
-
-
 
 }

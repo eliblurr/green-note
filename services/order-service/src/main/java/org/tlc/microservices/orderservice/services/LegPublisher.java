@@ -9,15 +9,15 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.kafka.KafkaProducer;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 
 
 @Service
 @Getter
 @Setter
-public class KafkaPublisher extends KafkaProducer<SaveOrderDTO> {
+public class LegPublisher extends KafkaProducer<SaveTradeDTO> {
 
-    public KafkaPublisher(@Autowired @Qualifier("createOrderTopic") NewTopic topic, KafkaTemplate<String, SaveOrderDTO> kafkaTemplate) {
+    public LegPublisher(@Autowired @Qualifier("createLegTopic") NewTopic topic, KafkaTemplate<String, SaveTradeDTO> kafkaTemplate) {
         super(topic, kafkaTemplate);
     }
-
 }

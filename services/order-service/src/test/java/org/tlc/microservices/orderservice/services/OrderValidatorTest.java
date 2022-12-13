@@ -5,17 +5,17 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.tlc.domain.base.order.Response;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.OrderPosition;
-import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.enums.OrderType;
-import org.tlc.domain.base.order.Response;
+import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.services.validation.ClientValidationService;
 import org.tlc.microservices.orderservice.services.validation.PriceValidationService;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

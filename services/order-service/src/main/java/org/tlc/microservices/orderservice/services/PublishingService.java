@@ -13,27 +13,33 @@ import java.util.List;
 public class PublishingService {
 
     @Autowired
-    private KafkaPublisher kafkaPublisher;
+    private OrderPublisher orderPublisher;
+    @Autowired
+    private LegPublisher legPublisher;
 
     @Autowired @Qualifier("createOrderTopic") private NewTopic topic;
+
+    @Autowired @Qualifier("createLegTopic") private NewTopic legTopic;
 
 
 
     public void saveOrder(SaveOrderDTO order) {
-        kafkaPublisher.setTopic(topic);
+        orderPublisher.setTopic(topic);
         System.out.println(topic.name());
-        kafkaPublisher.sendMessage(order);
+        orderPublisher.sendMessage(order);
 
-        System.out.println("SAVING TO DB*/**/*/*");
-
-
-    }
-
-    public void saveTrades(SaveTradeDTO tradeDTO){
+        System.out.println("********************SAVING ORDER TO DB************");
 
     }
 
     public void saveTrades(List<SaveTradeDTO> trades){
+        legPublisher.setTopic(legTopic);
+
+        System.out.println("********************SAVING TRADES TO DB************");
+        for(SaveTradeDTO trade : trades){
+            legPublisher.sendMessage(trade);
+        }
+
 
     }
 }

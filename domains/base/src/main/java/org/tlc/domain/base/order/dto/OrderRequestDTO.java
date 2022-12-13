@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Component
+@AllArgsConstructor
 public class OrderRequestDTO {
     private UUID clientId;
     private String product;

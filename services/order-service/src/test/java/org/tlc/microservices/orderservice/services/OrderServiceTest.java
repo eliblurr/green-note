@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 
-import static org.mockito.ArgumentMatchers.any;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class OrderServiceTest {
