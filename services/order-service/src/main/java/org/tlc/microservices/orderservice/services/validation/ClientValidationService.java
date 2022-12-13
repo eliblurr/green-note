@@ -19,7 +19,7 @@ public class ClientValidationService {
             System.out.println("\n\n"+customer.toString()+"\n\n");
 //            ClientValidationDTO customer = new ClientValidationDTO(1000,true,true,100,true,10000,true, 23);
             if(!customer.getUserOwnsPortfolio()){
-                System.out.println("USer does not own portfolio");
+                System.out.println("User does not own portfolio");
                 return Response.INVALID_REQUEST;
             }
             if(!customer.getCanShort() && (customer.getPortfolioBalance()< order.getPrice()* order.getQuantity())){

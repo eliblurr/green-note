@@ -22,11 +22,11 @@ public class OrderValidator {
 
     public Response validate(OrderRequestDTO order) {
         ValidateCustomerDTO customerInfo = modelMapper.map(order, ValidateCustomerDTO.class);
-        Response validateClient = clientValidationService.validateCustomer(customerInfo, order);
-        if (validateClient.isSuccess()) {
+        Response validateCustomerResponse = clientValidationService.validateCustomer(customerInfo, order);
+        if (validateCustomerResponse.isSuccess()) {
             return priceValidationService.validatePrice(order);
         }
-        return validateClient;
+        return validateCustomerResponse;
     }
 
 }
