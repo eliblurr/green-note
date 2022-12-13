@@ -61,7 +61,9 @@ public class OrderService {
 
 
     public Boolean cancelOrder(CancelOrderDTO cancelOrderDTO) throws Exception {
-        String exchangeURL = exchanges.get(cancelOrderDTO.getExchangeKey());
+//        String exchangeURL = exchanges.get(cancelOrderDTO.getExchangeKey());
+//        use order client validation service to get uuid
+        String exchangeURL = "https://exchange.matraining.com";
         String orderId = cancelOrderDTO.getOrderId().toString();
         System.out.println(cancelOrderDTO);
         return webClientBuilder.build()
