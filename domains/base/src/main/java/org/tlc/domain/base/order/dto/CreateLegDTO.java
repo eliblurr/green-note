@@ -18,7 +18,7 @@ public class CreateLegDTO {
     private Side side;
     private UUID exchangeId;
     private double price;
-    @Nullable private UUID order;
+    private UUID order;
     private UUID tradeId;
 
 }

@@ -15,6 +15,10 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.topic.account.name}")
     public String accountTopic;
+    @Value("${spring.kafka.topic.order.name}")
+    public String saveOrderTopic;
+
+
 
     @Bean
     @Qualifier("reportsTopic")
@@ -26,5 +30,11 @@ public class KafkaConfig {
     @Qualifier("accountTopic")
     public NewTopic producerTopic(){
         return TopicBuilder.name(accountTopic).partitions(2).build();
+    }
+
+    @Bean
+    @Qualifier("ordersTopic")
+    public NewTopic orderTopic() {
+        return TopicBuilder.name(saveOrderTopic).partitions(4).build();
     }
 }

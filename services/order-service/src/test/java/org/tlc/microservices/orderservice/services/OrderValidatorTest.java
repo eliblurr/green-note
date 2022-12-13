@@ -1,50 +1,81 @@
 package org.tlc.microservices.orderservice.services;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.OrderPosition;
-import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.enums.Side;
-import org.tlc.domain.base.order.Response;
-import org.tlc.microservices.orderservice.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.OrderType;
+import org.tlc.domain.base.order.Response;
+import org.tlc.microservices.orderservice.services.validation.ClientValidationService;
+import org.tlc.microservices.orderservice.services.validation.PriceValidationService;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class OrderValidatorTest {
     @Autowired
     OrderValidator orderValidator;
+    @MockBean
+    ClientValidationService clientValidationService;
+    @MockBean
+    PriceValidationService priceValidationService;
+
+//    @BeforeAll
+//    public static void init(){
+//        UUID clientId = UUID.randomUUID();
+//        UUID portfolioId = UUID.randomUUID();
+//    }
+
+
 
     @Test
     public void validate_SellOrderWithValidQuantityTest(){
         //given an order from a client who has enough stock in his inventory
-        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, 1, Side.SELL, OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.MARKET);
+        UUID clientId = UUID.randomUUID();
+        UUID portfolioId = UUID.randomUUID();
+        OrderRequestDTO testOrder = new OrderRequestDTO(clientId, "APPL", 1.5, 100, portfolioId, Side.SELL, OrderPosition.NORMAL, OrderType.MARKET);
 
-         // for test to pass you will need to mock the service that gives the data from user service inventory endpoint
-        //this test doesn't work
-
+        Mockito.when(clientValidationService.validateCustomer(any(),any())).thenReturn(Response.VALID_CLIENT);
+        Mockito.when(priceValidationService.validatePrice(any())).thenReturn(Response.VALID_ORDER);
         //when the validate method is called
-        Response resp = orderValidator.validate(order);
+        orderValidator.validate(testOrder);
 
-        //then assert that the request is valid
-        assertTrue(resp.isSuccess());
+        //verify that the client validation service was called once
+        verify(clientValidationService, times(1)).validateCustomer(any(),any());
+
+        //and that the price validation service was also called
+        verify(priceValidationService, times(1)).validatePrice(any());
+
     }
 
     @Test
     public void validate_SellOrderWithInvalidQuantityTest(){
         //given an order from a client who does not have enough stock in his inventory
-        OrderRequestDTO order = new OrderRequestDTO(2, "APPL", 1.5, 100, 1, Side.SELL, OrderPosition.NORMAL, OrderStatus.ACCEPTED, OrderType.MARKET);
+        UUID clientId = UUID.randomUUID();
+        UUID portfolioId = UUID.randomUUID();
+        OrderRequestDTO testOrder = new OrderRequestDTO(clientId, "APPL", 1.5, 100, portfolioId, Side.SELL, OrderPosition.NORMAL, OrderType.MARKET);
 
-        int numberOfProductInInventory;// for test to pass you wil need to mock the service that gives the data from user service inventory endpoint
-        //this test doesn't work
+        Mockito.when(clientValidationService.validateCustomer(any(),any())).thenReturn(Response.INVALID_QUANTITY);
 
         //when the validate method is called
-        Response resp = orderValidator.validate(order);
+        Response resp = orderValidator.validate(testOrder);
 
         //then assert that the request is valid
         assertFalse(resp.isSuccess());
+        //verify that the client validation service was called once
+        verify(clientValidationService, times(1)).validateCustomer(any(),any());
+
+        //and that the price validation service was not called
+        verify(priceValidationService, times(0)).validatePrice(any());
     }
 
 }
