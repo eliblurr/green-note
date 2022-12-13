@@ -1,27 +1,30 @@
 package org.tlc.microservices.reportingservice.kafka;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
-import org.tlc.domain.base.order.dto.CreateLegDTO;
-import org.tlc.domain.base.order.dto.CreateOrderDTO;
-import org.tlc.domain.base.order.dto.UpdateLegDTO;
-import org.tlc.domain.base.order.dto.UpdateOrderDTO;
+import org.tlc.domain.base.order.dto.*;
 import org.tlc.domain.base.order.enums.LegStatus;
 
 import org.tlc.microservices.reportingservice.services.LegService;
 
+import java.util.List;
 import java.util.UUID;
 
 public class LegConsumer {
 
-    @Autowired private LegService legService;
+    @Autowired
+    private LegService legService;
+    @Autowired
+    ModelMapper modelMapper;
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.leg.create.name}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consume(CreateLegDTO createLegDTO) {
-//        System.out.println("Received at reporting service: " + saveOrderDTO);
-//        orderService.create(new CreateOrderDTO(saveOrderDTO));
-        legService.create(createLegDTO);
+    public void consume(List<SaveLegDTO> legs) {
+        System.out.println("Received Leg at reporting service: " + legs);
+        for (SaveLegDTO leg : legs) {
+            legService.create(modelMapper.map(leg, CreateLegDTO.class));
+        }
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.leg.update.name}", groupId = "${spring.kafka.consumer.group-id}")

@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice.services;
+package org.tlc.microservices.orderservice.services.producers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,15 +8,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.kafka.KafkaProducer;
-import org.tlc.microservices.orderservice.dto.SaveLegDTO;
+import org.tlc.domain.base.order.dto.SaveLegDTO;
+
+import java.util.List;
 
 
 @Service
 @Getter
 @Setter
-public class LegPublisher extends KafkaProducer<SaveLegDTO> {
+public class LegPublisher extends KafkaProducer<List<SaveLegDTO>> {
 
-    public LegPublisher(@Autowired @Qualifier("createLegTopic") NewTopic topic, KafkaTemplate<String, SaveLegDTO> kafkaTemplate) {
+    public LegPublisher(@Autowired @Qualifier("createLegTopic") NewTopic topic, KafkaTemplate<String, List<SaveLegDTO>> kafkaTemplate) {
         super(topic, kafkaTemplate);
     }
 }

@@ -1,6 +1,5 @@
 package org.tlc.microservices.reportingservice.kafka;
 
-import org.bouncycastle.math.raw.Mod;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,11 +15,11 @@ public class OrderConsumer implements KafkaConsumer<SaveOrderDTO> {
     @Autowired
     private OrderService orderService;
 
-    ModelMapper modelMapper = new ModelMapper();
+//    ModelMapper modelMapper = new ModelMapper();
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.order.create.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(SaveOrderDTO saveOrderDTO) {
-        System.out.println("Received at reporting service: " + saveOrderDTO);
+        System.out.println("Received Order at reporting service: " + saveOrderDTO);
         orderService.create(new CreateOrderDTO(saveOrderDTO));
     }
 

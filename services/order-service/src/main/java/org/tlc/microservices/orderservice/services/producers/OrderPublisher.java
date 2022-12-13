@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice.services;
+package org.tlc.microservices.orderservice.services.producers;
 
 import lombok.Getter;
 import lombok.Setter;

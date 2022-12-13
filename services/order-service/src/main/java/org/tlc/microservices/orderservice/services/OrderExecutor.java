@@ -10,7 +10,7 @@ import org.tlc.domain.base.order.enums.LegStatus;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveLegDTO;
+import org.tlc.domain.base.order.dto.SaveLegDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

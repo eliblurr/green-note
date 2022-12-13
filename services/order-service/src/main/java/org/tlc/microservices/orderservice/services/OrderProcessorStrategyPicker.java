@@ -47,7 +47,7 @@ public class OrderProcessorStrategyPicker {
             //currently getting data from just 1 exchange
 
             //next check for if the order can be split into multiple legs
-            //first retrieve the last 10 prices avalailable to be traded at
+            //first retrieve the last 10 prices available to be traded at
             // then check if order can span multiple of these
             Iterator<TickerPriceDto> queueIterator = lastTenPrices.iterator();
             if(order.getSide().equals(Side.BUY)){

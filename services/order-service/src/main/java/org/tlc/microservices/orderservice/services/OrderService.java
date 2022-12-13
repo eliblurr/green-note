@@ -13,7 +13,7 @@ import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveLegDTO;
+import org.tlc.domain.base.order.dto.SaveLegDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
@@ -54,7 +54,7 @@ public class OrderService {
         //will be replaced with a list of trades
         System.out.println(trade);
         publishingService.saveOrder(order);
-        //orderPublisher.saveTrades(trade);
+        publishingService.saveTrades(trade);
         System.out.println(order);
         return resp;
     }

@@ -34,7 +34,7 @@ public class KafkaConfig {
         return TopicBuilder.name(createOrderTopic).partitions(2).build();
     }
     @Bean
-    @Qualifier("createOrderTopic")
+    @Qualifier("createLegTopic")
     public NewTopic createLegTopic(){
         return TopicBuilder.name(createLegTopic).partitions(2).build();
     }

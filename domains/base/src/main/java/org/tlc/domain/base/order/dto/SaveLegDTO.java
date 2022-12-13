@@ -1,10 +1,9 @@
-package org.tlc.microservices.orderservice.dto;
+package org.tlc.domain.base.order.dto;
 
 import lombok.*;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.enums.LegStatus;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
