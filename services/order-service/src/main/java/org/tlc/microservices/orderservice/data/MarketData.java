@@ -9,4 +9,5 @@ import org.tlc.domain.base.marketData.OrderingServiceDto;
 public class MarketData {
     private OrderingServiceDto marketData;
 
+
 }

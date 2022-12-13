@@ -8,17 +8,16 @@ import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.data.MarketData;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
-import org.tlc.microservices.orderservice.services.processingstrategies.SplitOrderProcessor;
 
 import java.util.Iterator;
 import java.util.Queue;
 
 @Component
-public class OrderProcessorStrategyPicker {
+public class OrderProcessorPicker {
     @Autowired
     DefaultOrderProcessor defaultOrderProcessor;
-    @Autowired
-    SplitOrderProcessor splitOrderProcessor;
+//    @Autowired
+//    SplitOrderProcessor splitOrderProcessor;
     @Autowired
     MarketData marketData;
 
@@ -52,7 +51,7 @@ public class OrderProcessorStrategyPicker {
             Iterator<TickerPriceDto> queueIterator = lastTenPrices.iterator();
             if(order.getSide().equals(Side.BUY)){
                 if(limitForPrice > lastTenPrices.element().getPrice() && order.getQuantity() > lastTenPrices.element().getQuantity()){
-                splitOrderProcessor.processOrder(order);
+//                splitOrderProcessor.processOrder(order);
                 }
             }
 

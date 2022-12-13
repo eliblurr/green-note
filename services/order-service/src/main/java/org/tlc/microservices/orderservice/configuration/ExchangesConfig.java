@@ -16,10 +16,10 @@ public class ExchangesConfig {
     @Autowired
     ExchangeDataFetcher exchangeDataFetcher;
     public String get(String key) {
-        return exchanges.get(key);
+        return exchangesURL.get(key);
     }
 
-    private HashMap<String, String> exchanges = new HashMap<>();
+    private HashMap<String, String> exchangesURL = new HashMap<>();
 
     private HashMap<String, UUID> exchangesUUID = new HashMap<>();
 
@@ -35,8 +35,8 @@ public class ExchangesConfig {
     }
 
     public void initExchanges(){
-        this.exchanges.put("MAL1", "https://exchange.matraining.com/");
-        this.exchanges.put("MAL2", "https://exchange2.matraining.com/");
+        this.exchangesURL.put("MAL1", "https://exchange.matraining.com/");
+        this.exchangesURL.put("MAL2", "https://exchange2.matraining.com/");
 //        for(ExchangesDTO exchange : allExchanges){
 //            this.exchanges.put(exchange.getExchangeName(), exchange.getExchangeUrl());
 //            this.exchangesUUID.put(exchange.getExchangeName(), exchange.getExchangeId());

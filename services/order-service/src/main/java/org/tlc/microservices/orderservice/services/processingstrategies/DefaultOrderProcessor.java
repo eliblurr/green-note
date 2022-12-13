@@ -7,11 +7,10 @@ import org.tlc.domain.base.order.dto.SaveLegDTO;
 import org.tlc.microservices.orderservice.services.OrderExecutor;
 
 @Component
-public class DefaultOrderProcessor implements OrderProcessor {
+public class DefaultOrderProcessor{
     @Autowired
     OrderExecutor orderExecutor;
 
-    @Override
     public SaveLegDTO processOrder(SaveOrderDTO order) {
         return orderExecutor.placeOrder(order, "MAL1");
     }
