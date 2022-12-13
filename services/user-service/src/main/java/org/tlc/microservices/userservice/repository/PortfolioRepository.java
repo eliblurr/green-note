@@ -26,7 +26,7 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, UUID> {
     @Query(value = "select * from portfolio where is_default=true", nativeQuery = true)
     Boolean portfolioIsDefault(UUID portfolio);
 
-    @Query(value = "SELECT CASE WHEN EXISTS(SELECT * FROM admin WHERE customer_id=:customer and id=:portfolio ) THEN true ELSE false END", nativeQuery = true)
+    @Query(value = "SELECT CASE WHEN EXISTS(SELECT * FROM portfolio WHERE customer_id=:customer and id=:portfolio ) THEN true ELSE false END", nativeQuery = true)
     Boolean userOwnsPortfolio(@Param("portfolio") UUID portfolio, @Param("customer") UUID customer);
 
 }

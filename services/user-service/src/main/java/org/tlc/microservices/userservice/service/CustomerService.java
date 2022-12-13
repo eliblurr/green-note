@@ -101,7 +101,9 @@ public class CustomerService {
         Optional<Portfolio> portfolio = portfolioRepository.findById(payload.getPortfolio());
         Optional<PortfolioProduct> portfolioProduct = portfolioProductRepository.findOneByPortfolioAndProduct(payload.getPortfolio(), payload.getProduct());
 
-        if(customer.isPresent() || portfolio.isEmpty() || portfolioProduct.isEmpty()){ return new ClientValidationDTO();}
+        System.out.println(customer.isPresent() || portfolio.isEmpty() || portfolioProduct.isEmpty());
+
+        if(customer.isEmpty() || portfolio.isEmpty() || portfolioProduct.isEmpty()){ return new ClientValidationDTO();}
 
         ClientValidationDTO response =  new ClientValidationDTO();
 
