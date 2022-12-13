@@ -49,9 +49,6 @@ public abstract class OrderProcessor {
                 .build();
 
     }
-
-
-
     public abstract SaveTradeDTO processOrder(SaveOrderDTO order);
 
 

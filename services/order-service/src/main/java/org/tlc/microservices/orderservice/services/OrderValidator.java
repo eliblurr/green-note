@@ -48,7 +48,7 @@ public class OrderValidator {
         // +/-  maxPriceShift
 
         if (order.getSide().equals(Side.SELL)){
-            if(Math.abs(order.getPrice() - askPrice) <maxPriceShift){
+            if(Math.abs(order.getPrice() - askPrice) < maxPriceShift){
                 return VALID_ORDER;
             } else{
                 return UNREASONABLE_PRICE;

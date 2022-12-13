@@ -24,8 +24,6 @@ public class ReportingServiceDto {
     private Double cumPrx;
     private Timestamp timestamp;
 
-//    private static final ModelMapper modelMapper = new ModelMapper();
-
 
     public ReportingServiceDto(String orderType, String product, String side, String orderID, Double price, int qty, String exchange, int cumQty, Double cumPrx, Timestamp timestamp) {
         this.orderType = orderType;

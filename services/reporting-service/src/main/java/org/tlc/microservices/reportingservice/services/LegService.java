@@ -62,6 +62,10 @@ public class LegService {
         }
     }
 
+    public Boolean legIdExist(UUID legId){
+        return legRepository.existsById(legId);
+    }
+
     public boolean exchangeHasActiveLeg(UUID exchange){
         return legRepository.exchangeHasActiveLeg(exchange);
     }
