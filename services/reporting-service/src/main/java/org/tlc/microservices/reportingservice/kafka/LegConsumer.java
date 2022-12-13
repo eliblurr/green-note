@@ -26,6 +26,9 @@ public class LegConsumer {
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.leg.update.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(ReportingServiceDto obj) {
+
+        System.out.println(obj.toString());
+
         UUID orderId = UUID.fromString(obj.getOrderID());
 
         if (legService.legIdExist(orderId)) {
