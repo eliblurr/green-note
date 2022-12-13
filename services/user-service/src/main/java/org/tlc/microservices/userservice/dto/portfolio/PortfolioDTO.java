@@ -23,6 +23,7 @@ public class PortfolioDTO {
     private UUID id;
     private String name;
     private Boolean is_default;
+    private double balance;
     private Timestamp updated;
     private Timestamp created;
 

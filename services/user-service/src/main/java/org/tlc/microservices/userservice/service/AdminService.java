@@ -49,6 +49,11 @@ public class AdminService {
     public AdminDTO updateById(UUID id, UpdateAdminDTO payload) {
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 
+        if (payload.getPassword() != null) {
+            System.out.println(payload.getPassword());
+            payload.setPassword(passwordEncoder.encode(payload.getPassword()));
+        }
+
         try{ objectMapper.readerForUpdating(admin).readValue(objectMapper.writeValueAsString(payload));}
         catch (JsonProcessingException e){ throw new InternalServerErrorException(e.getMessage());}
 

@@ -35,7 +35,7 @@ public class PortfolioProduct {
     @NonNull
     private Integer quantity;
 
-    @Column(name = "price")
+    @Column(name = "unit_price")
     private double unit_price;
 
     @Column(name = "updated")

@@ -35,9 +35,8 @@ public class Customer {
     @NonNull
     private String password; //hash password before save .i.e. override setter .. implement encryption with springboot Security
 
-//    add formula here
     @Column(name = "balance")
-    private Double balance = 0.0;
+    private Double balance = 1000.0;
 
     @Column(name = "updated")
     @UpdateTimestamp

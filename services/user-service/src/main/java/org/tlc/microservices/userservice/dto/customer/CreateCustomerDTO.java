@@ -26,7 +26,7 @@ public class CreateCustomerDTO  implements DTOToModel<Customer> {
     private String email;
     private String password;
     private String username;
-    @Nullable private Boolean can_short;
+    @Nullable private Boolean can_short = true;
     @Nullable private List<Portfolio> portfolios = new ArrayList<>();
 
     public Customer convertToEntity() throws RuntimeException {

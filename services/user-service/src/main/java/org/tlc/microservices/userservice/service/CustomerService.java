@@ -15,6 +15,7 @@ import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.customer.*;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
 import org.tlc.microservices.userservice.dto.product.PortfolioProductDTO;
+import org.tlc.microservices.userservice.exceptions.BadOperationException;
 import org.tlc.microservices.userservice.exceptions.InternalServerErrorException;
 import org.tlc.microservices.userservice.exceptions.NotFoundException;
 import org.tlc.microservices.userservice.model.Admin;
@@ -74,6 +75,10 @@ public class CustomerService {
 
     public CustomerDTO updateById(UUID id, UpdateCustomerDTO payload){
         Customer customer = customerRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
+
+        if (payload.getPassword() != null) {
+            payload.setPassword(passwordEncoder.encode(payload.getPassword()));
+        }
 
         try{ objectMapper.readerForUpdating(customer).readValue(objectMapper.writeValueAsString(payload));}
         catch (JsonProcessingException e){ throw new InternalServerErrorException(e.getMessage());}

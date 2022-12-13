@@ -33,4 +33,9 @@ public class OrderConsumer implements KafkaConsumer<ReportingServiceDto> {
 //        orderService.updateById("", updateOrderDTO);
     }
 
+//    topic
+//    check if order belongs to us
+//    puish to notification
+//    do partial update
+
 }

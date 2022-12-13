@@ -53,8 +53,8 @@ public class Portfolio {
     @OneToMany(mappedBy = "portfolio")
     private List<PortfolioProduct> products;
 
-    @Formula("(select sum(p.unit_price*p.quantity) from portfolio_product p where p.portfolio_id=id)")
-    private double balance;
+    @Formula("(select coalesce(sum(p.unit_price*p.quantity), 0.0) from portfolio_product p where p.portfolio_id=id)")
+    private double balance = 0;
 
     public Portfolio(String default_portfolio, boolean b, Customer customer) {
         this.name = default_portfolio;
