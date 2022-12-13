@@ -16,6 +16,9 @@ public class KafkaConfig {
     @Value("${spring.kafka.topic.ordering.name}")
     public String orderTopic;
 
+    @Value("${spring.kafka.topic.notification.name}")
+    public String tradeTopic;
+
     @Bean
     @Qualifier("reportTopic")
     public NewTopic topic(){
@@ -26,6 +29,12 @@ public class KafkaConfig {
     @Qualifier("orderTopic")
     public NewTopic topic2(){
         return TopicBuilder.name(orderTopic).partitions(4).build();
+    }
+
+    @Bean
+    @Qualifier("tradeTopic")
+    public NewTopic tradeTopic(){
+        return TopicBuilder.name(tradeTopic).partitions(4).build();
     }
 
 }

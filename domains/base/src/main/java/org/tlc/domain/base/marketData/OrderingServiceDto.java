@@ -15,7 +15,7 @@ import java.util.*;
 @Setter
 @Getter
 public class OrderingServiceDto {
-    private Map[] ExchangeList = new Map[2];
+    private Map<String, HashMap<String, Queue<TickerPriceDto>>>[] ExchangeList = new Map[2];
     private Map<String, HashMap<String, Queue<TickerPriceDto>>> tickers = new HashMap<>();
 
     public OrderingServiceDto() {
@@ -93,7 +93,7 @@ public class OrderingServiceDto {
         this.addTickerExchange(exchange,tickers);
     }
 
-
+    
     @Override
     public String toString() {
         return "OrderingServiceDto{" +

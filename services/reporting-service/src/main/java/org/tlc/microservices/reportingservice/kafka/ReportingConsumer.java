@@ -29,12 +29,6 @@ public class ReportingConsumer implements KafkaConsumer<ReportingServiceDto> {
             if (obj.getCumQty() == legService.readById(orderId).getQuantity()) {
                 legService.updateStatus(orderId, LegStatus.CLOSED);
             }
-
-//            //publish to front end
-//            KafkaPublish.setTopic(topic);
-//            System.out.println(topic.name());
-//            KafkaPublish.sendMessage(newData);
-//            System.out.println("\n\n" + obj.toString());
         }
     }
 }
