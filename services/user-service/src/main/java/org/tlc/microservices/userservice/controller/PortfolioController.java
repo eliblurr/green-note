@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+//@CrossOrigin("*")
 @RequestMapping("/api/users/")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class PortfolioController {
 

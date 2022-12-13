@@ -17,13 +17,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users/customers")
-@CrossOrigin("*")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping("/")
+    @PostMapping(value = {"/", ""})
     @ResponseStatus(HttpStatus.CREATED)
     CustomerDTO create(@RequestBody CreateCustomerDTO payload){
         return customerService.create(payload);

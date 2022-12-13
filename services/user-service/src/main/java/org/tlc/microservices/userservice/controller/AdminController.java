@@ -18,7 +18,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/users/admins")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor // create constructor with required arguments we need at compile time
 public class AdminController {
 
