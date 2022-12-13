@@ -6,12 +6,14 @@ import org.tlc.domain.base.dto.ClientValidationDTO;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.microservices.orderservice.Response;
+import org.tlc.microservices.orderservice.configuration.dto.ValidateCustomerDTO;
 
 @Service
 public class ClientValidationService {
     @Autowired
     ClientDataFetcher clientDataFetcher;
-    public Response validateCustomer(ClientValidationDTO customer, OrderRequestDTO order ){
+    public Response validateCustomer(ValidateCustomerDTO customerInfo, OrderRequestDTO order ){
+        ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
 
         if (order.getSide().equals(Side.SELL)) {
             int numberOfProductInInventory = customer.getProductQuantity();// data received from inventory service

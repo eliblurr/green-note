@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class ClientValidationDTO {
 
-    private double portfolioBalance = 0;
-    private Boolean userOwnsPortfolio = false;
-    private Boolean canShort = false;
-    private int productQuantity = 0;
-    private Boolean portfolioHasProduct = false;
-    private double productTotalValue = 0;
-    private Boolean customerExist = false;
+    private double portfolioBalance;
+    private Boolean userOwnsPortfolio;
+    private Boolean canShort;
+    private int productQuantity;
+    private Boolean portfolioHasProduct;
+    private double productTotalValue;
+    private Boolean customerExist;
 
 }

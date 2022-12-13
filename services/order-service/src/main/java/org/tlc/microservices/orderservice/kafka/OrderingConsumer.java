@@ -5,19 +5,20 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.kafka.KafkaConsumer;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
+import org.tlc.microservices.orderservice.data.MarketData;
 import org.tlc.microservices.orderservice.services.OrderProcessorStrategyPicker;
-import org.tlc.microservices.orderservice.services.OrderValidator;
 
 @Service
 public class OrderingConsumer implements KafkaConsumer<OrderingServiceDto> {
     @Autowired
-    OrderValidator orderValidator;
+    MarketData marketData;
+
     @Autowired
     OrderProcessorStrategyPicker orderProcessorStrategyPicker;
     @Override
     @KafkaListener(topics = "${spring.kafka.topic.reporting.name}",
             groupId = "${spring.kafka.consumer.group-id}")
     public void consume(OrderingServiceDto obj) {
-        orderValidator.setMarketData(obj);
+        marketData.setMarketData(obj);
     }
 }

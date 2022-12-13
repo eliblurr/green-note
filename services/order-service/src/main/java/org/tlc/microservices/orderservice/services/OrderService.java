@@ -40,7 +40,6 @@ public class OrderService {
     public Response placeOrder(@Validated OrderRequestDTO orderRequest) {
         // validate order
         Response resp = validator.validate(orderRequest);
-//        SaveOrderDTO order = modelMapper.map(orderRequest, SaveOrderDTO.class);
         if (!resp.isSuccess()) {
             SaveOrderDTO order = new SaveOrderDTO(orderRequest, OrderStatus.REJECTED);
             publishingService.saveOrder(order);

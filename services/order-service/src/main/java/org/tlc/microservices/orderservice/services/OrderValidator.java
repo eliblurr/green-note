@@ -20,27 +20,20 @@ import org.tlc.microservices.orderservice.services.validation.PriceValidationSer
 
 @Service
 public class OrderValidator {
-    @Setter
-    @Getter
-    private OrderingServiceDto marketData;
-    @Autowired
-    WebClient.Builder webClientBuilder;
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     ClientValidationService clientValidationService;
     @Autowired
     PriceValidationService priceValidationService;
+    @Autowired
+    ModelMapper modelMapper;
 
 
     public Response validate(OrderRequestDTO order) {
 
 //        make request ot user service for inventory data
-//        ValidateCustomerDTO validateCustomerDTO = modelMapper.map(order, ValidateCustomerDTO.class);
-//        ClientValidationDTO customer = getUserData(validateCustomerDTO);
-
-        ClientValidationDTO customer = new ClientValidationDTO(100.0,true,false,10_000,true,10_000,true);
-        Response validateClient = clientValidationService.validateCustomer(customer,order);
+        ValidateCustomerDTO customerInfo = modelMapper.map(order, ValidateCustomerDTO.class);
+        
+        Response validateClient = clientValidationService.validateCustomer(customerInfo, order);
         if (validateClient.isSuccess()){
 
             return priceValidationService.checkIfExchangeWillAcceptOrder(order);

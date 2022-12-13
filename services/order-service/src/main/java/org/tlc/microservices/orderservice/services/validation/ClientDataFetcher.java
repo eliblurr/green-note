@@ -10,10 +10,10 @@ import org.tlc.microservices.orderservice.configuration.dto.ValidateCustomerDTO;
 public class ClientDataFetcher {
     @Autowired
     WebClient.Builder webClientBuilder;
-    public ClientValidationDTO getUserData(ValidateCustomerDTO customer) {
+    public ClientValidationDTO getUserData(ValidateCustomerDTO customerInfo) {
         return webClientBuilder.build()
                 .get()
-                .uri("https://user-service/api/users/customersvalidate-customer" + customer)
+                .uri("https://user-service/api/users/customersvalidate-customer" + customerInfo)
                 .retrieve()
                 .bodyToMono(ClientValidationDTO.class)
                 .block();

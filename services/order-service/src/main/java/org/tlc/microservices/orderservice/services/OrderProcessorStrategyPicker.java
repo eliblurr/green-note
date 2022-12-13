@@ -6,6 +6,7 @@ import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.domain.base.marketData.TickerPriceDto;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
+import org.tlc.microservices.orderservice.data.MarketData;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import org.tlc.microservices.orderservice.services.processingstrategies.SplitOrderProcessor;
 
@@ -19,7 +20,7 @@ public class OrderProcessorStrategyPicker {
     @Autowired
     SplitOrderProcessor splitOrderProcessor;
     @Autowired
-    OrderValidator orderValidator;
+    MarketData marketData;
 
 
 
@@ -33,7 +34,7 @@ public class OrderProcessorStrategyPicker {
         ///if md is empty just place default order
 
         //extract some data from request and compare to data from exchange
-        OrderingServiceDto marketdata = orderValidator.getMarketData();
+        OrderingServiceDto marketdata = marketData.getMarketData();
 
 
         Queue<TickerPriceDto> lastTenPrices = marketdata.getTickers().get(product).get(side);
