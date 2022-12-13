@@ -14,23 +14,20 @@ import java.util.List;
 public class TradeNotificationService {
     @Autowired
     private TradeNotificationRepository tickerRepository;
-    @CachePut(value = "TradeNotification")
     //update trades function
     public TradeNotification saveTrade(TradeNotification tradeNotification){
         return tickerRepository.saveTicker(tradeNotification);
     }
 
-    @Cacheable(value = "TradeNotification[]")
+
     public List<Object> getAllTickers(){
         return tickerRepository.findAll();
     }
 
-    @Cacheable(key = "#tickerName",value = "TradeNotification")
     public Object getTrade(@PathVariable String tradeId){
         return tickerRepository.findByTradeId(tradeId);
     }
 
-    @Cacheable(key = "#tickerName",value = "TradeNotification")
     public Boolean tradeExist(@PathVariable String tradeId){
         return tickerRepository.tradeExist(tradeId);
     }

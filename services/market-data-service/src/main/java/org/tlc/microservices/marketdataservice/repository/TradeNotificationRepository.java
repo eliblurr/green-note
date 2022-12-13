@@ -31,7 +31,5 @@ public class TradeNotificationRepository {
     public Boolean tradeExist(String TradeId){
         return findAll().contains(TradeId);
     }
-
-
 }
 

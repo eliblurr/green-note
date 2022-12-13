@@ -43,7 +43,6 @@ public class ExchangeDataController {
     @Autowired private ExchangeService exchangeService;
     @Autowired private PdService pdService;
 
-
     public ExchangeDataController() {
     }
 
