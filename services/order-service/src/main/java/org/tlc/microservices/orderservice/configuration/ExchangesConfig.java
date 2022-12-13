@@ -27,7 +27,7 @@ public class ExchangesConfig {
 
     public ExchangesConfig() {
 //        this.allExchanges = exchangeDataFetcher.getExchanges();
-//        initExchanges();
+        initExchanges();
     }
 
     public UUID getExchangeUUID(String key) {
@@ -35,8 +35,8 @@ public class ExchangesConfig {
     }
 
     public void initExchanges(){
-        this.exchanges.put("MAL1", "https://exchange.matraining.com");
-        this.exchanges.put("MAL2", "https://exchange2.matraining.com");
+        this.exchanges.put("MAL1", "https://exchange.matraining.com/");
+        this.exchanges.put("MAL2", "https://exchange2.matraining.com/");
 //        for(ExchangesDTO exchange : allExchanges){
 //            this.exchanges.put(exchange.getExchangeName(), exchange.getExchangeUrl());
 //            this.exchangesUUID.put(exchange.getExchangeName(), exchange.getExchangeId());

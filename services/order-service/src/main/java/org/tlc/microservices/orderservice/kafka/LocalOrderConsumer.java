@@ -1,3 +1,4 @@
+/*
 package org.tlc.microservices.orderservice.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,3 +18,4 @@ public class LocalOrderConsumer  implements KafkaConsumer<SaveOrderDTO> {
     }
 
 }
+*/

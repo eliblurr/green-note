@@ -29,7 +29,7 @@ public class OrderExecutor {
     public SaveLegDTO placeOrder(SaveOrderDTO newOrder, String key) {
         String exchangeResponse = webClientBuilder.build()
                 .post()
-                .uri(exchanges.get(key) + apiKey + "/order")
+                .uri(exchanges.getExchanges().get(key)+ apiKey + "/order")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(new CreateOrderOnExchangeDTO(newOrder)), CreateOrderOnExchangeDTO.class)

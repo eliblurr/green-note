@@ -36,10 +36,9 @@ public class ClientValidationService {
                 System.out.println("User does not exist");
                 return Response.INVALID_REQUEST;
             }
-            //repeat for all flags
 
             if (order.getSide().equals(Side.SELL)) {
-                int numberOfProductInInventory = customer.getProductQuantity();// data received from inventory service
+                int numberOfProductInInventory = customer.getProductQuantity();
                 int numberOfProductsToSell = order.getQuantity();
                 if (numberOfProductInInventory < numberOfProductsToSell) {
                     return Response.INVALID_QUANTITY;
