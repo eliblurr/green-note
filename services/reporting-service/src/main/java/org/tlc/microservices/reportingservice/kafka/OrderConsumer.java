@@ -29,9 +29,5 @@ public class OrderConsumer implements KafkaConsumer<SaveOrderDTO> {
         orderService.updateStatus(updateOrderDTO.getOrderId(), updateOrderDTO.getStatus());
     }
 
-//    topic
-//    check if order belongs to us
-//    puish to notification
-//    do partial update
 
 }

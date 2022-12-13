@@ -10,8 +10,10 @@ import org.tlc.domain.base.order.enums.LegStatus;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveLegDTO;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @Component
 public class OrderExecutor {
@@ -24,7 +26,7 @@ public class OrderExecutor {
     @Autowired
     ExchangesConfig exchanges;
 
-    public SaveTradeDTO placeOrder(SaveOrderDTO newOrder, String key) {
+    public SaveLegDTO placeOrder(SaveOrderDTO newOrder, String key) {
         String exchangeResponse = webClientBuilder.build()
                 .post()
                 .uri(exchanges.get(key) + apiKey + "/order")
@@ -35,12 +37,13 @@ public class OrderExecutor {
                 .bodyToMono(String.class)
                 .block();
 
-        return new SaveTradeDTO.SaveTradeDTOBuilder(exchangeResponse,
+
+        return new SaveLegDTO.SaveTradeDTOBuilder(UUID.fromString(exchangeResponse),
                 newOrder.getOrderId(),
                 LegStatus.OPEN,
                 newOrder.getQuantity(),
                 newOrder.getSide(),
-                exchanges.get(key),
+                exchanges.getExchangeUUID(key),
                 newOrder.getPrice())
                 .build();
     }

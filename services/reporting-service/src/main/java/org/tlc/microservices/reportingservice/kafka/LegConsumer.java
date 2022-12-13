@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
 import org.tlc.domain.base.order.dto.CreateLegDTO;
+import org.tlc.domain.base.order.dto.CreateOrderDTO;
 import org.tlc.domain.base.order.dto.UpdateLegDTO;
 import org.tlc.domain.base.order.dto.UpdateOrderDTO;
 import org.tlc.domain.base.order.enums.LegStatus;
@@ -18,6 +19,8 @@ public class LegConsumer {
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.leg.create.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(CreateLegDTO createLegDTO) {
+//        System.out.println("Received at reporting service: " + saveOrderDTO);
+//        orderService.create(new CreateOrderDTO(saveOrderDTO));
         legService.create(createLegDTO);
     }
 

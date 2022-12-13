@@ -2,11 +2,11 @@ package org.tlc.microservices.orderservice.services.processingstrategies;
 
 
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveLegDTO;
 
 
 public interface OrderProcessor {
 
-    SaveTradeDTO processOrder(SaveOrderDTO order);
+    SaveLegDTO processOrder(SaveOrderDTO order);
 
 }

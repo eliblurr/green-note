@@ -13,13 +13,11 @@ import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveLegDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import reactor.core.publisher.Mono;
-
-import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -52,7 +50,7 @@ public class OrderService {
         }
 
         SaveOrderDTO order = new SaveOrderDTO(orderRequest, OrderStatus.ACCEPTED);
-        SaveTradeDTO trade = orderProcessor.processOrder(order);
+        SaveLegDTO trade = orderProcessor.processOrder(order);
         //will be replaced with a list of trades
         System.out.println(trade);
         publishingService.saveOrder(order);

@@ -15,15 +15,25 @@ public class ClientValidationService {
 
     public Response validateCustomer(ValidateCustomerDTO customerInfo, OrderRequestDTO order) {
         try {
-            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
+//            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
+            ClientValidationDTO customer = new ClientValidationDTO(1000, true, true, 100, true, 10000, true, 23);
             System.out.println("\n\n"+customer.toString()+"\n\n");
-//            ClientValidationDTO customer = new ClientValidationDTO(1000,true,true,100,true,10000,true, 23);
+
             if(!customer.getUserOwnsPortfolio()){
                 System.out.println("User does not own portfolio");
                 return Response.INVALID_REQUEST;
             }
             if(!customer.getCanShort() && (customer.getPortfolioBalance()< order.getPrice()* order.getQuantity())){
-                System.out.println("USer does not own enough funds and cannot short");
+                System.out.println("User does not own enough funds and cannot short");
+                return Response.INSUFFICIENT_FUNDS;
+            }
+
+            if(!customer.getPortfolioHasProduct()){
+                System.out.println("User portfolio does not contain this product");
+                return Response.INVALID_REQUEST;
+            }
+            if(!customer.getCustomerExist()){
+                System.out.println("User does not exist");
                 return Response.INVALID_REQUEST;
             }
             //repeat for all flags

@@ -12,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateLegDTO {
-
     private LegStatus status;
     private int quantity;
     private Side side;

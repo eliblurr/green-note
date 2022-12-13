@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveLegDTO;
 
 import java.util.List;
 
@@ -32,12 +32,12 @@ public class PublishingService {
 
     }
 
-    public void saveTrades(List<SaveTradeDTO> trades){
+    public void saveTrades(List<SaveLegDTO> legs){
         legPublisher.setTopic(legTopic);
 
         System.out.println("********************SAVING TRADES TO DB************");
-        for(SaveTradeDTO trade : trades){
-            legPublisher.sendMessage(trade);
+        for(SaveLegDTO leg : legs){
+            legPublisher.sendMessage(leg);
         }
 
 
