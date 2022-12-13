@@ -283,6 +283,7 @@ services:
       DB_HOST: postgres
       DB_USER: postgres
       DB_PASS: postgres
+      WEBHOOK_URL: ${WEBHOOK_URL:-https://dd8c-102-22-11-130.eu.ngrok.io/api/WebHook/newOrder}
       REDIS_HOST: redis-cache
       KAFKA_HOST: kafka-broker
       REDIS_PORT: ${REDIS_PORT:-6379}
