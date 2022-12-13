@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * Dto sent to the ordering services for order validation
+ */
 @Component
 @Data
 @Setter

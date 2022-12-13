@@ -5,87 +5,100 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public class ExchangeProducts implements Serializable {
-    @JsonProperty
-    private Double MAX_PRICE_SHIFT;
-    @JsonProperty
-    private Double LAST_TRADED_PRICE;
-    @JsonProperty
-    private Double BID_PRICE;
-    @JsonProperty
-    private int SELL_LIMIT;
-    @JsonProperty
-    private Double ASK_PRICE;
-    @JsonProperty
-    private int BUY_LIMIT;
-    @JsonProperty
-    private String TICKER;
+    @JsonProperty("MAX_PRICE_SHIFT")
+    private Double maxPriceShift;
+    @JsonProperty("LAST_TRADED_PRICE")
+    private Double lastTradedPrice;
+    @JsonProperty("BID_PRICE")
+    private Double bidPrice;
+    @JsonProperty("SELL_LIMIT")
+    private int sellLimit;
+    @JsonProperty("ASK_PRICE")
+    private Double askPrice;
+    @JsonProperty("BUY_LIMIT")
+    private int buyLimit;
+    @JsonProperty("TICKER")
+    private String ticker;
 
     public ExchangeProducts() {
     }
 
     public ExchangeProducts(Double MAX_PRICE_SHIFT, Double LAST_TRADED_PRICE, Double BID_PRICE, int SELL_LIMIT, Double ASK_PRICE, int BUY_LIMIT, String TICKER) {
-        this.MAX_PRICE_SHIFT = MAX_PRICE_SHIFT;
-        this.LAST_TRADED_PRICE = LAST_TRADED_PRICE;
-        this.BID_PRICE = BID_PRICE;
-        this.SELL_LIMIT = SELL_LIMIT;
-        this.ASK_PRICE = ASK_PRICE;
-        this.BUY_LIMIT = BUY_LIMIT;
-        this.TICKER = TICKER;
+        this.maxPriceShift = MAX_PRICE_SHIFT;
+        this.lastTradedPrice = LAST_TRADED_PRICE;
+        this.bidPrice = BID_PRICE;
+        this.sellLimit = SELL_LIMIT;
+        this.askPrice = ASK_PRICE;
+        this.buyLimit = BUY_LIMIT;
+        this.ticker = TICKER;
     }
 
-    public Double getMAX_PRICE_SHIFT() {
-        return MAX_PRICE_SHIFT;
+    public Double getMaxPriceShift() {
+        return maxPriceShift;
     }
 
-    public void setMAX_PRICE_SHIFT(Double MAX_PRICE_SHIFT) {
-        this.MAX_PRICE_SHIFT = MAX_PRICE_SHIFT;
+    public void setMaxPriceShift(Double maxPriceShift) {
+        this.maxPriceShift = maxPriceShift;
     }
 
-    public Double getLAST_TRADED_PRICE() {
-        return LAST_TRADED_PRICE;
+    public Double getLastTradedPrice() {
+        return lastTradedPrice;
     }
 
-    public void setLAST_TRADED_PRICE(Double LAST_TRADED_PRICE) {
-        this.LAST_TRADED_PRICE = LAST_TRADED_PRICE;
+    public void setLastTradedPrice(Double lastTradedPrice) {
+        this.lastTradedPrice = lastTradedPrice;
     }
 
-    public Double getBID_PRICE() {
-        return BID_PRICE;
+    public Double getBidPrice() {
+        return bidPrice;
     }
 
-    public void setBID_PRICE(Double BID_PRICE) {
-        this.BID_PRICE = BID_PRICE;
+    public void setBidPrice(Double bidPrice) {
+        this.bidPrice = bidPrice;
     }
 
-    public int getSELL_LIMIT() {
-        return SELL_LIMIT;
+    public int getSellLimit() {
+        return sellLimit;
     }
 
-    public void setSELL_LIMIT(int SELL_LIMIT) {
-        this.SELL_LIMIT = SELL_LIMIT;
+    public void setSellLimit(int sellLimit) {
+        this.sellLimit = sellLimit;
     }
 
-    public Double getASK_PRICE() {
-        return ASK_PRICE;
+    public Double getAskPrice() {
+        return askPrice;
     }
 
-    public void setASK_PRICE(Double ASK_PRICE) {
-        this.ASK_PRICE = ASK_PRICE;
+    public void setAskPrice(Double askPrice) {
+        this.askPrice = askPrice;
     }
 
-    public int getBUY_LIMIT() {
-        return BUY_LIMIT;
+    public int getBuyLimit() {
+        return buyLimit;
     }
 
-    public void setBUY_LIMIT(int BUY_LIMIT) {
-        this.BUY_LIMIT = BUY_LIMIT;
+    public void setBuyLimit(int buyLimit) {
+        this.buyLimit = buyLimit;
     }
 
-    public String getTICKER() {
-        return TICKER;
+    public String getTicker() {
+        return ticker;
     }
 
-    public void setTICKER(String TICKER) {
-        this.TICKER = TICKER;
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
+
+    @Override
+    public String toString() {
+        return "ExchangeProducts{" +
+                "MAX_PRICE_SHIFT=" + maxPriceShift +
+                ", LAST_TRADED_PRICE=" + lastTradedPrice +
+                ", BID_PRICE=" + bidPrice +
+                ", SELL_LIMIT=" + sellLimit +
+                ", ASK_PRICE=" + askPrice +
+                ", BUY_LIMIT=" + buyLimit +
+                ", TICKER='" + ticker + '\'' +
+                '}';
     }
 }

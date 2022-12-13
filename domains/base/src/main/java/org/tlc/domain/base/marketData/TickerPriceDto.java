@@ -1,5 +1,6 @@
 package org.tlc.domain.base.marketData;
 
+
 public class TickerPriceDto {
     private Double price;
     private int quantity;

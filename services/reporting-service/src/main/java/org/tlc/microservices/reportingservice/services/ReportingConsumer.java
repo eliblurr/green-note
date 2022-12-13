@@ -11,6 +11,9 @@ public class ReportingConsumer implements KafkaConsumer<ReportingServiceDto> {
     @KafkaListener(topics = "${spring.kafka.topic.reporting.name}",
             groupId = "${spring.kafka.consumer.group-id}")
     public void consume(ReportingServiceDto obj) {
+//        if (obj.getOrderID().equals()){
+//
+//        }
         System.out.println("\n\n"+obj.toString());
     }
 }

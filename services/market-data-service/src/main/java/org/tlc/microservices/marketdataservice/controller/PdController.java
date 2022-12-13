@@ -14,6 +14,7 @@ import org.tlc.microservices.marketdataservice.dto.ExchangeProducts;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,20 +33,22 @@ public class PdController {
      * get market data market information
      */
 
-
     @GetMapping("/pd")
 //    @CacheEvict(value = "pd",allEntries = true,key = "pd")
     @CachePut(value = "pd")
-    public Map<String,Object> pd(){
-        ExchangeProducts[] exchangeProducts = webClientBuilder.build()
+    public Map<String,ExchangeProducts> pd(){
+        List<ExchangeProducts> exchangeProducts = Arrays.stream(Objects.requireNonNull(webClientBuilder.build()
                 .get()
                 .uri("https://exchange.matraining.com/pd")
                 .retrieve()
                 .bodyToMono(ExchangeProducts[].class)
-                .block();
+                .block())).toList();
 
-        Map<String,Object> opsMap = Arrays.stream(
-                exchangeProducts).collect(Collectors.toMap(ExchangeProducts::getTICKER, ExchangeProducts ->ExchangeProducts));
+        Map<String,ExchangeProducts> opsMap =
+                exchangeProducts.stream()
+                .collect(Collectors.toMap(ExchangeProducts::getTicker, products ->products));
+
+        System.out.println(opsMap);
         redisTemplate.opsForHash().putAll("pd",opsMap);
         return opsMap;
     }
