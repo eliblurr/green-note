@@ -15,6 +15,7 @@ public abstract class KafkaProducer <E> {
     protected KafkaTemplate kafkaTemplate;
 
     public void sendMessage(E event){
+        System.out.println("\n\n"+topic.toString()+"\n\n");
         kafkaTemplate.send( MessageBuilder.withPayload(event).setHeader(KafkaHeaders.TOPIC, topic.name()).build());
     }
 

@@ -15,8 +15,9 @@ public class ClientValidationService {
 
     public Response validateCustomer(ValidateCustomerDTO customerInfo, OrderRequestDTO order) {
         try {
-//            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
-            ClientValidationDTO customer = new ClientValidationDTO(1000,true,true,100,true,10000,true);
+            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
+            System.out.println("\n\n"+customer.toString()+"\n\n");
+//            ClientValidationDTO customer = new ClientValidationDTO(1000,true,true,100,true,10000,true, 23);
             if(!customer.getUserOwnsPortfolio()){
                 System.out.println("USer does not own portfolio");
                 return Response.INVALID_REQUEST;
@@ -48,6 +49,7 @@ public class ClientValidationService {
                 return Response.INVALID_REQUEST;
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Response.USER_SERVICE_UNAVALABLE;
         }
     }

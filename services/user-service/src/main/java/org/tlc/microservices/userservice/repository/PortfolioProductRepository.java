@@ -25,11 +25,11 @@ public interface PortfolioProductRepository  extends JpaRepository<PortfolioProd
     @Query(value = "select count(*) from portfolio_product where portfolio_id=:portfolio", nativeQuery = true)
     int countPortfolioProducts(@Param("portfolio") UUID portfolio);
 
-    @Query(value = "SELECT CASE WHEN EXISTS(SELECT * FROM portfolio_product WHERE portfolio_id=:portfolio and id=:product) THEN true ELSE false END", nativeQuery = true)
-    Boolean productInPortfolio(@Param("product") UUID product, @Param("portfolio") UUID portfolio);
+    @Query(value = "SELECT CASE WHEN EXISTS(SELECT * FROM portfolio_product WHERE portfolio_id=:portfolio and ticker=:product) THEN true ELSE false END", nativeQuery = true)
+    Boolean productInPortfolio(@Param("product") String product, @Param("portfolio") UUID portfolio);
 
-    @Query(value = "select * from portfolio_product where portfolio_id=:portfolio and id=:id", nativeQuery = true)
-    Optional<PortfolioProduct> findOneByPortfolioAndProduct( @Param("portfolio") UUID portfolio, @Param("id") UUID id);
+    @Query(value = "select * from portfolio_product where portfolio_id=:portfolio and ticker=:ticker", nativeQuery = true)
+    Optional<PortfolioProduct> findOneByPortfolioAndProduct( @Param("portfolio") UUID portfolio, @Param("ticker") String ticker);
 
 
 

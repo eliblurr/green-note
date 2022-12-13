@@ -14,7 +14,14 @@ public class PriceValidationService {
 
     public Response validatePrice(OrderRequestDTO order) {
         try {
-            ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
+//            ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
+            ProductDataDTO productDataDTO = new ProductDataDTO(
+                    "GOOGL",
+                    5000,
+                    0.0, 150.0, 1.09, 10000, 1.0
+
+
+            );
 
             double maxPriceShift = productDataDTO.getMAX_PRICE_SHIFT();//retrieve from market data service
             double lastTradedPrice = productDataDTO.getLAST_TRADED_PRICE(); // retrieved from market data service

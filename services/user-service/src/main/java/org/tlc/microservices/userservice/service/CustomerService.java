@@ -10,7 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tlc.domain.base.dto.ClientValidationDTO;
-import org.tlc.domain.base.dto.ValidateCustomerDTO;
+//import org.tlc.domain.base.dto.ValidateCustomerDTO;
+import org.tlc.domain.base.order.dto.ValidateCustomerDTO;
 import org.tlc.microservices.userservice.dto.admin.AdminDTO;
 import org.tlc.microservices.userservice.dto.customer.*;
 import org.tlc.microservices.userservice.dto.portfolio.PortfolioDTO;
@@ -97,9 +98,9 @@ public class CustomerService {
 
     public ClientValidationDTO validateCustomer(ValidateCustomerDTO payload){
 
-        Optional<Customer> customer = customerRepository.findById(payload.getCustomer());
-        Optional<Portfolio> portfolio = portfolioRepository.findById(payload.getPortfolio());
-        Optional<PortfolioProduct> portfolioProduct = portfolioProductRepository.findOneByPortfolioAndProduct(payload.getPortfolio(), payload.getProduct());
+        Optional<Customer> customer = customerRepository.findById(payload.getClientId());
+        Optional<Portfolio> portfolio = portfolioRepository.findById(payload.getPortfolioId());
+        Optional<PortfolioProduct> portfolioProduct = portfolioProductRepository.findOneByPortfolioAndProduct(payload.getPortfolioId(), payload.getProduct());
 
         System.out.println(customer.isPresent() || portfolio.isEmpty() || portfolioProduct.isEmpty());
 
@@ -115,13 +116,13 @@ public class CustomerService {
         response.setProductTotalValue(portfolioProduct.get().getQuantity()*portfolioProduct.get().getUnit_price());
         response.setPortfolioHasProduct(
                 portfolioProductRepository.productInPortfolio(
-                        payload.getProduct(), payload.getPortfolio()
+                        payload.getProduct(), payload.getPortfolioId()
                 )
         );
         response.setUserOwnsPortfolio(
                 portfolioRepository.userOwnsPortfolio(
-                        payload.getPortfolio(),
-                        payload.getCustomer()
+                        payload.getPortfolioId(),
+                        payload.getClientId()
                 )
         );
         return response;

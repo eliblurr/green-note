@@ -5,11 +5,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.tlc.domain.base.marketData.ReportingServiceDto;
 import org.tlc.domain.base.order.dto.CreateLegDTO;
 import org.tlc.domain.base.order.dto.UpdateLegDTO;
-<<<<<<< HEAD
 import org.tlc.domain.base.order.dto.UpdateOrderDTO;
 import org.tlc.domain.base.order.enums.LegStatus;
-=======
->>>>>>> origin/order-service-refactor
+
 import org.tlc.microservices.reportingservice.services.LegService;
 
 import java.util.UUID;

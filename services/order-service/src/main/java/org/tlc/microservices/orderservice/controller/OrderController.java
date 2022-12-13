@@ -9,6 +9,8 @@ import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.services.OrderService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/orders")
 @CrossOrigin(origins = "*")
@@ -16,13 +18,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/orders")
-    public Response makeOrder(@Validated @RequestBody OrderRequestDTO order) {
-        System.out.println(order);
+    @PostMapping(value = {"/", ""})
+    public Response makeOrder(@RequestBody OrderRequestDTO order) {
         return orderService.placeOrder(order);
     }
 
-    @DeleteMapping("/orders")
+    @DeleteMapping(value = {"/",""})
     public Response cancelOrder(@Validated @RequestBody CancelOrderDTO cancelOrderDTO) {
         try {
             boolean isSuccess = orderService.cancelOrder(cancelOrderDTO);
@@ -36,7 +37,7 @@ public class OrderController {
         }
 
     }
-    @PutMapping("/orders")
+    @PutMapping(value = {"/",""})
     public Response updateOrder(@Validated @RequestBody UpdateOrderDTO updateOrderDTO){
         try {
             boolean isSuccess = orderService.updateOrder(updateOrderDTO);

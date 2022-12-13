@@ -2,6 +2,7 @@ package org.tlc.domain.base.order.dto;
 
 import jakarta.annotation.Nullable;
 import lombok.*;
+import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.stereotype.Component;
 import org.tlc.domain.base.order.enums.*;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreateOrderDTO {
 
-    private UUID id;
+//    private UUID id;
     private UUID exchangeOrderId;
     private UUID customer;
     private String product;
@@ -40,5 +41,7 @@ public class CreateOrderDTO {
         this.side = saveOrderDTO.getSide();
         this.position = saveOrderDTO.getPosition();
         this.status = saveOrderDTO.getStatus();
+        this.split = OrderSplit.SINGLE;
     }
+
 }

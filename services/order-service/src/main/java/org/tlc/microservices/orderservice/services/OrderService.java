@@ -19,6 +19,8 @@ import org.tlc.microservices.orderservice.dto.UpdateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 public class OrderService {
 

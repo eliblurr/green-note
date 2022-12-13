@@ -21,6 +21,7 @@ public class OrderConsumer implements KafkaConsumer<SaveOrderDTO> {
     @KafkaListener(topics = "${spring.kafka.topic.reporting.order.create.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(SaveOrderDTO saveOrderDTO) {
         System.out.println("Received at reporting service: " + saveOrderDTO);
+        orderService.create(new CreateOrderDTO(saveOrderDTO));
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.reporting.order.update.name}", groupId = "${spring.kafka.consumer.group-id}")

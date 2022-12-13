@@ -15,7 +15,7 @@ public class PublishingService {
     @Autowired
     private KafkaPublisher kafkaPublisher;
 
-    @Autowired @Qualifier("ordersTopic") private NewTopic topic;
+    @Autowired @Qualifier("createOrderTopic") private NewTopic topic;
 
 
 

@@ -13,6 +13,6 @@ public class ValidateCustomerDTO {
 
     private UUID portfolio;
     private UUID customer;
-    private UUID product;
+    private String product;
 
 }

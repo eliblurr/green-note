@@ -16,7 +16,7 @@ public class OrderingConsumer implements KafkaConsumer<OrderingServiceDto> {
     @Autowired
     OrderProcessorStrategyPicker orderProcessorStrategyPicker;
     @Override
-    @KafkaListener(topics = "${spring.kafka.topic.reporting.name}",
+    @KafkaListener(topics = "${spring.kafka.topic.md.data}",
             groupId = "${spring.kafka.consumer.group-id}")
     public void consume(OrderingServiceDto obj) {
         marketData.setMarketData(obj);
