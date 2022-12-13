@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.tlc.microservices.loggingservice.enums.Ops;
+import org.tlc.domain.base.logging.enums.Ops;
 import org.tlc.microservices.loggingservice.model.Log;
 
 import java.sql.Timestamp;

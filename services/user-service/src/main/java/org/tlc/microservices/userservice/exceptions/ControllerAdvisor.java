@@ -1,13 +1,10 @@
 package org.tlc.microservices.userservice.exceptions;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.modelmapper.MappingException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.tlc.domain.base.exceptions.BadCredentialsException;
 
 @ControllerAdvice
 @ResponseBody
@@ -68,5 +66,11 @@ public class ControllerAdvisor {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage invalidArgumentTypeHandler(RuntimeException e, WebRequest wr){
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = {BadCredentialsException.class})
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public ErrorMessage badCredentialsTypeHandler(RuntimeException e, WebRequest wr){
+        return new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
     }
 }

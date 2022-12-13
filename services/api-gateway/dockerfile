@@ -1,0 +1,10 @@
+FROM elvisnw/gradle-8.0-milestone-3-bin AS build
+COPY . /home/app/
+WORKDIR /home/app/services/api-gateway/
+RUN gradle build
+
+FROM openjdk:19-jdk-alpine
+WORKDIR /usr/app
+COPY --from=build /home/app/services/api-gateway/build/libs/*SNAPSHOT.jar /usr/app/app.jar
+EXPOSE 80
+ENTRYPOINT ["java","-jar","/usr/app/app.jar"]

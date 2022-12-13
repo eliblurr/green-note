@@ -1,14 +1,16 @@
 package org.tlc.microservices.reportingservice.dto;
 
+import jakarta.annotation.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.tlc.domain.base.order.enums.OrderPosition;
-import org.tlc.domain.base.order.enums.OrderStatus;
-import org.tlc.domain.base.order.enums.Side;
-import org.tlc.microservices.reportingservice.model.OrderTrade;
+import org.tlc.domain.base.order.dto.CreateOrderDTO;
+import org.tlc.domain.base.order.enums.*;
+import org.tlc.microservices.reportingservice.model.Order;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,12 +28,19 @@ class OrderCreationDTOTest {
     @Test
     public void whenMapGameWithExactMatch_thenConvertsToDTO() {
         // when similar source object is provided
-        OrderCreationDTO orderCreationDTO = new OrderCreationDTO(3,"AAPL",3.2,20,2, Side.BUY, OrderPosition.NORMAL, OrderStatus.ACCEPTED);
-        OrderTrade orderTrade = this.mapper.map(orderCreationDTO, OrderTrade.class);
-
+        UUID exchangeOrderId = UUID.randomUUID();
+        UUID customer = UUID.randomUUID();
+        UUID portfolio = UUID.randomUUID();
+        CreateOrderDTO orderCreationDTO = new CreateOrderDTO(
+                exchangeOrderId, customer, "AAPL",
+                3.2, 20, portfolio, Side.BUY,
+                OrderPosition.NORMAL, OrderStatus.ACCEPTED,
+                OrderSplit.SINGLE
+        );
+        Order orderTrade = this.mapper.map(orderCreationDTO, Order.class);
         // then it maps by default
         assertEquals(orderCreationDTO.getQuantity(), orderCreationDTO.getQuantity());
-        assertEquals(orderTrade.getClientID(), orderTrade.getClientID());
+        assertEquals(orderTrade.getCustomer(), orderTrade.getCustomer());
     }
 
 }

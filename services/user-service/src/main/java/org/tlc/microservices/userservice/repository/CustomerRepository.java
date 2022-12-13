@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.tlc.microservices.userservice.model.Admin;
 import org.tlc.microservices.userservice.model.Customer;
 
 import java.util.UUID;
@@ -22,4 +23,6 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     Page<Customer> findAll(Pageable pageable);
 
     Customer findOneByEmail(String email);
+
+    Customer findOneByEmailAndPassword(String email, String password);
 }

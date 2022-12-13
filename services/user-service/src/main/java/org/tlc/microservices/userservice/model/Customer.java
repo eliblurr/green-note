@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -53,10 +55,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Portfolio> portfolios;
-
-    public void setPassword(String password) {
-        this.password = password; // hash password here
-    }
 
 }
 

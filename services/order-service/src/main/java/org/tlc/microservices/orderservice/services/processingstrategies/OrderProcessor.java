@@ -5,14 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.tlc.domain.base.order.enums.TradeStatus;
+import org.tlc.domain.base.order.enums.LegStatus;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.microservices.orderservice.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 
 public abstract class OrderProcessor {
@@ -42,7 +41,7 @@ public abstract class OrderProcessor {
 
         return new SaveTradeDTO.SaveTradeDTOBuilder(exchangeResponse,
                 newOrder.getOrderID(),
-                TradeStatus.OPEN,
+                LegStatus.OPEN,
                 newOrder.getQuantity(),
                 newOrder.getSide(),
                 exchanges.get(key),
