@@ -20,7 +20,15 @@ networks:
     driver: bridge
 
 services:
-#  redis
+  redis-cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+
   postgres:
     image: postgis/postgis:12-master
     container_name: green-note-postgres
@@ -269,13 +277,15 @@ services:
     volumes:
       - market-data-service-data:/usr/app/data/
     depends_on:
-      - postgres
+      - redis-cache
       - kafka-broker
     environment:
       DB_HOST: postgres
       DB_USER: postgres
       DB_PASS: postgres
+      REDIS_HOST: redis-cache
       KAFKA_HOST: kafka-broker
+      REDIS_PORT: ${REDIS_PORT:-6379}
       DISCOVERY_HOST: discovery-server
       DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT:-8088}
       DISCOVERY_SERVER_USERNAME: ${DISCOVERY_SERVER_USERNAME:-eureka}

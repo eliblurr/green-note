@@ -30,7 +30,6 @@ public class OrderConsumer implements KafkaConsumer<ReportingServiceDto> {
     @KafkaListener(topics = "${spring.kafka.topic.reporting.order.update.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(UpdateOrderDTO updateOrderDTO) {
         orderService.updateStatus(updateOrderDTO.getOrderId(), updateOrderDTO.getStatus());
-//        orderService.updateById("", updateOrderDTO);
     }
 
 //    topic

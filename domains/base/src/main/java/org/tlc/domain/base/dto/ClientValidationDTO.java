@@ -19,5 +19,6 @@ public class ClientValidationDTO {
     private Boolean portfolioHasProduct = false;
     private double productTotalValue = 0;
     private Boolean customerExist = false;
+    private double customerBalance = 0;
 
 }

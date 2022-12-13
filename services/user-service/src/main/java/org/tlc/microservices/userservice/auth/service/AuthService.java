@@ -39,7 +39,7 @@ public class AuthService {
         Customer customer = customerRepository.findOneByEmail(payload.getEmail());
         if(customer == null || !encoder.matches(payload.getPassword(), customer.getPassword())){ throw new BadCredentialsException();}
         CustomerResponseDTO responseDTO = new CustomerResponseDTO();
-        responseDTO.setAdmin(CustomerDTO.convertToDTO(customer));
+        responseDTO.setCustomer(CustomerDTO.convertToDTO(customer));
         responseDTO.setAccess_token(jwtUtils.generateJwtToken(customer.getEmail(), customer.getId(), false));
         responseDTO.setRefresh_token(jwtUtils.generateJwtToken(customer.getEmail(), customer.getId(), true));
 

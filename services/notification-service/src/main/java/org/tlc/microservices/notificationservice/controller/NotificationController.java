@@ -17,7 +17,7 @@ public class NotificationController {
     @ResponseStatus(HttpStatus.OK)
     void read(){
         System.out.println("\n\n[TestController]I was hit\n\n");
-        notificationService.sendMessage("message sent");
+//        notificationService.sendMessage("message sent");
     }
 
 }

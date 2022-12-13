@@ -66,7 +66,7 @@ public class WebHookController {
     public void marketData(@RequestBody ReportingServiceDto newData) {
         System.out.println("new data came in: "+ newData.toString());
 
-        //publish to front end and reporting
+        //publish to notification end and reporting
         KafkaPublish.setTopic(topic);
         System.out.println(topic.name());
         KafkaPublish.sendMessage(newData);

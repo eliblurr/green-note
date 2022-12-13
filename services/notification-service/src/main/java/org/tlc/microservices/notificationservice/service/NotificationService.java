@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
 
     @Autowired private SimpMessagingTemplate simpMessagingTemplate;
-    public void sendMessage(String message){
-        simpMessagingTemplate.convertAndSend("/topic/transactions", message);
+    public void sendMessage(String message, String path){
+        simpMessagingTemplate.convertAndSend(path, message);
     }
 
 }

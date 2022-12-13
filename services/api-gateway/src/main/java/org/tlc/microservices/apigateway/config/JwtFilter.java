@@ -23,6 +23,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (jwt !=null && jwtUtils.validateJwtToken(jwt)){
                 String email = jwtUtils.getEmailFromJwtToken(jwt);
                 System.out.println("\n\n"+email+"\n\n");
+//                webclient
                 // verify user exists here
                 // use  request.getPathInfo() to get information about where user type to check against
             }

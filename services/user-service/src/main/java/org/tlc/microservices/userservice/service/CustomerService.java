@@ -108,6 +108,7 @@ public class CustomerService {
         ClientValidationDTO response =  new ClientValidationDTO();
 
         response.setCustomerExist(true);
+        response.setCustomerBalance(customer.get().getBalance());
         response.setPortfolioBalance(portfolio.get().getBalance());
         response.setCanShort(customer.get().getCan_short());
         response.setProductQuantity(portfolioProduct.get().getQuantity());

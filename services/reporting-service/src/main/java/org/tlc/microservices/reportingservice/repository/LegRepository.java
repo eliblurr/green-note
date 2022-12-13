@@ -20,4 +20,6 @@ public interface LegRepository extends JpaRepository<Leg, UUID> {
     @Query(value = "SELECT CASE WHEN EXISTS(SELECT * FROM legs WHERE exchange_id=:exchange and status='OPEN' ) THEN true ELSE false END", nativeQuery = true)
     boolean exchangeHasActiveLeg(@Param("exchange") UUID exchange);
 
+    boolean findOneByExchangeId(UUID tradeId);
+
 }
