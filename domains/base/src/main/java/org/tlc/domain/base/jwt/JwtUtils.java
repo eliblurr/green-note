@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.tlc.domain.base.exceptions.BadCredentialsException;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Component
 public final class JwtUtils {
@@ -21,6 +24,14 @@ public final class JwtUtils {
     public String generateJwtToken(String email, boolean isRefresh) {
         int exp = isRefresh ? refreshJwtExpirationMs : jwtExpirationMs;
         return JWT.create().withSubject(email)
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + exp))
+                .sign(Algorithm.HMAC512(jwtSecret));
+    }
+
+    public String generateJwtToken(String email, UUID id, boolean isRefresh) {
+        int exp = isRefresh ? refreshJwtExpirationMs : jwtExpirationMs;
+        return JWT.create().withSubject(email).withPayload(Map.of("id", id.toString()))
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + exp))
                 .sign(Algorithm.HMAC512(jwtSecret));

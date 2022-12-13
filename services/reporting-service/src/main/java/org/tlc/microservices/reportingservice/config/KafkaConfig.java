@@ -19,12 +19,12 @@ public class KafkaConfig {
     @Bean
     @Qualifier("reportsTopic")
     public NewTopic consumerTopic(){
-        return TopicBuilder.name(reportsTopic).partitions(4).build();
+        return TopicBuilder.name(reportsTopic).partitions(2).build();
     }
 
     @Bean
     @Qualifier("accountTopic")
     public NewTopic producerTopic(){
-        return TopicBuilder.name(accountTopic).partitions(4).build();
+        return TopicBuilder.name(accountTopic).partitions(2).build();
     }
 }

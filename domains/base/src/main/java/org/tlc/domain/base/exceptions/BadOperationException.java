@@ -1,6 +1,6 @@
-package org.tlc.microservices.userservice.exceptions;
+package org.tlc.domain.base.exceptions;
 
-public class BadOperationException  extends RuntimeException {
+public class BadOperationException extends RuntimeException {
 
     public BadOperationException() {
         super("Operation not permitted");

@@ -20,3 +20,8 @@ dependencies {
 	//	local project dependency
 	implementation project(':domains:base')
 }
+
+dependencyManagement {
+	imports { mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"}
+}
+

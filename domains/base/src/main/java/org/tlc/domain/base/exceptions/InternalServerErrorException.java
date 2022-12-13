@@ -1,4 +1,4 @@
-package org.tlc.microservices.userservice.exceptions;
+package org.tlc.domain.base.exceptions;
 
 public class InternalServerErrorException extends RuntimeException {
 

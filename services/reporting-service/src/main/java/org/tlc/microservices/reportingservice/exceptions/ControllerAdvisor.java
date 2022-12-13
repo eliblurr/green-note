@@ -1,4 +1,4 @@
-package org.tlc.microservices.userservice.exceptions;
+package org.tlc.microservices.reportingservice.exceptions;
 
 import org.modelmapper.MappingException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.tlc.domain.base.exceptions.BadCredentialsException;
+import org.tlc.domain.base.exceptions.*;
 
 @ControllerAdvice
 @ResponseBody

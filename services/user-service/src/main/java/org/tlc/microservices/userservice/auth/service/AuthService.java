@@ -40,8 +40,8 @@ public class AuthService {
         if(customer == null || !encoder.matches(payload.getPassword(), customer.getPassword())){ throw new BadCredentialsException();}
         CustomerResponseDTO responseDTO = new CustomerResponseDTO();
         responseDTO.setAdmin(CustomerDTO.convertToDTO(customer));
-        responseDTO.setAccess_token(jwtUtils.generateJwtToken(customer.getEmail(), false));
-        responseDTO.setRefresh_token(jwtUtils.generateJwtToken(customer.getEmail(), true));
+        responseDTO.setAccess_token(jwtUtils.generateJwtToken(customer.getEmail(), customer.getId(), false));
+        responseDTO.setRefresh_token(jwtUtils.generateJwtToken(customer.getEmail(), customer.getId(), true));
 
         // publish to logger here
         try{ this.publishActivity(customer.getId());}
@@ -55,8 +55,8 @@ public class AuthService {
         if(admin == null || !encoder.matches(payload.getPassword(), admin.getPassword())){ throw new BadCredentialsException();}
         AdminResponseDTO responseDTO = new AdminResponseDTO();
         responseDTO.setAdmin(AdminDTO.convertToDTO(admin));
-        responseDTO.setAccess_token(jwtUtils.generateJwtToken(admin.getEmail(), false));
-        responseDTO.setRefresh_token(jwtUtils.generateJwtToken(admin.getEmail(), true));
+        responseDTO.setAccess_token(jwtUtils.generateJwtToken(admin.getEmail(), admin.getId(), false));
+        responseDTO.setRefresh_token(jwtUtils.generateJwtToken(admin.getEmail(), admin.getId(), true));
 
         // publish to logger here
         try{ this.publishActivity(admin.getId());}

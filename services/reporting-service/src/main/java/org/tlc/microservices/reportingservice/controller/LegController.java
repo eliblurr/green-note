@@ -18,7 +18,7 @@ public class LegController {
 
     @Autowired private final LegService legService;
 
-    @GetMapping("/{id}/legs")
+    @GetMapping(value = {"/{id}/legs", "/{id}/legs/"})
     @ResponseStatus(HttpStatus.OK)
     List<LegDTO> read(
             @RequestParam(defaultValue = "0") int page,
