@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice.configuration.dto;
+package org.tlc.domain.base.order.dto;
 
 import jakarta.annotation.Nullable;
 import lombok.*;

@@ -1,24 +1,12 @@
 package org.tlc.microservices.orderservice.services;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.tlc.domain.base.order.dto.OrderRequestDTO;
-import org.tlc.domain.base.order.enums.OrderPosition;
-import org.tlc.domain.base.order.enums.OrderStatus;
-import org.tlc.domain.base.order.enums.Side;
-import org.tlc.domain.base.order.enums.OrderType;
-import org.tlc.microservices.orderservice.Response;
 import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
 
-import java.util.UUID;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc

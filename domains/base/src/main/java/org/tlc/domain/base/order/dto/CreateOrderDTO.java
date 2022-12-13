@@ -29,4 +29,16 @@ public class CreateOrderDTO {
 
     //    legs - can be a list of tradeIds -- define final schema tomorrow
 
+
+    public CreateOrderDTO(SaveOrderDTO saveOrderDTO) {
+        this.exchangeOrderId = saveOrderDTO.getOrderId();
+        this.customer = saveOrderDTO.getClientId();
+        this.product = saveOrderDTO.getProduct();
+        this.price = saveOrderDTO.getPrice();
+        this.quantity = saveOrderDTO.getQuantity();
+        this.portfolio = saveOrderDTO.getPortfolioId();
+        this.side = saveOrderDTO.getSide();
+        this.position = saveOrderDTO.getPosition();
+        this.status = saveOrderDTO.getStatus();
+    }
 }

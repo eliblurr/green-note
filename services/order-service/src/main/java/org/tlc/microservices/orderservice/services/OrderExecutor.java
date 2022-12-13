@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.order.enums.LegStatus;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
-import org.tlc.microservices.orderservice.configuration.dto.CreateOrderOnExchangeDTO;
+import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.configuration.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 import reactor.core.publisher.Mono;
 
 @Component

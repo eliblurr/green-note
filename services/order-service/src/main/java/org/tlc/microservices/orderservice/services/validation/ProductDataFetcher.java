@@ -3,7 +3,7 @@ package org.tlc.microservices.orderservice.services.validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.tlc.microservices.orderservice.configuration.dto.ProductDataDTO;
+import org.tlc.microservices.orderservice.dto.ProductDataDTO;
 
 @Service
 public class ProductDataFetcher {

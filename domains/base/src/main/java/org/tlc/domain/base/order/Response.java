@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice;
+package org.tlc.domain.base.order;
 
 public enum Response {
     VALID_CLIENT(true, "Client is valid"),
@@ -10,7 +10,11 @@ public enum Response {
     ORDER_CANCELLED(true, "Order cancelled successfully"),
     ORDER_NOT_CANCELLED(false, "Order could not be cancelled"),
     ORDER_UPDATED(true, "Order updated successfully"),
-    ORDER_NOT_UPDATED(false, "Order could not be updated");
+    ORDER_NOT_UPDATED(false, "Order could not be updated"),
+    USER_SERVICE_UNAVALABLE(false, "User Service cannot be found"),
+    MD_SERVICE_UNAVALABLE(false, "Market Data Service cannot be found");
+
+
 
     Response(boolean success, String message) {
         this.success = success;

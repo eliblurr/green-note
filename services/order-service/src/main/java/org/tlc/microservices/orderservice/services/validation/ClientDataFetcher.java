@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tlc.domain.base.dto.ClientValidationDTO;
-import org.tlc.microservices.orderservice.configuration.dto.ValidateCustomerDTO;
+import org.tlc.domain.base.order.dto.ValidateCustomerDTO;
 
 @Service
 public class ClientDataFetcher {

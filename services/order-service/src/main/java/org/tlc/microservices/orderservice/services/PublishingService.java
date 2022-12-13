@@ -5,29 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
-import org.tlc.microservices.orderservice.configuration.dto.SaveTradeDTO;
+import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
 
 import java.util.List;
 
 @Service
 public class PublishingService {
-//    @Autowired
-//    @Qualifier("saveOrderTopic") private NewTopic saveOrderTopic;
 
-//    @Autowired
-//    ReportPublisher reportPublisher;
+    @Autowired
+    private KafkaPublisher kafkaPublisher;
 
-//    @Autowired
-//    private KafkaPublisher kafkaPublisher;
-//
-//    @Autowired @Qualifier("saveOrderTopic") private NewTopic topic;
+    @Autowired @Qualifier("ordersTopic") private NewTopic topic;
 
 
 
     public void saveOrder(SaveOrderDTO order) {
-//        kafkaPublisher.setTopic(topic);
-//        System.out.println(topic.name());
-//        kafkaPublisher.sendMessage(order);
+        kafkaPublisher.setTopic(topic);
+        System.out.println(topic.name());
+        kafkaPublisher.sendMessage(order);
 
         System.out.println("SAVING TO DB*/**/*/*");
 

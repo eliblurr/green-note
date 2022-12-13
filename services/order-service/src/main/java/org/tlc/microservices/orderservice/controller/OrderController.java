@@ -3,10 +3,10 @@ package org.tlc.microservices.orderservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.tlc.microservices.orderservice.Response;
-import org.tlc.microservices.orderservice.configuration.dto.CancelOrderDTO;
+import org.tlc.domain.base.order.Response;
+import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
-import org.tlc.microservices.orderservice.configuration.dto.UpdateOrderDTO;
+import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.services.OrderService;
 
 @RestController

@@ -1,21 +1,15 @@
 package org.tlc.microservices.orderservice.services;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.tlc.domain.base.dto.ClientValidationDTO;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.OrderPosition;
-import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.enums.OrderType;
-import org.tlc.microservices.orderservice.Response;
-import org.tlc.microservices.orderservice.configuration.dto.ValidateCustomerDTO;
-import org.tlc.microservices.orderservice.services.validation.ClientDataFetcher;
+import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.orderservice.services.validation.ClientValidationService;
 import org.tlc.microservices.orderservice.services.validation.PriceValidationService;
 
@@ -51,7 +45,7 @@ class OrderValidatorTest {
         OrderRequestDTO testOrder = new OrderRequestDTO(clientId, "APPL", 1.5, 100, portfolioId, Side.SELL, OrderPosition.NORMAL, OrderType.MARKET);
 
         Mockito.when(clientValidationService.validateCustomer(any(),any())).thenReturn(Response.VALID_CLIENT);
-        Mockito.when(priceValidationService.checkIfExchangeWillAcceptOrder(any())).thenReturn(Response.VALID_ORDER);
+        Mockito.when(priceValidationService.validatePrice(any())).thenReturn(Response.VALID_ORDER);
         //when the validate method is called
         orderValidator.validate(testOrder);
 
@@ -59,7 +53,7 @@ class OrderValidatorTest {
         verify(clientValidationService, times(1)).validateCustomer(any(),any());
 
         //and that the price validation service was also called
-        verify(priceValidationService, times(1)).checkIfExchangeWillAcceptOrder(any());
+        verify(priceValidationService, times(1)).validatePrice(any());
 
     }
 
@@ -81,7 +75,7 @@ class OrderValidatorTest {
         verify(clientValidationService, times(1)).validateCustomer(any(),any());
 
         //and that the price validation service was not called
-        verify(priceValidationService, times(0)).checkIfExchangeWillAcceptOrder(any());
+        verify(priceValidationService, times(0)).validatePrice(any());
     }
 
 }

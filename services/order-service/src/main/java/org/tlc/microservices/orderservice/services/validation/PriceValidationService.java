@@ -4,38 +4,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.enums.Side;
-import org.tlc.microservices.orderservice.Response;
-import org.tlc.microservices.orderservice.configuration.dto.ProductDataDTO;
+import org.tlc.domain.base.order.Response;
+import org.tlc.microservices.orderservice.dto.ProductDataDTO;
 
 @Service
 public class PriceValidationService {
     @Autowired
     ProductDataFetcher productDataFetcher;
-    public Response checkIfExchangeWillAcceptOrder(OrderRequestDTO order) {
-        ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
 
-        double maxPriceShift = productDataDTO.getMAX_PRICE_SHIFT();//retrieve from market data service
-        double lastTradedPrice = productDataDTO.getLAST_TRADED_PRICE(); // retrieved from market data service
+    public Response validatePrice(OrderRequestDTO order) {
+        try {
+            ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
 
-        double askPrice = productDataDTO.getASK_PRICE(); // from market data service. determines the lowest price being sold at.
-        //acceptable bids lastTradedPrice for buying and askPrice for selling,
-        // +/-  maxPriceShift
+            double maxPriceShift = productDataDTO.getMAX_PRICE_SHIFT();//retrieve from market data service
+            double lastTradedPrice = productDataDTO.getLAST_TRADED_PRICE(); // retrieved from market data service
 
-        if (order.getSide().equals(Side.SELL)) {
-            if (Math.abs(order.getPrice() - askPrice) < maxPriceShift) {
-                return Response.VALID_ORDER;
-            } else  {
-                return Response.UNREASONABLE_PRICE;
+            double askPrice = productDataDTO.getASK_PRICE(); // from market data service. determines the lowest price being sold at.
+            //acceptable bids lastTradedPrice for buying and askPrice for selling,
+            // +/-  maxPriceShift
+
+            if (order.getSide().equals(Side.SELL)) {
+                if (Math.abs(order.getPrice() - askPrice) < maxPriceShift) {
+                    return Response.VALID_ORDER;
+                } else {
+                    return Response.UNREASONABLE_PRICE;
+                }
             }
-        }
 
-        if (order.getSide().equals(Side.BUY)) {
-            if (Math.abs(order.getPrice() - lastTradedPrice) < maxPriceShift) {
-                return Response.VALID_ORDER;
-            } else {
-                return Response.UNREASONABLE_PRICE;
+            if (order.getSide().equals(Side.BUY)) {
+                if (Math.abs(order.getPrice() - lastTradedPrice) < maxPriceShift) {
+                    return Response.VALID_ORDER;
+                } else {
+                    return Response.UNREASONABLE_PRICE;
+                }
             }
+            return Response.INVALID_REQUEST;
+
+        } catch (Exception e) {
+            return Response.MD_SERVICE_UNAVALABLE;
         }
-        return Response.INVALID_REQUEST;
     }
 }

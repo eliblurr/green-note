@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice.configuration.dto;
+package org.tlc.microservices.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
