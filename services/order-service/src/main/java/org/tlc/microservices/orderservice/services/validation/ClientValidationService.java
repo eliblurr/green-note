@@ -50,6 +50,15 @@ public class ClientValidationService {
                 return Response.INVALID_REQUEST;
             }
 
+            if(!customer.getPortfolioHasProduct() && !customer.getCanShort()){
+                System.out.println("User portfolio does not contain this product");
+                return Response.INVALID_REQUEST;
+            }
+            if(!customer.getCustomerExist()){
+                System.out.println("User does not exist");
+                return Response.INVALID_REQUEST;
+            }
+
             if (order.getSide().equals(Side.SELL)) {
                 int numberOfProductInInventory = customer.getProductQuantity();
                 int numberOfProductsToSell = order.getQuantity();
@@ -59,7 +68,7 @@ public class ClientValidationService {
                     return Response.VALID_CLIENT;
                 }
             } else if (order.getSide().equals(Side.BUY)) {
-                double accountBalance = customer.getPortfolioBalance();
+                double accountBalance = customer.getCustomerBalance();
 
                 double orderTotal = order.getQuantity() * order.getPrice();
                 if (accountBalance < orderTotal) {
