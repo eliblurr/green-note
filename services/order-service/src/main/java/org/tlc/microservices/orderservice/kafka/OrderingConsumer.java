@@ -6,15 +6,12 @@ import org.springframework.stereotype.Service;
 import org.tlc.domain.base.kafka.KafkaConsumer;
 import org.tlc.domain.base.marketData.OrderingServiceDto;
 import org.tlc.microservices.orderservice.data.MarketData;
-import org.tlc.microservices.orderservice.services.OrderProcessorStrategyPicker;
 
 @Service
 public class OrderingConsumer implements KafkaConsumer<OrderingServiceDto> {
     @Autowired
     MarketData marketData;
 
-    @Autowired
-    OrderProcessorStrategyPicker orderProcessorStrategyPicker;
     @Override
     @KafkaListener(topics = "${spring.kafka.topic.md.data}",
             groupId = "${spring.kafka.consumer.group-id}")

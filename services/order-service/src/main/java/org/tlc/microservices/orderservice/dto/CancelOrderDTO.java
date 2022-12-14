@@ -8,5 +8,6 @@ import java.util.UUID;
 public class CancelOrderDTO {
     private UUID clientId;
     private UUID orderId;
-    private String exchangeKey;
+    private UUID portfolioId;
+
 }

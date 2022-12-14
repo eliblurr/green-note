@@ -18,23 +18,35 @@ public class KafkaConfig {
     @Value("${spring.kafka.topic.order.name}")
     public String saveOrderTopic;
 
+    @Value("${spring.kafka.topic.reporting.leg.create.name}")
+    public String createLegTopic;
 
 
-    @Bean
+
+
+
+    @Bean("reportsTopic")
     @Qualifier("reportsTopic")
-    public NewTopic consumerTopic(){
+
+    public NewTopic consumerTopic() {
         return TopicBuilder.name(reportsTopic).partitions(2).build();
     }
 
-    @Bean
+    @Bean("accountTopic")
     @Qualifier("accountTopic")
-    public NewTopic producerTopic(){
+    public NewTopic producerTopic() {
         return TopicBuilder.name(accountTopic).partitions(2).build();
     }
 
-    @Bean
+    @Bean("ordersTopic")
     @Qualifier("ordersTopic")
     public NewTopic orderTopic() {
         return TopicBuilder.name(saveOrderTopic).partitions(4).build();
+    }
+
+    @Bean("legsTopic")
+    @Qualifier("legsTopic")
+    public NewTopic legTopic() {
+        return TopicBuilder.name(createLegTopic).partitions(4).build();
     }
 }

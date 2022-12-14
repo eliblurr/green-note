@@ -1,4 +1,4 @@
-package org.tlc.microservices.orderservice.services;
+package org.tlc.microservices.orderservice.services.publishing;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,10 +14,9 @@ import org.tlc.domain.base.order.dto.SaveOrderDTO;
 @Service
 @Getter
 @Setter
-public class KafkaPublisher extends KafkaProducer<SaveOrderDTO> {
+public class OrderPublisher extends KafkaProducer<SaveOrderDTO> {
 
-    public KafkaPublisher(@Autowired @Qualifier("createOrderTopic") NewTopic topic, KafkaTemplate<String, SaveOrderDTO> kafkaTemplate) {
+    public OrderPublisher(@Autowired @Qualifier("createOrderTopic") NewTopic topic, KafkaTemplate<String, SaveOrderDTO> kafkaTemplate) {
         super(topic, kafkaTemplate);
     }
-
 }

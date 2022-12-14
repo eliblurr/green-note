@@ -13,13 +13,11 @@ import org.tlc.domain.base.order.enums.OrderStatus;
 import org.tlc.domain.base.order.Response;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
-import org.tlc.microservices.orderservice.dto.SaveTradeDTO;
+import org.tlc.domain.base.order.dto.SaveLegDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderOnExchangeDTO;
-import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
+import org.tlc.microservices.orderservice.services.processing.DefaultOrderProcessor;
 import reactor.core.publisher.Mono;
-
-import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -52,18 +50,19 @@ public class OrderService {
         }
 
         SaveOrderDTO order = new SaveOrderDTO(orderRequest, OrderStatus.ACCEPTED);
-        SaveTradeDTO trade = orderProcessor.processOrder(order);
-        //will be replaced with a list of trades
+        SaveLegDTO trade = orderProcessor.processOrder(order);
+
         System.out.println(trade);
         publishingService.saveOrder(order);
-        //orderPublisher.saveTrades(trade);
+        publishingService.saveLegs(trade);
         System.out.println(order);
         return resp;
     }
 
 
     public Boolean cancelOrder(CancelOrderDTO cancelOrderDTO) throws Exception {
-        String exchangeURL = exchanges.get(cancelOrderDTO.getExchangeKey());
+//        String exchangeURL = exchanges.get(cancelOrderDTO.getExchangeKey());
+        String exchangeURL = "https://exchange.matraining.com";
         String orderId = cancelOrderDTO.getOrderId().toString();
         System.out.println(cancelOrderDTO);
         return webClientBuilder.build()

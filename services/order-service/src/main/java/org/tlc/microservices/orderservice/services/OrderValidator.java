@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.Response;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.dto.ValidateCustomerDTO;
+import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
 import org.tlc.microservices.orderservice.services.validation.ClientValidationService;
 import org.tlc.microservices.orderservice.services.validation.PriceValidationService;
 
@@ -20,26 +21,17 @@ public class OrderValidator {
     @Autowired
     ModelMapper modelMapper;
 
-
     public Response validate(OrderRequestDTO order) {
-
-//        make request ot user service for inventory data
         ValidateCustomerDTO customerInfo = modelMapper.map(order, ValidateCustomerDTO.class);
-
-        Response validateClient = clientValidationService.validateCustomer(customerInfo, order);
-        if (validateClient.isSuccess()){
-
+        Response validateCustomerResponse = clientValidationService.validateCustomer(customerInfo, order);
+        if (validateCustomerResponse.isSuccess()) {
             return priceValidationService.validatePrice(order);
         }
-        return validateClient;
-
+        return validateCustomerResponse;
     }
 
-
-
-
-
-
-
+/*    public Response validate(CancelOrderDTO cancelOrderDTO){
+//        Response validateCancelResquest =
+    }*/
 
 }

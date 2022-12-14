@@ -15,18 +15,40 @@ public class ClientValidationService {
 
     public Response validateCustomer(ValidateCustomerDTO customerInfo, OrderRequestDTO order) {
         try {
-            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
-            System.out.println("\n\n"+customer.toString()+"\n\n");
-//            ClientValidationDTO customer = new ClientValidationDTO(1000,true,true,100,true,10000,true, 23);
-            if(!customer.getUserOwnsPortfolio()){
+//            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
+            ClientValidationDTO customer = new ClientValidationDTO(1000, true, true, 100, true, 10000, true, 23);
+//            System.out.println("\n\n"+customer.toString()+"\n\n");
+
+            if(!customer.getCanShort() && !customer.getUserOwnsPortfolio()){
+                if(!customer.getUserOwnsPortfolio() && order.getSide().equals(Side.SELL)){
+                    System.out.println("User does not own portfolio");
+                    return Response.INVALID_REQUEST;
+                }
+            }
+            if (customer.getCanShort()) {
+                if(customer.getCustomerBalance() < order.getPrice()* order.getQuantity()){
+                    System.out.println("User does not own enough funds to short");
+                    return Response.INSUFFICIENT_FUNDS;
+                }
+            }
+
+            if(!customer.getUserOwnsPortfolio() && order.getSide().equals(Side.SELL)){
                 System.out.println("User does not own portfolio");
                 return Response.INVALID_REQUEST;
             }
-            if(!customer.getCanShort() && (customer.getCustomerBalance()< order.getPrice()* order.getQuantity())){
+            if(!customer.getCanShort() && (customer.getPortfolioBalance()< order.getPrice()* order.getQuantity())){
                 System.out.println("User does not own enough funds and cannot short");
+                return Response.INSUFFICIENT_FUNDS;
+            }
+
+            if(!customer.getPortfolioHasProduct()){
+                System.out.println("User portfolio does not contain this product");
                 return Response.INVALID_REQUEST;
             }
-            //repeat for all flags
+            if(!customer.getCustomerExist()){
+                System.out.println("User does not exist");
+                return Response.INVALID_REQUEST;
+            }
 
             if(!customer.getPortfolioHasProduct() && !customer.getCanShort()){
                 System.out.println("User portfolio does not contain this product");
@@ -38,7 +60,7 @@ public class ClientValidationService {
             }
 
             if (order.getSide().equals(Side.SELL)) {
-                int numberOfProductInInventory = customer.getProductQuantity();// data received from inventory service
+                int numberOfProductInInventory = customer.getProductQuantity();
                 int numberOfProductsToSell = order.getQuantity();
                 if (numberOfProductInInventory < numberOfProductsToSell) {
                     return Response.INVALID_QUANTITY;

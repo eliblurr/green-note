@@ -11,8 +11,8 @@ public enum Response {
     ORDER_NOT_CANCELLED(false, "Order could not be cancelled"),
     ORDER_UPDATED(true, "Order updated successfully"),
     ORDER_NOT_UPDATED(false, "Order could not be updated"),
-    USER_SERVICE_UNAVALABLE(false, "User Service cannot be found"),
-    MD_SERVICE_UNAVALABLE(false, "Market Data Service cannot be found");
+    USER_SERVICE_UNAVALABLE(false, "Could not reach user service"),
+    MD_SERVICE_UNAVALABLE(false, "Could not reach market data service");
 
 
 

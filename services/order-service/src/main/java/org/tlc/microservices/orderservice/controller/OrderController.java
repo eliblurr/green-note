@@ -1,6 +1,7 @@
 package org.tlc.microservices.orderservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.tlc.domain.base.order.Response;
@@ -8,8 +9,7 @@ import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.services.OrderService;
-
-import java.util.UUID;
+import org.tlc.microservices.orderservice.util.ResponseHandler;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -19,8 +19,9 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping(value = {"/", ""})
-    public Response makeOrder(@RequestBody OrderRequestDTO order) {
-        return orderService.placeOrder(order);
+    public ResponseEntity<String> makeOrder(@RequestBody OrderRequestDTO order) {
+        Response response = orderService.placeOrder(order);
+        return ResponseHandler.getResponse(response);
     }
 
     @DeleteMapping(value = {"/",""})
@@ -52,6 +53,4 @@ public class OrderController {
         }
 
     }
-
-
 }

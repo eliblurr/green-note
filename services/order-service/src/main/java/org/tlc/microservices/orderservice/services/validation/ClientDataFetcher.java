@@ -13,7 +13,6 @@ public class ClientDataFetcher {
     @Autowired
     WebClient.Builder webClientBuilder;
     public ClientValidationDTO getUserData(ValidateCustomerDTO customerInfo) {
-//        http://user-service/user-exists?user=
         return webClientBuilder.build()
                 .post()
                 .uri("http://user-service/api/users/customers/validate-customer")
