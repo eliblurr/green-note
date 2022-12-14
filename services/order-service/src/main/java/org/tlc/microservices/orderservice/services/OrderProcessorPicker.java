@@ -1,3 +1,4 @@
+/*
 package org.tlc.microservices.orderservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.tlc.microservices.orderservice.data.MarketData;
 import org.tlc.microservices.orderservice.services.processing.DefaultOrderProcessor;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Queue;
 
 @Component
@@ -33,13 +35,18 @@ public class OrderProcessorPicker {
         ///if md is empty just place default order
 
         //extract some data from request and compare to data from exchange
-        OrderingServiceDto marketdata = marketData.getMarketData();
+//        OrderingServiceDto marketdata = marketData.getMarketData();
 
 
-        Queue<TickerPriceDto> lastTenPrices = marketdata.getTickers().get(product).get(side);
+//        List<TickerPriceDto> lastTenPricesSorted = marketData.getLastTenPrices(Side side);
+
+          List<List<TickerPriceDto>> exchangesWithLastTenPrices;
+
+
+
 
         ///if md is empty just place default order
-        if (!lastTenPrices.isEmpty()) {
+        if (!) {
 
 
             //first check the exchanges the order exists on
@@ -48,12 +55,12 @@ public class OrderProcessorPicker {
             //next check for if the order can be split into multiple legs
             //first retrieve the last 10 prices available to be traded at
             // then check if order can span multiple of these
-            Iterator<TickerPriceDto> queueIterator = lastTenPrices.iterator();
-            if(order.getSide().equals(Side.BUY)){
-                if(limitForPrice > lastTenPrices.element().getPrice() && order.getQuantity() > lastTenPrices.element().getQuantity()){
-//                splitOrderProcessor.processOrder(order);
-                }
-            }
+//            Iterator<TickerPriceDto> queueIterator = lastTenPrices.iterator();
+//            if(order.getSide().equals(Side.BUY)){
+//                if(limitForPrice > lastTenPrices.element().getPrice() && order.getQuantity() > lastTenPrices.element().getQuantity()){
+////                splitOrderProcessor.processOrder(order);
+//                }
+//            }
 
             //
 
@@ -71,3 +78,4 @@ public class OrderProcessorPicker {
     }
 
 }
+*/

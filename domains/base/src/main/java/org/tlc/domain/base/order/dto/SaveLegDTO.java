@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class SaveLegDTO {
-    private UUID tradeId;
+    private String tradeId;
     private UUID order;
     private LegStatus status;
     private int quantity;
@@ -28,7 +28,7 @@ public class SaveLegDTO {
     }
 
     public static class SaveTradeDTOBuilder{
-        private UUID tradeId;
+        private String tradeId;
         private UUID orderId;
         private LegStatus status;
         private int quantity;
@@ -36,7 +36,7 @@ public class SaveLegDTO {
         private UUID exchangeId;
         private double price;
 
-        public SaveTradeDTOBuilder(UUID tradeId, UUID orderId, LegStatus status, int quantity, Side side, UUID exchangeId, double price) {
+        public SaveTradeDTOBuilder(String  tradeId, UUID orderId, LegStatus status, int quantity, Side side, UUID exchangeId, double price) {
             this.tradeId = tradeId;
             this.orderId = orderId;
             this.status = status;

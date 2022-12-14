@@ -10,8 +10,7 @@ import org.tlc.domain.base.order.enums.Side;
 import java.util.UUID;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class OrderRequestDTO {
     private UUID clientId;

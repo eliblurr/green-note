@@ -51,10 +51,10 @@ public class OrderService {
 
         SaveOrderDTO order = new SaveOrderDTO(orderRequest, OrderStatus.ACCEPTED);
         SaveLegDTO trade = orderProcessor.processOrder(order);
-        //will be replaced with a list of trades
+
         System.out.println(trade);
         publishingService.saveOrder(order);
-        publishingService.saveTrades(trade);
+        publishingService.saveLegs(trade);
         System.out.println(order);
         return resp;
     }
@@ -62,7 +62,6 @@ public class OrderService {
 
     public Boolean cancelOrder(CancelOrderDTO cancelOrderDTO) throws Exception {
 //        String exchangeURL = exchanges.get(cancelOrderDTO.getExchangeKey());
-//        use order client validation service to get uuid
         String exchangeURL = "https://exchange.matraining.com";
         String orderId = cancelOrderDTO.getOrderId().toString();
         System.out.println(cancelOrderDTO);

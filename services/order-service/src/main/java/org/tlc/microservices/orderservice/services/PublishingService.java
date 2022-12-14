@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
 import org.tlc.domain.base.order.dto.SaveLegDTO;
-import org.tlc.microservices.orderservice.services.producers.LegPublisher;
-import org.tlc.microservices.orderservice.services.producers.OrderPublisher;
+import org.tlc.microservices.orderservice.services.publishing.LegPublisher;
+import org.tlc.microservices.orderservice.services.publishing.OrderPublisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,22 +31,22 @@ public class PublishingService {
         System.out.println(topic.name());
         orderPublisher.sendMessage(order);
         System.out.println("********************SAVING ORDER TO DB************");
-
     }
 
-    public void saveTrades(List<SaveLegDTO> legs){
+    public void saveLegs(List<SaveLegDTO> legs){
         legPublisher.setTopic(legTopic);
         System.out.println(legTopic.name());
-        System.out.println("********************SAVING LEGS TO DB************");
         legPublisher.sendMessage(legs);
+        System.out.println("********************SAVING LEGS TO DB************");
     }
 
-    public void saveTrades(SaveLegDTO leg){
+    public void saveLegs(SaveLegDTO leg){
         legPublisher.setTopic(legTopic);
         System.out.println(legTopic.name());
-        System.out.println("********************SAVING LEGS TO DB************");
         List<SaveLegDTO> legs = new ArrayList<SaveLegDTO>();
         legs.add(leg);
         legPublisher.sendMessage(legs);
+        System.out.println(leg.toString());
+        System.out.println("********************SAVING LEGS TO DB************");
     }
 }

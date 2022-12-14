@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.tlc.domain.base.order.Response;
 import org.tlc.domain.base.order.enums.LegStatus;
 import org.tlc.microservices.orderservice.configuration.ExchangesConfig;
 import org.tlc.microservices.orderservice.dto.CreateOrderOnExchangeDTO;
@@ -36,9 +37,9 @@ public class OrderExecutor {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
+        System.out.println(exchangeResponse);
 
-
-        return new SaveLegDTO.SaveTradeDTOBuilder(UUID.fromString(exchangeResponse),
+        return new SaveLegDTO.SaveTradeDTOBuilder(exchangeResponse,
                 newOrder.getOrderId(),
                 LegStatus.OPEN,
                 newOrder.getQuantity(),
@@ -47,6 +48,8 @@ public class OrderExecutor {
                 newOrder.getPrice())
                 .build();
     }
+
+
 
 }
 

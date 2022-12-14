@@ -17,9 +17,22 @@ public class ClientValidationService {
         try {
 //            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
             ClientValidationDTO customer = new ClientValidationDTO(1000, true, true, 100, true, 10000, true, 23);
-            System.out.println("\n\n"+customer.toString()+"\n\n");
+//            System.out.println("\n\n"+customer.toString()+"\n\n");
 
-            if(!customer.getUserOwnsPortfolio()){
+            if(!customer.getCanShort() && !customer.getUserOwnsPortfolio()){
+                if(!customer.getUserOwnsPortfolio() && order.getSide().equals(Side.SELL)){
+                    System.out.println("User does not own portfolio");
+                    return Response.INVALID_REQUEST;
+                }
+            }
+            if (customer.getCanShort()) {
+                if(customer.getCustomerBalance() < order.getPrice()* order.getQuantity()){
+                    System.out.println("User does not own enough funds to short");
+                    return Response.INSUFFICIENT_FUNDS;
+                }
+            }
+
+            if(!customer.getUserOwnsPortfolio() && order.getSide().equals(Side.SELL)){
                 System.out.println("User does not own portfolio");
                 return Response.INVALID_REQUEST;
             }

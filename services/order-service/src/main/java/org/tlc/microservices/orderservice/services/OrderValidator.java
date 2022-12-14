@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.tlc.domain.base.order.Response;
 import org.tlc.domain.base.order.dto.OrderRequestDTO;
 import org.tlc.domain.base.order.dto.ValidateCustomerDTO;
+import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
 import org.tlc.microservices.orderservice.services.validation.ClientValidationService;
 import org.tlc.microservices.orderservice.services.validation.PriceValidationService;
 
@@ -28,5 +29,9 @@ public class OrderValidator {
         }
         return validateCustomerResponse;
     }
+
+/*    public Response validate(CancelOrderDTO cancelOrderDTO){
+//        Response validateCancelResquest =
+    }*/
 
 }
