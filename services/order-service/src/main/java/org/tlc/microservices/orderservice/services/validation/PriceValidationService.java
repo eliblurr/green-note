@@ -14,14 +14,16 @@ public class PriceValidationService {
 
     public Response validatePrice(OrderRequestDTO order) {
         try {
-//            ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
-            ProductDataDTO productDataDTO = new ProductDataDTO(
-                    "GOOGL",
-                    5000,
-                    0.0, 150.0, 1.09, 10000, 1.0
 
-
-            );
+            ProductDataDTO productDataDTO = productDataFetcher.getProductData(order.getProduct());
+//            ProductDataDTO productDataDTO = new ProductDataDTO(
+//                    "GOOGL",
+//                    5000,
+//                    0.0, 150.0, 1.09, 10000, 1.0
+//
+//
+//            );
+            System.out.println("\n\n"+productDataDTO+"\n\n");
 
             double maxPriceShift = productDataDTO.getMAX_PRICE_SHIFT();//retrieve from market data service
             double lastTradedPrice = productDataDTO.getLAST_TRADED_PRICE(); // retrieved from market data service
@@ -37,7 +39,6 @@ public class PriceValidationService {
                     return Response.UNREASONABLE_PRICE;
                 }
             }
-
             if (order.getSide().equals(Side.BUY)) {
                 if (Math.abs(order.getPrice() - lastTradedPrice) < maxPriceShift) {
                     return Response.VALID_ORDER;
@@ -45,6 +46,7 @@ public class PriceValidationService {
                     return Response.UNREASONABLE_PRICE;
                 }
             }
+            System.out.println("\n\n I hit here\n\n");
             return Response.INVALID_REQUEST;
 
         } catch (Exception e) {
