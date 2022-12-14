@@ -7,7 +7,7 @@ import org.tlc.domain.base.marketData.TickerPriceDto;
 import org.tlc.domain.base.order.enums.Side;
 import org.tlc.domain.base.order.dto.SaveOrderDTO;
 import org.tlc.microservices.orderservice.data.MarketData;
-import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
+import org.tlc.microservices.orderservice.services.processing.DefaultOrderProcessor;
 
 import java.util.Iterator;
 import java.util.Queue;

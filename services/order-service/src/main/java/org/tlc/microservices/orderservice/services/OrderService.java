@@ -16,7 +16,7 @@ import org.tlc.microservices.orderservice.dto.CancelOrderDTO;
 import org.tlc.domain.base.order.dto.SaveLegDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderDTO;
 import org.tlc.microservices.orderservice.dto.UpdateOrderOnExchangeDTO;
-import org.tlc.microservices.orderservice.services.processingstrategies.DefaultOrderProcessor;
+import org.tlc.microservices.orderservice.services.processing.DefaultOrderProcessor;
 import reactor.core.publisher.Mono;
 
 @Service
