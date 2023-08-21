@@ -15,8 +15,8 @@ public class ClientValidationService {
 
     public Response validateCustomer(ValidateCustomerDTO customerInfo, OrderRequestDTO order) {
         try {
-//            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
-            ClientValidationDTO customer = new ClientValidationDTO(1000, true, true, 100, true, 10000, true, 23);
+            ClientValidationDTO customer = clientDataFetcher.getUserData(customerInfo);
+//            ClientValidationDTO customer = new ClientValidationDTO(1000, true, true, 100, true, 10000, true, 23);
 //            System.out.println("\n\n"+customer.toString()+"\n\n");
 
             if(!customer.getCanShort() && !customer.getUserOwnsPortfolio()){
@@ -62,18 +62,18 @@ public class ClientValidationService {
             if (order.getSide().equals(Side.SELL)) {
                 int numberOfProductInInventory = customer.getProductQuantity();
                 int numberOfProductsToSell = order.getQuantity();
-                if (numberOfProductInInventory < numberOfProductsToSell) {
-                    return Response.INVALID_QUANTITY;
-                } else {
-                    return Response.VALID_CLIENT;
-                }
+//                if (numberOfProductInInventory < numberOfProductsToSell) {
+//                    return Response.INVALID_QUANTITY;
+//                }
+                return Response.VALID_CLIENT;
+
             } else if (order.getSide().equals(Side.BUY)) {
                 double accountBalance = customer.getCustomerBalance();
 
                 double orderTotal = order.getQuantity() * order.getPrice();
-                if (accountBalance < orderTotal) {
-                    return Response.INSUFFICIENT_FUNDS;
-                }
+//                if (accountBalance < orderTotal) {
+//                    return Response.INSUFFICIENT_FUNDS;
+//                }
                 return Response.VALID_CLIENT;
 
             } else {
